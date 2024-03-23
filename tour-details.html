@@ -939,6 +939,8 @@ if (matches && matches.length > 1) {
 
             } else {
                 console.log("Tour not found");
+              var url = "testingtours.github.io/mztdemo/tour404"; // Change this to the desired URL
+      window.open(url, "_blank");
             }
         })
         .catch(error => console.error('Error fetching data from Google Sheets:', error));
