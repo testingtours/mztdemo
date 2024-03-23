@@ -880,6 +880,7 @@ function fetchDataFromGoogleSheets() {
     var apiKey = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
     var url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z100?key=${apiKey}`;
 
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
