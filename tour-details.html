@@ -862,8 +862,7 @@
   }
 </style>
 <script>
-  console.log("script works")
-// Function to get URL parameter by name
+console.log("script works")
 // Function to get URL parameter by name
 function getUrlParameter(name) {
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -881,7 +880,6 @@ function fetchDataFromGoogleSheets() {
     var sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
     var apiKey = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
     var url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z100?key=${apiKey}`;
-
 
     fetch(url)
         .then(response => response.json())
@@ -911,17 +909,9 @@ function fetchDataFromGoogleSheets() {
                 var columnX = row[23]; // Column X
                 var columnZ = row[25]; // Column Z
 
-                // Use the retrieved data as needed
-                console.log("Tour Name:", tourName);
-                console.log("Column C:", columnC);
-                console.log("Column F:", columnF);
-                console.log("Column G:", columnG);
-                console.log("Column H:", columnH);
-                console.log("Column I:", columnI);
-                console.log("Column AE:", columnAE);
-                console.log("Column W:", columnW);
-                console.log("Column X:", columnX);
-                console.log("Column Z:", columnZ);
+                // Fill in the elements with fetched data
+                document.getElementById("i2nbno").innerText = tourName;
+                document.getElementById("iyfdd9").innerHTML = `${columnC}<br/><br/>${columnF} Per Person<br/><br/>Single add: ${columnW} Triple deduct: ${columnZ}`;
             } else {
                 console.log("Tour not found");
             }
@@ -931,6 +921,5 @@ function fetchDataFromGoogleSheets() {
 
 // Call the function to fetch data when the page loads
 window.onload = fetchDataFromGoogleSheets;
-  
- fetchDataFromGoogleSheets()
-  </script>
+</script>
+
