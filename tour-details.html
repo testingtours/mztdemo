@@ -882,32 +882,928 @@ function fetchDataFromGoogleSheets() {
     var url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z100?key=${apiKey}`;
 
 
-    fetch(url)
+<body>
+  <header class="header-banner" id="igtuih"><span id="ip3n93"><b></b></span>
+    <div class="container-width" id="ibhder">
+      <div class="logo-container">
+      </div>
+      <div class="lead-title" id="i5sobn"><span><b></b></span></div>
+      <div class="clearfix">
+      </div>
+    </div>
+    <div id="ir86ui">MileZeroTours</div>
+    <div id="i2nbno">{TourName}</div>
+  </header><b>
+  </b>
+  <div id="i9m5cg">
+    <p id="imsppp">
+      <span class="x-el x-el-span c1-8x c1-8y c1-b c1-c c1-d c1-e c1-f c1-g" id="i3orqh"><span class="x-el x-el-span c1-1s c1-1t c1-b c1-1y c1-3w c1-8s c1-8t" id="iyfdd9">{Dates}<br/><br/>${Price} Per Person<br/><br/>Single add: {1ADD} Triple deduct: {3ADD}<br/><br/></span></span><a
+        href="" class="gjs-link" id="i9qycs">Need to save it? Click here to download the itinerary </a>
+    </p>
+  </div><a class="gjs-link" id="ioolhp"><b></b></a>
+  <div class="gjs-grid-row" id="ib7z6a">
+    <div class="gjs-grid-column" id="ie9bjl">
+      <h4 role="heading" aria-level="4" data-ux="ContentHeading" data-aid="CONTENT_MEDIA_HEADLINE1_RENDERED"
+        data-typography="HeadingDelta"
+        class="x-el x-el-h4 c1-1 c1-2 c1-1f c1-1g c1-73 c1-2d c1-2c c1-1i c1-1j c1-2m c1-2v c1-5s c1-74 c1-5t c1-5u c1-5v c1-5w"
+        id="infbcg">Full Itinerary:</h4>
+      <div id="ided1x">{iData}</div>
+    </div>
+    <div class="gjs-grid-column" id="imjqz7">
+      <div id="in9eov"><b id="ielypp">What's included</b></div>
+    </div>
+  </div>
+  <div id="il4h1l">
+    <div data-ux="ContentText" alignment="left" data-aid="CONTENT_MEDIA_DESCRIPTION1_RENDERED"
+      data-typography="BodyAlpha"
+      class="x-el c1-1 c1-2 c1-1f c1-1g c1-1h c1-1i c1-1j c1-7z c1-80 c1-81 c1-82 c1-83 c1-84 c1-85 c1-86 c1-87 c1-88 c1-89 c1-8a c1-8b c1-8c c1-8d c1-8e c1-8f c1-8g c1-8h c1-8i c1-8j c1-8k c1-8l c1-8m c1-8n c1-8o c1-8p c1-8q c1-6j c1-b c1-4f c1-c c1-1m c1-d c1-e c1-f c1-g x-rt"
+      id="ierc9j"></div>
+  </div>
+  <section class="gjs-section" id="ifq8wu">
+    <div class="gjs-container">
+      <div id="iq5mrz">Tour Policies </div>
+      <div id="ij4jeh">Early Booking: A $75 early booking discount is offered off the first 10 seats booked and $25 is
+        offered off the next 10 until Mar 15,
+        2024.<br/><br/>Deposit and Payment: A $100 deposit per person is required at booking or booking may be cancelled. Full payment is required by Mar 15, 2024<br/><br/>Price Changes: In the event of significant changes in taxes or surcharges by suppliers or local government Mile Zero Tours reserves the right to increase price up until final payment is made.<br/><br/>Cancellation Policy: Full refund less $50 per person admin fee if cancelled before March 15, 2024. After March 15, 2024 only 20% is refundable. There are no refunds offered after April 03, 2024. We strongly recommend purchasing trip cancellation insurance, as Mile Zero Tours cannot issue refunds, no matter the reason, beyond the scope of the above-mentioned policy.<br/>
+      </div>
+    </div>
+  </section>
+  <footer class="footer-under" id="im3of4">
+    <div class="container-width">
+      <div class="footer-container" id="irryte">
+        <div class="foot-lists" id="itwi27">
+          <div class="foot-list"></div>
+          <div class="foot-list"></div>
+          <div class="clearfix">
+          </div>
+        </div>
+        <div class="form-sub"></div>
+      </div>
+    </div>
+    <div class="copyright" id="i4j0vp">
+      <div class="made-with" id="i58zv2"><span id="idjbxj">2024 MileZeroTours -- All rights reserved </span></div>
+      <div class="container-width">
+        <div class="foot-social-btns">facebook twitter linkedin mail
+        </div>
+        <div class="clearfix">
+        </div>
+      </div>
+      <div class="foot-list-item" id="i4ildh">Contact Us
+      </div>
+      <div class="foot-list-item" id="io1n5w">Tours
+      </div>
+      <div class="foot-list-item" id="ik9h5t">Company
+      </div>
+      <div class="foot-list-item" id="is7i7w">Privacy Policy
+      </div>
+      <div class="foot-list-item" id="i6vw9o">Terms of travel 
+      </div>
+    </div>
+  </footer>
+</body>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .clearfix {
+    clear: both;
+  }
+
+  .header-banner {
+    padding-top: 35px;
+    padding-bottom: 100px;
+    color: #ffffff;
+    font-family: Helvetica, serif;
+    font-weight: 100;
+    background-image: url("https://grapesjs.com/img/bg-gr-v.png"), url("https://grapesjs.com/img/work-desk.jpg");
+    background-attachment: scroll, scroll;
+    background-position: left top, center center;
+    background-repeat: repeat-y, no-repeat;
+    background-size: contain, cover;
+  }
+
+  .container-width {
+    width: 90%;
+    max-width: 1150px;
+    margin: 0 auto;
+  }
+
+  .logo-container {
+    float: left;
+    width: 50%;
+  }
+
+  .lead-title {
+    margin: 150px 0 30px 0;
+    font-size: 40px;
+  }
+
+  .footer-under {
+    background-color: #312833;
+    padding-bottom: 100px;
+    padding-top: 100px;
+    min-height: 500px;
+    color: #eee;
+    position: relative;
+    font-weight: 100;
+    font-family: Helvetica, serif;
+  }
+
+  .copyright {
+    background-color: rgba(0, 0, 0, 0.15);
+    color: rgba(238, 238, 238, 0.5);
+    bottom: 0;
+    padding: 1em 0;
+    position: absolute;
+    width: 100%;
+    font-size: 0.75em;
+  }
+
+  .made-with {
+    float: left;
+    width: 50%;
+    padding: 5px 0;
+  }
+
+  .foot-social-btns {
+    display: none;
+    float: right;
+    width: 50%;
+    text-align: right;
+    padding: 5px 0;
+  }
+
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-around;
+  }
+
+  .foot-list {
+    float: left;
+    width: 200px;
+  }
+
+  .foot-list-item {
+    color: rgba(238, 238, 238, 0.8);
+    font-size: 0.8em;
+    padding: 0.5em 0;
+  }
+
+  .foot-list-item:hover {
+    color: rgba(238, 238, 238, 1);
+  }
+
+  .Iq2xPb .kaAt2 .KKHx9e {
+    background-color: #3C4043;
+  }
+
+  .Iq2xPb .kaAt2.KKjvXb .KKHx9e {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb .kaAt2.RDPZE .KKHx9e {
+    background-color: #70757a;
+  }
+
+  .wGQFbe.N2RpBe:not(.RDPZE),
+  .wGQFbe.B6Vhqe:not(.RDPZE) {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .wGQFbe.i9xfbb>.MbhUzd,
+  .wGQFbe.u3bW4e>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .wGQFbe.wGQFbe:hover>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.04);
+  }
+
+  .wGQFbe.wGQFbe:focus>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .BJHAP.RDPZE:not(.N2RpBe):not(.B6Vhqe) {
+    border-color: #9AA0A6;
+  }
+
+  .da8bmd .BJHAP.N2RpBe.RDPZE,
+  .da8bmd .BJHAP.B6Vhqe.RDPZE,
+  .wMUAvd .BJHAP.RDPZE {
+    border-color: #5F6368;
+  }
+
+  .aomaEc.N2RpBe:not(.RDPZE) .Id5V1,
+  .aomaEc .nQOrEb {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .aomaEc .N2RpBe:not(.RDPZE) .Id5V1 {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .aomaEc.i9xfbb>.MbhUzd,
+  .aomaEc.u3bW4e>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .aomaEc :not(.RDPZE):hover>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.04);
+  }
+
+  .aomaEc :not(.RDPZE):focus>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .ECvBRb .N2RpBe.RDPZE .Id5V1,
+  .ECvBRb .N2RpBe.RDPZE .nQOrEb {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .ECvBRb .RDPZE:not(.N2RpBe) .Id5V1 {
+    border-color: #9AA0A6;
+  }
+
+  .da8bmd .ECvBRb .N2RpBe.RDPZE .Id5V1,
+  .da8bmd .ECvBRb .N2RpBe.RDPZE .nQOrEb,
+  .wMUAvd .ECvBRb .RDPZE .Id5V1 {
+    border-color: #5F6368;
+  }
+
+  .aYSFK> :first-child {
+    border-left: transparent solid 5px;
+  }
+
+  .aYSFK.N2RpBe> :first-child {
+    border-left-color: rgb(0, 145, 0);
+  }
+
+  .TFBnVe .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
+  }
+
+  .TFBnVe.u3bW4e .CeoRYc {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .RvMhje .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(255, 255, 255, .3), rgba(255, 255, 255, .3) 80%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .RvMhje a .snByac {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .RvMhje.u3bW4e .CeoRYc {
+    background-color: rgba(255, 255, 255, .3);
+  }
+
+  .QvWxOd .TpQm9d,
+  .QvWxOd .TpQm9d:hover,
+  .QvWxOd .TpQm9d:link,
+  .QvWxOd .TpQm9d:visited {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .ctEux .CeoRYc {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .ctEux .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
+  }
+
+  .p6JeP .kaAt2 {
+    color: rgb(104, 110, 115);
+  }
+
+  .p6JeP .kaAt2.KKjvXb {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: rgb(0, 145, 0);
+  }
+
+  .p6JeP .kaAt2.KKjvXb.RDPZE {
+    background-color: rgba(189, 189, 189, .38);
+    color: #9AA0A6;
+  }
+
+  .p6JeP .k6JGBb {
+    fill: rgb(104, 110, 115);
+  }
+
+  .p6JeP .KKjvXb .k6JGBb {
+    fill: rgb(0, 145, 0);
+  }
+
+  .p6JeP .RDPZE .k6JGBb,
+  .p6JeP .KKjvXb.RDPZE.k6JGBb {
+    fill: #9AA0A6;
+  }
+
+  .mfr8Qd .SKMfG {
+    fill: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb .s7bIcf {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb .kaAt2 {
+    color: #3C4043;
+  }
+
+  .Iq2xPb .kaAt2.KKjvXb {
+    color: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb .kaAt2.RDPZE {
+    color: #70757a;
+    cursor: default;
+  }
+
+  .Iq2xPb .RDPZE+.s7bIcf {
+    background-color: #70757a;
+  }
+
+  .Iq2xPb .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
+  }
+
+  .Iq2xPb .PXrNBb {
+    fill: #5F6368;
+  }
+
+  .Iq2xPb .KKjvXb .PXrNBb {
+    fill: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb RDPZE .PXrNBb,
+  .Iq2xPb .KKjvXb.RDPZE.PXrNBb {
+    fill: #9AA0A6;
+  }
+
+  .LKH0ge .cXrdqd {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .LKH0ge .Is7Fhb {
+    color: rgb(0, 145, 0);
+  }
+
+  .LKH0ge.u3bW4e .snByac {
+    color: rgb(0, 145, 0);
+  }
+
+  .LKH0ge.IYewr .oJeWuf.mIZh1c,
+  .LKH0ge.IYewr .oJeWuf.cXrdqd {
+    background-color: rgb(210, 235, 211);
+  }
+
+  .whsOnd:not([disabled]):focus~.AxOyFc.snByac,
+  .u3bW4e>.oJeWuf>.fqp6hd.snByac,
+  .u3bW4e.dm7YTc>.oJeWuf>.fqp6hd.snByac {
+    color: rgb(0, 145, 0);
+  }
+
+  .HNgK9.RDPZE .zHQkBf[disabled] {
+    color: rgba(0, 0, 0, .87);
+  }
+
+  .FlwNw.u3bW4e .oJeWuf:before {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .FlwNw .zHQkBf:not([disabled]):focus~.snByac {
+    color: rgb(0, 145, 0);
+  }
+
+  .yqQS1 .cXrdqd {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .yqQS1 .Is7Fhb {
+    color: rgb(0, 145, 0);
+  }
+
+  .yqQS1.IYewr .oJeWuf.mIZh1c,
+  .yqQS1.IYewr .oJeWuf.cXrdqd {
+    background-color: rgb(210, 235, 211);
+  }
+
+  .toT2u.RDPZE .zHQkBf[disabled] {
+    color: rgba(0, 0, 0, .87);
+  }
+
+  .Y4klN.N2RpBe .espmsb {
+    border-color: rgb(76, 175, 80);
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .Y4klN.N2RpBe>.MLPG7 {
+    border-color: rgb(210, 235, 211);
+  }
+
+  .Y4klN.i9xfbb>.MbhUzd,
+  .Y4klN.u3bW4e>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .IszBRc-Guievd-HLvlvd .TCbR9b {
+    display: block;
+  }
+
+  .IszBRc-Guievd-HLvlvd .doKKyd {
+    display: none;
+  }
+
+  .barETd .X1clqd,
+  .barETd .qRUolc,
+  .barETd .pPQgvf {
+    color: #202124;
+    fill: #5F6368;
+  }
+
+  .IszBRc-Guievd-JaPV2b .barETd {
+    border: 2px solid white;
+  }
+
+  .IszBRc-Guievd-HLvlvd .barETd {
+    border: 2px solid black;
+  }
+
+  .IOncP .HvOprf {
+    color: rgb(0, 145, 0);
+  }
+
+  .IOncP .HvOprf .CeoRYc {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .IOncP .HvOprf .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
+  }
+
+  .IOncP .HvOprf:hover {
+    border-color: rgb(210, 235, 211);
+  }
+
+  .IOncP .HvOprf.RDPZE {
+    color: rgba(0, 145, 0, 0.5);
+  }
+
+  .IOncP .HvOprf.RDPZE:hover {
+    box-shadow: none;
+  }
+
+  .IOncP .HvOprf.qs41qe.qs41qe {
+    box-shadow: 0px 2px 1px -1px rgba(0, 145, 0, 0.2), 0px 1px 1px 0px rgba(0, 145, 0, 0.14), 0px 1px 3px 0px rgba(0, 145, 0, 0.12);
+  }
+
+  .da8bmd .RDPZE .Pi3FHb {
+    outline-color: rgba(0, 0, 0, .54);
+  }
+
+  .LygNqb.RDPZE .snByac {
+    color: #70757a;
+  }
+
+  .LygNqb.RDPZE.N2RpBe .snByac,
+  .LygNqb.RDPZE.B6Vhqe .snByac {
+    color: #202124;
+  }
+
+  .wMUAvd .LygNqb.RDPZE .snByac,
+  .wMUAvd .LygNqb.RDPZE.N2RpBe .snByac,
+  .wMUAvd .LygNqb.RDPZE.B6Vhqe .snByac {
+    color: black;
+  }
+
+  .LygNqb.RDPZE .PgfOZ svg {
+    fill: rgba(0, 0, 0, .54);
+  }
+
+  .LygNqb.RDPZE.N2RpBe .PgfOZ,
+  .LygNqb.RDPZE.B6Vhqe .PgfOZ svg {
+    fill: rgba(0, 0, 0, .87);
+  }
+
+  .G4EHhc,
+  .G4EHhc .Wic03c .tL9Q4c,
+  .G4EHhc .I9OJHe .KRoqRc,
+  .G4EHhc .PyrB4,
+  .G4EHhc .snByac {
+    font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
+  }
+
+  .LgNcQe,
+  .LgNcQe .Wic03c .tL9Q4c,
+  .LgNcQe .I9OJHe .KRoqRc,
+  .LgNcQe .PyrB4,
+  .LgNcQe .snByac {
+    font-size: 24pt;
+    font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .M7eMe,
+  .M7eMe .Wic03c .tL9Q4c,
+  .M7eMe .I9OJHe .KRoqRc,
+  .M7eMe .PyrB4,
+  .M7eMe .snByac {
+    font-size: 12pt;
+    font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .OIC90c.RjsPE,
+  .OIC90c .zHQkBf,
+  .OIC90c .Wic03c .tL9Q4c,
+  .OIC90c .I9OJHe .KRoqRc,
+  .OIC90c .PyrB4,
+  .OIC90c .snByac {
+    font-size: 11pt;
+    line-height: 15pt;
+    letter-spacing: 0;
+  }
+
+  .sId0Ce,
+  .sId0Ce a {
+    color: rgba(0, 0, 0, 0.66);
+  }
+
+  .gjs-grid-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: row;
+    min-height: auto;
+    padding: 10px 0;
+  }
+
+  .gjs-grid-column {
+    flex: 1 1 0%;
+    padding: 5px 0;
+  }
+
+  .gjs-link {
+    vertical-align: top;
+    max-width: 100%;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #irryte {
+    text-align: center;
+  }
+
+  #idjbxj {
+    font-size: 20px !important;
+  }
+
+  #i58zv2 {
+    width: 80%;
+  }
+
+  #i4ildh {
+    font-size: 15px !important;
+  }
+
+  #io1n5w {
+    font-size: 15px !important;
+  }
+
+  #ik9h5t {
+    font-size: 15px !important;
+  }
+
+  #is7i7w {
+    font-size: 15px !important;
+  }
+
+  #i6vw9o {
+    font-size: 15px !important;
+  }
+
+  #i4j0vp {
+    background-color: rgba(64, 117, 5, 0.47);
+  }
+
+  #im3of4 {
+    padding-top: 135px;
+    padding-right: 0px;
+    padding-bottom: 100px;
+    padding-left: 0px;
+    background-color: rgba(0, 0, 0, 1);
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    min-height: 200px;
+  }
+
+  #ip3n93 {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 2px;
+    margin-left: 0px;
+  }
+
+  #i5sobn {
+    border: 0px solid black;
+    color: #000000;
+    text-align: left;
+    font-size: 75px !important;
+    transition: opacity 5s ease 0s;
+    text-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+  }
+
+  #ibhder {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-right: 184px;
+    margin-bottom: 0px;
+    margin-left: 139px;
+  }
+
+  #ir86ui {
+    padding: 10px;
+    font-size: 40px !important;
+    font-family: Lucida Sans Unicode, Lucida Grande, sans-serif;
+    text-align: center;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+  }
+
+  #i2nbno {
+    padding: 10px;
+    font-size: 100px !important;
+    font-family: Lucida Sans Unicode, Lucida Grande, sans-serif;
+    text-align: center;
+  }
+
+  #igtuih {
+    background-repeat: repeat, repeat;
+    background-position: 0px 0px, 0px 0px;
+    background-attachment: scroll, scroll;
+    background-size: 100% 100%, 50px 50px;
+    background-image: linear-gradient(rgba(21, 21, 21, 0.61) 1%, rgba(21, 21, 21, 0.61) 100%), url("https://placehold.co/150/777/white.png?text=IMAGE");
+    perspective: 50px;
+    transition: opacity 3s ease-in 1s;
+    border: 0px solid #161616;
+    opacity: 100%;
+    padding-top: 35px;
+    padding-right: 0px;
+    padding-bottom: 232px;
+    padding-left: 0px;
+    background-origin: padding-box, ;
+  }
+
+  #i9m5cg {
+    padding: 10px;
+    font-size: 25px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  #il4h1l {
+    padding: 10px;
+    font-size: 25px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  #imsppp {
+    box-sizing: inherit;
+    margin: 0px;
+    color: rgb(253, 253, 253);
+    font-family: Roboto, arial, sans-serif;
+    font-size: 18px;
+    background-color: rgb(64, 103, 29);
+  }
+
+  #i3orqh {
+    box-sizing: inherit;
+    letter-spacing: unset;
+    text-transform: unset;
+  }
+
+  #iyfdd9 {
+    box-sizing: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    font-weight: 700;
+    line-height: inherit;
+    font-size: inherit !important;
+  }
+
+  #in9eov {
+    padding: 10px;
+    font-size: 39px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(14, 213, 17, 1);
+  }
+
+  #ierc9j {
+    box-sizing: inherit;
+    font-family: Roboto, arial, sans-serif;
+    font-size: 18px;
+    overflow-wrap: break-word;
+    line-height: 1.8;
+    margin-top: 0px;
+    color: rgb(94, 94, 94);
+    flex-grow: 1;
+    max-width: 100%;
+    text-align: left;
+    margin-bottom: 0px !important;
+  }
+
+  #ie9bjl {
+    flex-basis: 73%;
+    flex-grow: 0;
+    padding-right: 0px;
+    padding-left: 29px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }
+
+  #ib7z6a {
+    min-height: 571px;
+  }
+
+  #imjqz7 {
+    background-color: rgba(0, 0, 0, 0.35);
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-top: 48px;
+    padding-right: 0px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    color: rgba(255, 229, 229, 1);
+  }
+
+  #ided1x {
+    padding: 10px;
+  }
+
+  #in9eov {
+    padding: 10px;
+    font-size: 36px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #40671d;
+  }
+
+  #infbcg {
+    font-size: 46px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(30, 152, 12, 1);
+    text-align: left;
+  }
+
+  #ioolhp {
+    color: rgba(47, 162, 65, 1);
+    padding: 10px;
+    font-size: 30px !important;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #i9qycs {
+    text-align: center;
+    font-size: 18px !important;
+    text-decoration: underline;
+  }
+
+  .gjs-container {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  .gjs-section {
+    display: flex;
+    padding: 50px 0;
+  }
+
+  #iq5mrz {
+    padding: 10px;
+    font-size: 35px !important;
+    font-weight: 300;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  #ij4jeh {
+    padding: 10px;
+    font-size: 15px !important;
+    font-weight: 300;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  @media screen and (forced-colors: active) {
+    .Iq2xPb .s7bIcf {
+      outline: 1px solid Highlight;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .gjs-grid-row {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .foot-lists {
+      display: none;
+    }
+  }
+</style>
+<script>
+  console.log("script works")
+// Function to get URL parameter by name
+function getUrlParameter(name) {
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[#&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(window.location.href);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// Google Sheets API function to fetch data
+function fetchDataFromGoogleSheets() {
+    // Use the Google Sheets API to fetch your sheet data
+    // Replace 'YOUR_SHEET_ID' and 'YOUR_API_KEY' with your actual values
+    var sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
+    var apiKey = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
+    var url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z100?key=${apiKey}`;
+
+
+      fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log('Google Sheets data:', data); // Log the fetched data
-            // Get the tour code from the URL parameter
-            var tourCode = getUrlParameter('tour');
-            console.log('Tour Code from URL:', tourCode); // Log the extracted tour code
+            // Get the row number of the tour name
+            var tourName = getUrlParameter('tour');
             var rowIndex = -1;
             data.values.forEach((row, index) => {
-                if (row[0] === tourCode) { // Assuming Tour Code is in column A (index 0)
+                if (row[1] === tourName) { // Assuming Tour Name is in column B (index 1)
                     rowIndex = index;
                     return;
                 }
             });
 
             if (rowIndex !== -1) {
-                // Assuming column B has Tour Name and other details are in subsequent columns
+                // Assuming column A has unique identifiers and column B has Tour Name
                 var row = data.values[rowIndex];
                 var tourName = row[1]; // Tour Name
-                var days = row[2]; // Days
-                var depDate = row[3]; // Departure Date
-                // Assign other details to variables as needed
-                console.log("Tour Name:", tourName);
-                console.log("Days:", days);
-                console.log("Departure Date:", depDate);
+                var columnC = row[2]; // Column C
+                var columnF = row[5]; // Column F
+                var columnG = row[6]; // Column G
+                var columnH = row[7]; // Column H
+                var columnI = row[8]; // Column I
+                var columnAE = row[30]; // Column AE
+                var columnW = row[22]; // Column W
+                var columnX = row[23]; // Column X
+                var columnZ = row[25]; // Column Z
+
                 // Use the retrieved data as needed
+                console.log("Tour Name:", tourName);
+                console.log("Column C:", columnC);
+                console.log("Column F:", columnF);
+                console.log("Column G:", columnG);
+                console.log("Column H:", columnH);
+                console.log("Column I:", columnI);
+                console.log("Column AE:", columnAE);
+                console.log("Column W:", columnW);
+                console.log("Column X:", columnX);
+                console.log("Column Z:", columnZ);
             } else {
                 console.log("Tour not found");
             }
@@ -922,3 +1818,5 @@ window.onload = fetchDataFromGoogleSheets;
   
  fetchDataFromGoogleSheets()
   </script>
+
+  
