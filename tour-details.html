@@ -913,6 +913,30 @@ function fetchDataFromGoogleSheets() {
                 document.getElementById("i2nbno").innerText = tourName;
                 document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF}  `;
                 document.getElementById("ided1x").innerHTML = `${columnW}`;
+              // Select the element with id "igtuih"
+              const element = document.getElementById('igtuih');
+
+// Get the computed style of the element
+const style = window.getComputedStyle(element);
+
+// Get the current background image URL
+const currentBackgroundImage = style.getPropertyValue('background-image');
+
+// Extract the URL from the current background image value
+const urlRegex = /url\("([^"]+)"\)/;
+const matches = currentBackgroundImage.match(urlRegex);
+let newUrl = '${columnAE}'; // Replace 'https://example.com/new-image.jpg' with your desired URL
+
+if (matches && matches.length > 1) {
+    // Replace the URL in the background image property with the new URL
+    const newBackgroundImage = currentBackgroundImage.replace(matches[1], newUrl);
+    
+    // Set the new background image property to the element
+    element.style.backgroundImage = newBackgroundImage;
+} else {
+    console.error('Unable to extract current background image URL.');
+}
+
             } else {
                 console.log("Tour not found");
             }
