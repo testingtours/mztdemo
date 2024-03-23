@@ -862,6 +862,7 @@
   }
 </style>
 <script>
+  console.log("script works")
 // Function to get URL parameter by name
 function getUrlParameter(name) {
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -916,5 +917,8 @@ function fetchDataFromGoogleSheets() {
 
 // Call the function to fetch data when the page loads
 window.onload = fetchDataFromGoogleSheets;
-
+  
+  
+  
+ fetchDataFromGoogleSheets()
   <script>
