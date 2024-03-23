@@ -8,7 +8,7 @@
       </div>
     </div>
     <div id="ir86ui">MileZeroTours</div>
-    <div id="i2nbno">{TourName}</div>
+    <div id="i2nbno">...</div>
   </header><b>
   </b>
   <div id="i9m5cg">
@@ -911,7 +911,8 @@ function fetchDataFromGoogleSheets() {
 
                 // Fill in the elements with fetched data
                 document.getElementById("i2nbno").innerText = tourName;
-                document.getElementById("iyfdd9").innerHTML = `${columnC}<br/><br/>${columnF} Per Person<br/><br/>Single add: ${columnW} Triple deduct: ${columnZ}`;
+                document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF}  `;
+                document.getElementById("ided1x").innerHTML = ${columnW}``;
             } else {
                 console.log("Tour not found");
             }
