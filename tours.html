@@ -203,6 +203,7 @@ function fetchTours() {
             const DepartFrom = values[i][19];
             const price = values[i][6];
             const Season = values[i][17];
+            const id = values[i][0];
 
             // Filter by season
             if (seasonFilter.value !== "" && !Season.toLowerCase().includes(seasonFilter.value.toLowerCase())) {
@@ -271,7 +272,7 @@ document.body.appendChild(tourElement);
             p.textContent = Description;
 
             const detailButton = document.createElement("a");
-            detailButton.href = `https://milezerotours.com/tour-details#${tourName.replace(/\s+/g, '-').toLowerCase()}`;
+            detailButton.href = `https://milezerotours.com/tour-details#tour=${id.replace(/\s+/g, '-').toLowerCase()}`;
             detailButton.textContent = "Tour Details";
             detailButton.classList.add("btn");
             detailButton.style.marginRight = "10px"; // Adjust the margin as needed
