@@ -884,27 +884,27 @@ function fetchDataFromGoogleSheets() {
         .then(response => response.json())
         .then(data => {
             console.log('Google Sheets data:', data); // Log the fetched data
-            // Get the row number of the tour name
-            var tourName = getUrlParameter('tour');
-            console.log('Tour Name from URL:', tourName); // Log the extracted tour name
+            // Get the tour code from the URL parameter
+            var tourCode = getUrlParameter('tour');
+            console.log('Tour Code from URL:', tourCode); // Log the extracted tour code
             var rowIndex = -1;
             data.values.forEach((row, index) => {
-                if (row[1] === tourName) { // Assuming Tour Name is in column B (index 1)
+                if (row[0] === tourCode) { // Assuming Tour Code is in column A (index 0)
                     rowIndex = index;
                     return;
                 }
             });
 
             if (rowIndex !== -1) {
-                // Assuming column A has unique identifiers and column B has Tour Name
+                // Assuming column B has Tour Name and other details are in subsequent columns
                 var row = data.values[rowIndex];
-                var tourName = row[0]; // Tour Name
-                var columnC = row[2]; // Assuming other details are in subsequent columns
-                var columnD = row[3];
+                var tourName = row[1]; // Tour Name
+                var days = row[2]; // Days
+                var depDate = row[3]; // Departure Date
                 // Assign other details to variables as needed
                 console.log("Tour Name:", tourName);
-                console.log("Column C:", columnC);
-                console.log("Column D:", columnD);
+                console.log("Days:", days);
+                console.log("Departure Date:", depDate);
                 // Use the retrieved data as needed
             } else {
                 console.log("Tour not found");
