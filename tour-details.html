@@ -864,6 +864,7 @@
 <script>
   console.log("script works")
 // Function to get URL parameter by name
+// Function to get URL parameter by name
 function getUrlParameter(name) {
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[#&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -881,6 +882,7 @@ function fetchDataFromGoogleSheets() {
     var apiKey = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
     var url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:Z100?key=${apiKey}`;
 
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -888,7 +890,8 @@ function fetchDataFromGoogleSheets() {
             var tourName = getUrlParameter('tour');
             var rowIndex = -1;
             data.values.forEach((row, index) => {
-                if (row[1] === tourName) { // Assuming Tour Name is in column B (index 1)
+                // Adjust the comparison to handle spaces and special characters
+                if (row[0].includes(tourName)) { // Assuming Tour Code is in column A (index 0)
                     rowIndex = index;
                     return;
                 }
@@ -897,7 +900,7 @@ function fetchDataFromGoogleSheets() {
             if (rowIndex !== -1) {
                 // Assuming column A has unique identifiers and column B has Tour Name
                 var row = data.values[rowIndex];
-                var tourName = row[0]; // Tour Name
+                var tourName = row[1]; // Tour Name
                 var columnC = row[2]; // Column C
                 var columnF = row[5]; // Column F
                 var columnG = row[6]; // Column G
@@ -928,7 +931,6 @@ function fetchDataFromGoogleSheets() {
 
 // Call the function to fetch data when the page loads
 window.onload = fetchDataFromGoogleSheets;
-  
   
  fetchDataFromGoogleSheets()
   </script>
