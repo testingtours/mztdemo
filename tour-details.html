@@ -897,7 +897,7 @@ function fetchDataFromGoogleSheets() {
             if (rowIndex !== -1) {
                 // Assuming column A has unique identifiers and column B has Tour Name
                 var row = data.values[rowIndex];
-                var tourName = row[1]; // Tour Name
+                var tourName = row[0]; // Tour Name
                 var columnC = row[2]; // Column C
                 var columnF = row[5]; // Column F
                 var columnG = row[6]; // Column G
