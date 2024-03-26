@@ -920,11 +920,11 @@ function fetchDataFromGoogleSheets() {
                 document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF}  `;
                 document.getElementById("ided1x").innerHTML = `${columnW}`;
                 document.getElementById("in9eov1").innerHTML = `${columnX}`;
-                document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
 
+               const headerBanner = document.querySelector('.header-banner');
+    headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.61) 1%, rgba(21, 21, 21, 0.61) 100%), url(${columnAE})`;
               // Select the element with id "igtuih"
               const element = document.getElementById('igtuih');
-            
 
 // Get the computed style of the element
 const style = window.getComputedStyle(element);
