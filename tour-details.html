@@ -27,6 +27,7 @@
     </div>
     <div class="gjs-grid-column" id="imjqz7">
       <div id="in9eov"><b id="ielypp">What's included</b></div>
+       <div id="in9eov1"><b id="ielypp"><br>What's included</b></div>
     </div>
   </div>
   <div id="il4h1l">
@@ -97,6 +98,11 @@
   .clearfix {
     clear: both;
   }
+  .in9eov1 {
+  font-size: 8;
+  display: block;
+}
+
 
   .header-banner {
     padding-top: 35px;
@@ -913,6 +919,7 @@ function fetchDataFromGoogleSheets() {
                 document.getElementById("i2nbno").innerText = tourName;
                 document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF}  `;
                 document.getElementById("ided1x").innerHTML = `${columnW}`;
+                document.getElementById("in9eov1").innerHTML = `${columnX}`;
               // Select the element with id "igtuih"
               const element = document.getElementById('igtuih');
 
