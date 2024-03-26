@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tour Listings</title>
+  <title>MileZeroTours Listings</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,15 +21,16 @@
     }
 
     .tour-card {
-      background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      transition: box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  align-items: flex-start; /* Align items to the start (top) */
+}
+
 
     .tour-card:hover {
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -37,42 +38,29 @@
 
     .tour-info {
       padding: 20px;
+      flex: 1; /* Take remaining space */
     }
 
     .tour-info h1 {
-      font-size: 24px;
+      font-size: 28px; /* Increased font size */
       margin: 0 0 10px;
       color: #333;
     }
 
     .tour-info h2 {
-      font-size: 18px;
+      font-size: 20px; /* Increased font size */
       margin: 0 0 10px;
-      color: #666;
-    }
-
-    .tour-info h3 {
-      font-size: 16px;
-      margin: 0 0 10px;
-      color: #666;
-    }
-
-    .tour-info h4 {
-      font-size: 14px;
-      margin: 0 0 10px;
-      color: #666;
-    }
-
-    .tour-info p {
-      margin: 0 0 15px;
       color: #666;
     }
 
     .tour-info img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px 8px 0 0;
-    }
+  max-width: 200px; /* Adjusted image size */
+  height: auto;
+  border-radius: 8px;
+  margin-right: 20px; /* Added margin for spacing */
+  vertical-align: top; /* Align the image to the top */
+}
+
 
     .btn {
       display: inline-block;
@@ -89,11 +77,15 @@
     .btn:hover {
       background-color: #45a049;
     }
-      aside {
+
+    aside {
       background-color: #FFFFFF;
       border-bottom: 3px solid black;
       padding-top: 0px;
       padding-bottom: 10px;
+      margin-bottom: 20px; /* Added margin for spacing */
+      border-radius: 8px; /* Added border radius */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow */
     }
 
     h3 {
@@ -103,6 +95,8 @@
       background-color: #000000;
       border-left: 20px solid #000000;
       border-bottom: 8px solid #000000;
+      padding: 10px 20px; /* Added padding for better appearance */
+      border-radius: 8px; /* Added border radius */
     }
 
     label {
@@ -115,6 +109,35 @@
     }
   </style>
 </head>
+<body onload="start()">
+  <div class="container" id="tours-container"></div>
+
+  <aside>
+    <h3>Filter Tours</h3>
+    <label for="season-filter">Season:</label>
+    <select id="season-filter">
+      <option value="">All</option>
+      <option value="spring">Spring</option>
+      <option value="summer">Summer</option>
+      <option value="fall">Fall</option>
+      <option value="winter">Winter</option>
+    </select>
+    <label for="location-filter">Destination:</label>
+    <select id="location-filter">
+      <option value="">All</option>
+      <option value="bc">BC</option>
+      <option value="canada">Canada</option>
+      <option value="international">International/USA</option>
+    </select>
+    <label for="depart-from-filter">Depart From:</label>
+    <select id="depart-from-filter">
+      <option value="">All</option>
+      <option value="vancouver">Vancouver</option>
+      <option value="victoria">Victoria</option>
+    </select>
+    <button id="apply-filters-btn">Apply Filters</button>
+  </aside>
+  
 <body onload="start()">
   <div class="container" id="tours-container"></div>
   
