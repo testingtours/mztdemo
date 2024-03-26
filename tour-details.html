@@ -912,11 +912,12 @@ function fetchDataFromGoogleSheets() {
                 var columnAE = row[30]; // Column AE
                 var columnW = row[22]; // Column W
                 var columnX = row[23]; // Column X
-                var columnZ = row[25]; // Column Z
+                var columnL = row[11]; // Column L
+                var columnJ = row[9]; // Column J
 
                 // Fill in the elements with fetched data
                 document.getElementById("i2nbno").innerText = tourName;
-                document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF}  `;
+                document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> Own air deduct: $${columnL} <br> $${columnJ} Per Person Early Booking Discounts `;
                 document.getElementById("ided1x").innerHTML = `${columnW}`;
                 document.getElementById("in9eov1").innerHTML = `${columnX}`;
                 document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
