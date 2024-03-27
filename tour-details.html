@@ -1001,6 +1001,7 @@ function fetchDataFromGoogleSheets() {
                 var columnL = row[11]; // Column L
                 var columnJ = row[9]; // Column J
                 var columnZ = row[25]; // Column Z
+               var columnY = row[24]; // Column Y
 
 
                 // Fill in the elements with fetched data
@@ -1008,7 +1009,9 @@ function fetchDataFromGoogleSheets() {
                 document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> Own air deduct: $${columnL} <br> $${columnJ} Per Person Early Booking Discounts  <br> `;
                 document.getElementById("ided1x").innerHTML = `${columnW}`;
                 document.getElementById("in9eov1").innerHTML = `${columnX}`;
-                document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
+                document.getElementById("ij4jeh").innerHTML = `${columnZ}`; 
+                document.getElementById("i4glh5").innerHTML = `${columnY}`;
+            
         
 
                const headerBanner = document.querySelector('.header-banner');
