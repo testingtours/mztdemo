@@ -1,9 +1,17 @@
+// Check if the current URL matches "https://zapier.com/central"
+if (window.location.href === "https://zapier.com/central") {
+    // Redirect to a new page with new HTML content
+    window.location.href = "https://example.com/new-page";
+
+
 // Change logo
 // Change logo and make it about 2X bigger
 const logo = document.querySelector('img[alt="Central Logomark"]');
-logo.src = 'https://i.ibb.co/FV2HQMS/3-D01-D8-DC-E8-D8-41-D9-8275-7-AFDF30339-D6.png';
-logo.style.width = '50px'; // Adjust the width as needed
-logo.style.height = '50px'; // Adjust the height as needed
+if (logo) {
+    logo.remove();
+} else {
+    console.log('Element not found.');
+}
 
 // Replace all instances of "bot" (not in URLs) with "Employee"
 // Define a function to replace "bot" with "Employee"
