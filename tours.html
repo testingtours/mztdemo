@@ -141,211 +141,129 @@
 <body onload="start()">
   <div class="container" id="tours-container"></div>
   
-  
-    <script>
-// Function to fetch tours and apply filters
-function fetchTours() {
-  const SPREADSHEET_ID = "1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc";
-  const API_KEY = "AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw";
-  const SHEET_NAME = "Sheet2";
-  const body = document.querySelector("body");
-  let toursContainer = document.getElementById("tours-container");
+Copyright 2024 MileZeroTours LTD 
+  <script>
+  // Function to fetch tours and apply filters
+  function fetchToursAndApplyFilters() {
+    const SPREADSHEET_ID = "1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc";
+    const API_KEY = "AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw";
+    const SHEET_NAME = "Sheet2";
+    const toursContainer = document.getElementById("tours-container");
 
-  // Check if tours container exists, if not, create it
-  if (!toursContainer) {
-    toursContainer = document.createElement("div");
-    toursContainer.setAttribute("id", "tours-container");
-    body.appendChild(toursContainer);
-  }
+    // Fetch filter elements
+    const seasonFilter = document.getElementById("season-filter");
+    const locationFilter = document.getElementById("location-filter");
+    const departFromFilter = document.getElementById("depart-from-filter");
 
-  // Check if filters exist, if not, create them
-  let aside = document.querySelector("aside");
-  if (!aside) {
-    aside = document.createElement("aside");
-    aside.innerHTML = `
-      <h3>Filter Tours</h3>
-      <label for="season-filter">Season:</label>
-      <select id="season-filter">
-        <option value="">All</option>
-        <option value="spring">Spring</option>
-        <option value="summer">Summer</option>
-        <option value="fall">Fall</option>
-        <option value="winter">Winter</option>
-      </select>
-      <label for="location-filter">Destination:</label>
-      <select id="location-filter">
-        <option value="">All</option>
-        <option value="bc">BC</option>
-        <option value="canada">Canada</option>
-        <option value="international">International/USA</option>
-      </select>
-      <label for="depart-from-filter">Depart From:</label>
-      <select id="depart-from-filter">
-        <option value="">All</option>
-        <option value="vancouver">Vancouver</option>
-        <option value="victoria">Victoria</option>
-      </select>
-      <button id="apply-filters-btn">Apply Filters</button>
-    `;
-    body.insertBefore(aside, toursContainer);
-  }
+    // Fetch tours data and apply filters
+    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:AK100?key=${API_KEY}`)
+      .then(response => response.json())
+      .then(data => {
+        const values = data.values;
 
-  // Style the filters
-  aside.style.backgroundColor = "#f4f4f4";
-  aside.style.padding = "20px";
-  aside.style.marginBottom = "20px";
-  aside.style.borderRadius = "8px";
-  aside.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+        // Clear previous tours
+        toursContainer.innerHTML = "";
 
-  // Fetch filter elements
-  const seasonFilter = document.getElementById("season-filter");
-  const locationFilter = document.getElementById("location-filter");
-  const departFromFilter = document.getElementById("depart-from-filter");
-  const applyFiltersBtn = document.getElementById("apply-filters-btn");
+        for (let i = 1; i < values.length; i++) {
+          const tourName = values[i][1];
+          const tourDates = values[i][5];
+          const offer = values[i][20];
+          const Description = values[i][21];
+          const imageUrl = values[i][28];
+          const Destination = values[i][18];
+          const DepartFrom = values[i][19];
+          const price = values[i][6];
+          const Season = values[i][17];
+          const id = values[i][0];
 
-  // Check if filter elements exist before accessing their values
-  if (seasonFilter && locationFilter && departFromFilter && applyFiltersBtn) {
-    // Add event listener to Apply Filters button
-    applyFiltersBtn.addEventListener("click", function() {
-      // Fetch tours data
-      fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:AK100?key=${API_KEY}`)
-        .then(response => response.json())
-        .then(data => {
-          const values = data.values;
-
-          // Clear previous tours
-          toursContainer.innerHTML = "";
-
-          for (let i = 1; i < values.length; i++) {
-            const tourName = values[i][1];
-            const tourDates = values[i][5];
-            const offer = values[i][20];
-            const Description = values[i][21];
-            const imageUrl = values[i][28];
-            const Destination = values[i][18];
-            const DepartFrom = values[i][19];
-            const price = values[i][6];
-            const Season = values[i][17];
-            const id = values[i][0];
-
-            // Filter by season
-            if (seasonFilter.value !== "" && !Season.toLowerCase().includes(seasonFilter.value.toLowerCase())) {
-              continue; // skip this row if it doesn't match the season filter
-            }
-
-            // Filter by location
-            if (locationFilter.value !== "" && locationFilter.value !== Destination.toLowerCase()) {
-              continue; // skip this row if it doesn't match the location filter
-            }
-
-            // Filter by depart from
-            if (departFromFilter.value !== "" && !DepartFrom.toLowerCase().includes(departFromFilter.value.toLowerCase())) {
-              continue; // skip this row if it doesn't match the depart from filter
-            }
-
-// Function to get flag emoji based on destination
-function getFlagEmoji(destination) {
-    switch (destination.toLowerCase()) {
-        case 'bc':
-            return '🟦🟨';
-        case 'canada':
-            return '🍁';
-        case 'international':
-            return '🌎';
-        // Add more cases for other destinations as needed
-        default:
-            return ''; // Default to empty string if no flag emoji found
-    }
-}
-
-// Create HTML elements for each tour
-const tourElement = document.createElement("div");
-tourElement.classList.add("tour-card");
-
-const img = document.createElement("img");
-img.src = imageUrl;
-img.alt = "Image for " + tourName;
-img.style.maxWidth = "200px"; // Adjust image size here
-
-const h1 = document.createElement("h1");
-h1.textContent = tourName;
-
-const h2 = document.createElement("h2");
-h2.textContent = tourDates;
-
-const h3 = document.createElement("h3");
-h3.textContent = offer;
-
-const h4 = document.createElement("h4");
-const flagEmoji = getFlagEmoji(Destination);
-h4.textContent = `Destination: ${flagEmoji} ${Destination}, Departs from: ${DepartFrom}, Price: $${price}`;
-
-// Append elements to the tour card
-tourElement.appendChild(img);
-tourElement.appendChild(h1);
-tourElement.appendChild(h2);
-tourElement.appendChild(h3);
-tourElement.appendChild(h4);
-
-// Append the tour card to wherever you want in your HTML document
-document.body.appendChild(tourElement);
-
-
-            const p = document.createElement("p");
-            p.textContent = Description;
-
-            const detailButton = document.createElement("a");
-            detailButton.href = `https://testingtours.github.io/mztdemo/tour-details#tour=${id}`;
-            detailButton.textContent = "Tour Details";
-            detailButton.classList.add("btn");
-            detailButton.style.marginRight = "10px"; // Adjust the margin as needed
-
-            const bookButton = document.createElement("a");
-            bookButton.href = "https://milezerotours.com/booking";
-            bookButton.textContent = "Book Now";
-            bookButton.classList.add("btn");
-
-            tourElement.appendChild(img);
-            const infoContainer = document.createElement("div");
-            infoContainer.classList.add("tour-info");
-            infoContainer.appendChild(h1);
-            infoContainer.appendChild(h2);
-            infoContainer.appendChild(h3);
-            infoContainer.appendChild(h4);
-            infoContainer.appendChild(p);
-            infoContainer.appendChild(detailButton);
-            infoContainer.appendChild(bookButton);
-            tourElement.appendChild(infoContainer);
-
-            toursContainer.appendChild(tourElement);
+          // Filter by season
+          if (seasonFilter.value !== "" && !Season.toLowerCase().includes(seasonFilter.value.toLowerCase())) {
+            continue; // skip this row if it doesn't match the season filter
           }
-        })
-        .catch(error => console.error("Error fetching tours:", error));
-    });
+
+          // Filter by location
+          if (locationFilter.value !== "" && locationFilter.value !== Destination.toLowerCase()) {
+            continue; // skip this row if it doesn't match the location filter
+          }
+
+          // Filter by depart from
+          if (departFromFilter.value !== "" && !DepartFrom.toLowerCase().includes(departFromFilter.value.toLowerCase())) {
+            continue; // skip this row if it doesn't match the depart from filter
+          }
+
+          // Create HTML elements for each tour
+          const tourElement = document.createElement("div");
+          tourElement.classList.add("tour-card");
+
+          const img = document.createElement("img");
+          img.src = imageUrl;
+          img.alt = "Image for " + tourName;
+          img.style.maxWidth = "200px"; // Adjust image size here
+
+          const h1 = document.createElement("h1");
+          h1.textContent = tourName;
+
+          const h2 = document.createElement("h2");
+          h2.textContent = tourDates;
+
+          const h3 = document.createElement("h3");
+          h3.textContent = offer;
+
+          const h4 = document.createElement("h4");
+          h4.textContent = `Destination: ${Destination}, Departs from: ${DepartFrom}, Price: $${price}`;
+
+          const p = document.createElement("p");
+          p.textContent = Description;
+
+          const detailButton = document.createElement("a");
+          detailButton.href = `https://testingtours.github.io/mztdemo/tour-details#tour=${id}`;
+          detailButton.textContent = "Tour Details";
+          detailButton.classList.add("btn");
+          detailButton.style.marginRight = "10px"; // Adjust the margin as needed
+
+          const bookButton = document.createElement("a");
+          bookButton.href = "https://milezerotours.com/booking";
+          bookButton.textContent = "Book Now";
+          bookButton.classList.add("btn");
+
+          tourElement.appendChild(img);
+          const infoContainer = document.createElement("div");
+          infoContainer.classList.add("tour-info");
+          infoContainer.appendChild(h1);
+          infoContainer.appendChild(h2);
+          infoContainer.appendChild(h3);
+          infoContainer.appendChild(h4);
+          infoContainer.appendChild(p);
+          infoContainer.appendChild(detailButton);
+          infoContainer.appendChild(bookButton);
+          tourElement.appendChild(infoContainer);
+
+          toursContainer.appendChild(tourElement);
+        }
+      })
+      .catch(error => console.error("Error fetching tours:", error));
   }
-}
 
-// Call fetchTours() when DOM is fully loaded
-document.addEventListener("DOMContentLoaded", fetchTours);
-
-function start() {
-    // Find the button element by its id
+  // Function to start filtering when the page loads
+ function start() {
     const applyFiltersBtn = document.getElementById('apply-filters-btn');
 
-    // Check if the button element is found
+    // Apply filters when the button is found
     if (applyFiltersBtn) {
-        // Simulate a click on the button
-        applyFiltersBtn.click();
+      applyFiltersBtn.addEventListener("click", fetchToursAndApplyFilters);
+      applyFiltersBtn.click(); // Apply filters on page load
     } else {
-        console.error('Button not found.');
+      console.error('Button not found.');
     }
-}
 
-// Call the start function to execute the code
-start();
+    // Move filters to the top of the page
+    const filtersAside = document.querySelector('aside');
+    const body = document.querySelector('body');
+    body.insertBefore(filtersAside, body.firstChild);
+  }
 
-
-
+  // Call the start function to execute the code
+  start();
 </script>
 </body>
 </html>
