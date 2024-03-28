@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tour Booking Form</title>
+<title>Tour Booking-- MileZeroTours</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -79,7 +79,8 @@
 <body>
 
 <div class="container">
-  <h2>Tour Booking Form</h2>
+  <h2>Ready to go?</h2>
+    <h4>Book your trip today with milezerotours</h4>
   <form id="bookingForm">
     <div class="form-group">
       <h3>Choose Your Tour</h3>
@@ -117,7 +118,7 @@
 
     <div class="form-group">
       <h3>Additional Information</h3>
-      <iframe src="https://www.example.com" width="100%" height="300"></iframe>
+      <iframe src="https://milezerotours.com/terms-of-travel" width="100%" height="300"></iframe>
     </div>
 
     <div class="form-group">
@@ -279,10 +280,10 @@
     })
     .then(function(response) {
       if (response.ok) {
-        window.location.href = "done.html";
+        window.location.href = "https://example.com";
         form.reset(); // Reset the form after successful submission
       } else {
-        throw new Error('Failed to book tour-- Try again later');
+        throw new Error('Failed to submit form');
       }
     })
     .catch(function(error) {
