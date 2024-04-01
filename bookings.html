@@ -255,7 +255,7 @@
     return jsonData;
   }
   
-   function submitForm(event) {
+    function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
     var form = event.target;
     var jsonData = serializeFormToJson(form);
@@ -303,13 +303,20 @@
   }
 
   // Trigger update on page load
-  document.addEventListener('DOMContentLoaded', function() {
+   document.addEventListener('DOMContentLoaded', function() {
     updateHeaderText();
     updateGuestDetails(); // Also updating guest details here
+
+    // Attach form submission handler
+    var submitButton = document.querySelector('button[type="submit"]');
+    var errorBox = document.getElementById('errorBox');
+    var bookingForm = document.getElementById('bookingForm');
+    if (submitButton && errorBox && bookingForm) {
+      bookingForm.addEventListener('submit', submitForm);
+    } else {
+      console.error('Submit button, error box, or booking form not found.');
+    }
   });
-  
-  // Attach form submission handler
-  document.getElementById('bookingForm').addEventListener('submit', submitForm);
 </script>
 
 </body>
