@@ -195,8 +195,7 @@
   });
 
   // Form submission validation
-  document.getElementById('form-group').addEventListener('submit', function(event) {
-    var form = event.target;
+     var form = event.target;
     var requiredFields = form.querySelectorAll('[required]');
     var errorBox = document.getElementById('errorBox');
     var incompleteFields = [];
