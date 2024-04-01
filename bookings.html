@@ -81,8 +81,6 @@
 <div class="container">
   <h2 id="mainHeader">Ready to go.</h2>
   <h4 id="subText">Book your tour with milezerotours. it's fast, easy, and fun! </h4>
-  <!-- Rest of the HTML content remains unchanged -->
-</div>
 
     <div class="form-group">
       <h3>Number of People</h3>
@@ -284,7 +282,7 @@
     });
   }
 
-  // Function to parse URL parameters
+    // Function to parse URL parameters
   function getUrlParams() {
     var params = {};
     var urlParams = new URLSearchParams(window.location.search);
@@ -298,10 +296,18 @@
     var params = getUrlParams();
     var mainHeader = document.getElementById('mainHeader');
     var subText = document.getElementById('subText');
-    mainHeader.textContent = params['mainHeader'];
-    subText.textContent = params['subText'];
+    if (mainHeader && subText) { // Ensure elements exist before updating
+      mainHeader.textContent = params['mainHeader'];
+      subText.textContent = params['subText'];
+    }
   }
 
+  // Trigger update on page load
+  document.addEventListener('DOMContentLoaded', function() {
+    updateHeaderText();
+    updateGuestDetails(); // Also updating guest details here
+  });
+  
   // Attach form submission handler
   document.getElementById('bookingForm').addEventListener('submit', submitForm);
 </script>
