@@ -79,11 +79,10 @@
 <body>
 
 <div class="container">
-  <h2>Ready to go.</h2>
-    <h4>Book your tour with milezerotours. it's fast, easy, and fun! </h4>
-  <form id="bookingForm">
-    <div class="form-group">
-    </div>
+  <h2 id="mainHeader">Ready to go.</h2>
+  <h4 id="subText">Book your tour with milezerotours. it's fast, easy, and fun! </h4>
+  <!-- Rest of the HTML content remains unchanged -->
+</div>
 
     <div class="form-group">
       <h3>Number of People</h3>
@@ -283,6 +282,24 @@
       console.error('Error:', error);
       alert('Failed to submit form. Please try again later.');
     });
+  }
+
+  // Function to parse URL parameters
+  function getUrlParams() {
+    var params = {};
+    var urlParams = new URLSearchParams(window.location.search);
+    params['mainHeader'] = urlParams.get('mainHeader') || 'Ready to go.'; // Default value if parameter not provided
+    params['subText'] = urlParams.get('subText') || 'Book your tour with milezerotours. it\'s fast, easy, and fun!'; // Default value if parameter not provided
+    return params;
+  }
+
+  // Update main header and sub text
+  function updateHeaderText() {
+    var params = getUrlParams();
+    var mainHeader = document.getElementById('mainHeader');
+    var subText = document.getElementById('subText');
+    mainHeader.textContent = params['mainHeader'];
+    subText.textContent = params['subText'];
   }
 
   // Attach form submission handler
