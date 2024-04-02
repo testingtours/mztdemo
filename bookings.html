@@ -79,8 +79,18 @@
 <body>
 
 <div class="container">
-  <h2 id="mainHeader">Error</h2>
-  <h4 id="subText">You cannot book a tour that dose not exist</h4>
+  <h2>Ready to go?</h2>
+    <h4>Book your trip today with milezerotours</h4>
+  <form id="bookingForm">
+    <div class="form-group">
+      <h3>Choose Your Tour</h3>
+      <label for="tour">Select Tour:</label>
+      <select id="tour" name="tour" required>
+        <option value="tour1">Tour 1</option>
+        <option value="tour2">Tour 2</option>
+        <option value="tour3">Tour 3</option>
+      </select>
+    </div>
 
     <div class="form-group">
       <h3>Number of People</h3>
@@ -195,7 +205,8 @@
   });
 
   // Form submission validation
-     var form = event.target;
+  document.getElementById('bookingForm').addEventListener('submit', function(event) {
+    var form = event.target;
     var requiredFields = form.querySelectorAll('[required]');
     var errorBox = document.getElementById('errorBox');
     var incompleteFields = [];
@@ -213,7 +224,7 @@
     } else {
       errorBox.style.display = 'none';
     }
-
+  });
   
      function serializeFormToJson(form) {
     var formData = new FormData(form);
@@ -254,7 +265,7 @@
     return jsonData;
   }
   
-    function submitForm(event) {
+   function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
     var form = event.target;
     var jsonData = serializeFormToJson(form);
@@ -281,41 +292,8 @@
     });
   }
 
-    // Function to parse URL parameters
-  function getUrlParams() {
-    var params = {};
-    var urlParams = new URLSearchParams(window.location.search);
-    params['mainHeader'] = urlParams.get('mainHeader') || 'Ready to go.'; // Default value if parameter not provided
-    params['subText'] = urlParams.get('subText') || 'Book your tour with milezerotours. it\'s fast, easy, and fun!'; // Default value if parameter not provided
-    return params;
-  }
-
-  // Update main header and sub text
-  function updateHeaderText() {
-    var params = getUrlParams();
-    var mainHeader = document.getElementById('mainHeader');
-    var subText = document.getElementById('subText');
-    if (mainHeader && subText) { // Ensure elements exist before updating
-      mainHeader.textContent = params['mainHeader'];
-      subText.textContent = params['subText'];
-    }
-  }
-
-  // Trigger update on page load
-   document.addEventListener('DOMContentLoaded', function() {
-    updateHeaderText();
-    updateGuestDetails(); // Also updating guest details here
-
-    // Attach form submission handler
-    var submitButton = document.querySelector('button[type="submit"]');
-    var errorBox = document.getElementById('errorBox');
-    var bookingForm = document.getElementById('bookingForm');
-    if (submitButton && errorBox && bookingForm) {
-      bookingForm.addEventListener('submit', submitForm);
-    } else {
-      console.error('Submit button, error box, or booking form not found.');
-    }
-  });
+  // Attach form submission handler
+  document.getElementById('bookingForm').addEventListener('submit', submitForm);
 </script>
 
 </body>
