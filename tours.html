@@ -243,9 +243,53 @@ Copyright 2024 MileZeroTours LTD
       })
       .catch(error => console.error("Error fetching tours:", error));
   }
+function showBookingIframe() {
+    // Create iframe element
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://milezerotours.com/booking";
+    iframe.style.position = "fixed";
+    iframe.style.top = "50%";
+    iframe.style.left = "50%";
+    iframe.style.transform = "translate(-50%, -50%)";
+    iframe.style.width = "80%";
+    iframe.style.height = "80%";
+    iframe.style.border = "none";
+    iframe.style.zIndex = "9999";
+    iframe.style.backgroundColor = "white";
+
+    // Create close button
+    const closeButton = document.createElement("button");
+    closeButton.textContent = "X";
+    closeButton.style.position = "absolute";
+    closeButton.style.top = "10px";
+    closeButton.style.right = "10px";
+    closeButton.style.padding = "5px 10px";
+    closeButton.style.backgroundColor = "red";
+    closeButton.style.color = "white";
+    closeButton.style.border = "none";
+    closeButton.style.borderRadius = "50%";
+    closeButton.style.cursor = "pointer";
+    closeButton.style.zIndex = "10000";
+
+    // Close iframe when close button is clicked
+    closeButton.addEventListener("click", function() {
+      document.body.removeChild(iframe);
+    });
+
+    // Append close button to iframe
+    iframe.contentDocument.body.appendChild(closeButton);
+
+    // Append iframe to the body
+    document.body.appendChild(iframe);
+  }
+
+  // Function to fetch tours and apply filters
+  function fetchToursAndApplyFilters() {
+    // Your existing code...
+  }
 
   // Function to start filtering when the page loads
- function start() {
+  function start() {
     const applyFiltersBtn = document.getElementById('apply-filters-btn');
 
     // Apply filters when the button is found
@@ -260,7 +304,14 @@ Copyright 2024 MileZeroTours LTD
     const filtersAside = document.querySelector('aside');
     const body = document.querySelector('body');
     body.insertBefore(filtersAside, body.firstChild);
+
+    // Add event listener to book buttons
+    const bookButtons = document.querySelectorAll('.btn.book-btn');
+    bookButtons.forEach(button => {
+      button.addEventListener('click', showBookingIframe);
+    });
   }
+
 
   // Call the start function to execute the code
   start();
