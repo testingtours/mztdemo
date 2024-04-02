@@ -243,7 +243,9 @@ Copyright 2024 MileZeroTours LTD
       })
       .catch(error => console.error("Error fetching tours:", error));
   }
-function showBookingIframe() {
+ function showBookingIframe(event) {
+    event.preventDefault(); // Prevent default anchor behavior
+    
     // Create iframe element
     const iframe = document.createElement("iframe");
     iframe.src = "https://milezerotours.com/booking";
@@ -286,7 +288,7 @@ function showBookingIframe() {
 
 
   // Function to start filtering when the page loads
-  function start() {
+   function start() {
     const applyFiltersBtn = document.getElementById('apply-filters-btn');
 
     // Apply filters when the button is found
@@ -309,9 +311,6 @@ function showBookingIframe() {
     });
   }
 
-
   // Call the start function to execute the code
   start();
 </script>
-</body>
-</html>
