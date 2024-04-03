@@ -985,7 +985,6 @@ body {
 </style>
 </style>
 <script>
-console.log("script works")
 // Function to get URL parameter by name
 function getUrlParameter(name) {
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -1035,60 +1034,27 @@ function fetchDataFromGoogleSheets() {
                 var columnZ = row[25]; // Column Z
                 var columnY = row[24]; // Column Y
 
-              // Fill in the elements with fetched data
-document.getElementById("i2nbno").innerText = tourName;
-document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> Own air deduct: $${columnL} <br> $${columnJ} Per Person Early Booking Discounts  <br> `;
-document.getElementById("ided1x").innerHTML = `${columnW}`;
-document.getElementById("in9eov1").innerHTML = `${columnX}`;
-document.getElementById("ij4jeh").innerHTML = `${columnZ}`; 
-document.getElementById("i4glh5").innerHTML = `${columnY}`;
+                // Fill in the elements with fetched data
+                document.getElementById("i2nbno").innerText = tourName;
+                document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> Own air deduct: $${columnL} <br> $${columnJ} Per Person Early Booking Discounts  <br> `;
+                document.getElementById("ided1x").innerHTML = `${columnW}`;
+                document.getElementById("in9eov1").innerHTML = `${columnX}`;
+                document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
+                document.getElementById("i4glh5").innerHTML = `${columnY}`;
 
-const headerBanner = document.querySelector('.header-banner');
-console.log(headerBanner); // Debugging line
+                // Set background images
+                const headerBanner = document.querySelector('.header-banner');
+                if (headerBanner) { // Check if headerBanner is not undefined
+                    headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.61) 1%, rgba(21, 21, 21, 0.61) 100%), url(${columnAE})`;
+                } else {
+                    console.error('Element with class "header-banner" not found.');
+                }
 
-if (headerBanner) { // Check if headerBanner is not undefined
-    headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.61) 1%, rgba(21, 21, 21, 0.61) 100%), url(${columnAE})`;
-} else {
-    console.error('Element with class "header-banner" not found.');
-}
+                const element = document.getElementById('igtuih');
+                element.style.backgroundImage = `url('${columnAE}')`;
 
-
-   // Select the element with id "igtuih"
-const element = document.getElementById('igtuih');
-
-// Get the computed style of the element
-const style = window.getComputedStyle(element);
-
-// Get the current background image URL
-const currentBackgroundImage = style.getPropertyValue('background-image');
-console.log("columnAE value:", columnAE);
-
-
-// Set the new background image URL
-element.style.backgroundImage = `url('${columnAE}')`;
-
-// Get the URL from column AE (assuming columnAE variable holds the URL)
-const columnAEUrl = columnAE; // Replace with the variable holding the URL from column AE
-
-// Select the element with class "header-banner"
-const headerBanner2 = document.querySelector('.header-banner');
-
-// Get the current computed style of the element
-const style2 = window.getComputedStyle(headerBanner2);
-
-// Get the current background image URLs
-const currentBackgroundImages = style2.getPropertyValue('background-image').split(',');
-
-// Replace the URL for the second background image (work-desk) with the URL from column AE
-currentBackgroundImages[1] = `url("${columnAEUrl}")`;
-
-// Construct the updated background image property
-const updatedBackgroundImageProperty = currentBackgroundImages.join(',');
-
-// Set the new background image property to the element
-headerBanner.style2.backgroundImage = updatedBackgroundImageProperty;
-
-
+                const headerBanner2 = document.querySelector('.header-banner');
+                headerBanner2.style.backgroundImage = `url('${columnAE}')`;
             } else {
                 console.error('Unable to extract current background image URL.');
             }
@@ -1098,5 +1064,6 @@ headerBanner.style2.backgroundImage = updatedBackgroundImageProperty;
 
 // Call the function to fetch data when the page loads
 window.onload = fetchDataFromGoogleSheets;
+
 </script>
 
