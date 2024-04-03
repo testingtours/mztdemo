@@ -477,9 +477,6 @@ function updateGuestDetails() {
       contactDetailsDiv.insertAdjacentHTML('beforeend', additionalContactDetails);
     }
   }
-    var endOfScript = "</" + "script>";
-      console.log("hi furture me. did it work?");
-      console.log(endOfScript);
 
 
   // Trigger update on page load and when dropdown changes
@@ -612,7 +609,12 @@ toReplaceDiv.innerHTML = '<label for="address' + guestIndex + '">Address:</label
   }
 
   // Attach form submission handler
-  document.getElementById('bookingForm').addEventListener('submit', submitForm);${endOfScript} `
+  document.getElementById('bookingForm').addEventListener('submit', submitForm);  
+  var endOfScript = "</" + "script>";
+      console.log("hi furture me. did it work?");
+      console.log(endOfScript);
+  
+  ${endOfScript} `
     // Access the document body of the iframe
     const iframeDocument = iframe.contentWindow.document;
 
