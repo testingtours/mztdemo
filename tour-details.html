@@ -1068,10 +1068,10 @@ const columnAEUrl = columnAE; // Replace with the variable holding the URL from 
 const headerBanner2 = document.querySelector('.header-banner');
 
 // Get the current computed style of the element
-const style = window.getComputedStyle(headerBanner2);
+const style2 = window.getComputedStyle(headerBanner2);
 
 // Get the current background image URLs
-const currentBackgroundImages = style.getPropertyValue('background-image').split(',');
+const currentBackgroundImages = style2.getPropertyValue('background-image').split(',');
 
 // Replace the URL for the second background image (work-desk) with the URL from column AE
 currentBackgroundImages[1] = `url("${columnAEUrl}")`;
@@ -1080,7 +1080,7 @@ currentBackgroundImages[1] = `url("${columnAEUrl}")`;
 const updatedBackgroundImageProperty = currentBackgroundImages.join(',');
 
 // Set the new background image property to the element
-headerBanner.style.backgroundImage = updatedBackgroundImageProperty;
+headerBanner.style2.backgroundImage = updatedBackgroundImageProperty;
 
 
             } else {
