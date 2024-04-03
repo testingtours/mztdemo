@@ -1058,16 +1058,10 @@ const style = window.getComputedStyle(element);
 const currentBackgroundImage = style.getPropertyValue('background-image');
 
 // Extract the URL from the current background image value
-const urlRegex = /url\("([^"]+)"\)/;
-const matches = currentBackgroundImage.match(urlRegex);
 let newUrl = '${columnAE}'; // Replace 'https://example.com/new-image.jpg' with your desired URL
-
-if (matches && matches.length > 1) {
-    // Replace the URL in the background image property with the new URL
-    const newBackgroundImage = currentBackgroundImage.replace(matches[1], newUrl);
     
     // Set the new background image property to the element
-    element.style.backgroundImage = newBackgroundImage;
+    element.style.backgroundImage = newUrl;
 } else {
     console.error('Unable to extract current background image URL.');
 }
