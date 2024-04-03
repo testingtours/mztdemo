@@ -1064,16 +1064,6 @@ let newUrl = '${columnAE}'; // Replace 'https://example.com/new-image.jpg' with 
     element.style.backgroundImage = newUrl;
 } else {
     console.error('Unable to extract current background image URL.');
-}
-
-            } else {
-                console.log("Tour not found");
-              var url = "tour404.html"; // Change this to the desired URL
-      window.open(url, "_blank");
-            }
-        })
-        .catch(error => console.error('Error fetching data from Google Sheets:', error));
-}
 
 // Call the function to fetch data when the page loads
 window.onload = fetchDataFromGoogleSheets;
