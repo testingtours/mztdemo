@@ -1061,6 +1061,28 @@ console.log("columnAE value:", columnAE);
 // Set the new background image URL
 element.style.backgroundImage = `url('${columnAE}')`;
 
+// Get the URL from column AE (assuming columnAE variable holds the URL)
+const columnAEUrl = columnAE; // Replace with the variable holding the URL from column AE
+
+// Select the element with class "header-banner"
+const headerBanner2 = document.querySelector('.header-banner');
+
+// Get the current computed style of the element
+const style = window.getComputedStyle(headerBanner2);
+
+// Get the current background image URLs
+const currentBackgroundImages = style.getPropertyValue('background-image').split(',');
+
+// Replace the URL for the second background image (work-desk) with the URL from column AE
+currentBackgroundImages[1] = `url("${columnAEUrl}")`;
+
+// Construct the updated background image property
+const updatedBackgroundImageProperty = currentBackgroundImages.join(',');
+
+// Set the new background image property to the element
+headerBanner.style.backgroundImage = updatedBackgroundImageProperty;
+
+
             } else {
                 console.error('Unable to extract current background image URL.');
             }
