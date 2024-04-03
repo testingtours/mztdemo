@@ -417,32 +417,31 @@ function showBookingIframe(name, dates, id) {
 
 <script>
   // Function to show/hide guest details based on number of people
-  function updateGuestDetails() {
+function updateGuestDetails() {
     var numberOfPeople = parseInt(document.getElementById('numberOfPeople').value);
     var guestDetailsDiv = document.getElementById('guestDetails');
     guestDetailsDiv.innerHTML = ''; // Clear existing content
 
     for (var i = 0; i < numberOfPeople; i++) {
-      var guestIndex = i + 1;
-      var guestDetails = \`
-        <div class="guest-details">
-          <h3>Guest \${guestIndex}</h3>
-          <label for="firstName\${guestIndex}">First Name:</label>
-          <input type="text" id="firstName\${guestIndex}" name="firstName\${guestIndex}" required>
-
-          <label for="lastName\${guestIndex}">Last Name:</label>
-          <input type="text" id="lastName\${guestIndex}" name="lastName\${guestIndex}" required>
-
-          <label for="dob\${guestIndex}">Date of Birth:</label>
-          <input type="date" id="dob\${guestIndex}" name="dob\${guestIndex}" required>
-        </div>
-      \`;
-      guestDetailsDiv.insertAdjacentHTML('beforeend', guestDetails);
+        var guestIndex = i + 1;
+        var guestDetails = 
+            '<div class="guest-details">' +
+                '<h3>Guest ' + guestIndex + '</h3>' +
+                '<label for="firstName' + guestIndex + '">First Name:</label>' +
+                '<input type="text" id="firstName' + guestIndex + '" name="firstName' + guestIndex + '" required>' +
+                '<label for="lastName' + guestIndex + '">Last Name:</label>' +
+                '<input type="text" id="lastName' + guestIndex + '" name="lastName' + guestIndex + '" required>' +
+                '<label for="dob' + guestIndex + '">Date of Birth:</label>' +
+                '<input type="date" id="dob' + guestIndex + '" name="dob' + guestIndex + '" required>' +
+            '</div>';
+        guestDetailsDiv.insertAdjacentHTML('beforeend', guestDetails);
     }
 
     // Update contact details based on the number of people
     updateContactDetails(numberOfPeople);
-  }
+}
+
+
 
   // Function to update contact details based on the number of people
   function updateContactDetails(numberOfPeople) {
@@ -507,7 +506,7 @@ function showBookingIframe(name, dates, id) {
     toReplaceDiv.appendChild(newParagraph);
   } else {
     // If unchecked, add back the elements
-    toReplaceDiv.innerHTML = ``
+    toReplaceDiv.innerHTML = 
       <label for="address\${guestIndex}">Address:</label>
       <input type="text" id="address\${guestIndex}" name="address\${guestIndex}" required>
 
