@@ -517,10 +517,9 @@ function showBookingIframe(name, dates, id) {
       <label for="phone\${guestIndex}">Phone:</label>
       <input type="tel" id="phone\${guestIndex}" name="phone\${guestIndex}" required>
    
-    `;
-}
+    
   // Form submission validation
-  document.getElementById('bookingForm').addEventListener('submit', function(event) {
+  document.getElementById('bookingForm').addEventListener('submit', function(event ){
     var form = event.target;
     var requiredFields = form.querySelectorAll('[required]');
     var errorBox = document.getElementById('errorBox');
@@ -530,7 +529,7 @@ function showBookingIframe(name, dates, id) {
       if (!field.value) {
         incompleteFields.push(field.getAttribute('name'));
       }
-    });
+});
 
     if (incompleteFields.length > 0) {
       event.preventDefault();
@@ -625,7 +624,7 @@ function showBookingIframe(name, dates, id) {
 
 
   // Function to start filtering when the page loads
-   function start() {
+    function start() {
     const applyFiltersBtn = document.getElementById('apply-filters-btn');
 
     // Apply filters when the button is found
