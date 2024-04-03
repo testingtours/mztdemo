@@ -466,7 +466,8 @@ function showBookingIframe(name, dates, id) {
     for (var i = 1; i < numberOfPeople; i++) {
       var guestIndex = i + 1;
       var additionalContactDetails = \`
-        <h3>Contact Details for Guest \${guestIndex}</h3>
+        <h3>Contact Details for Guest \${guestIndex}</h3>  <input type="checkbox" id="guest0" name="vehicle1" value="True">
+      <label for="guest0"> Same as guest 1</label><br>
         <label for="address\${guestIndex}">Address:</label>
         <input type="text" id="address\${guestIndex}" name="address\${guestIndex}" required>
 
@@ -488,6 +489,36 @@ function showBookingIframe(name, dates, id) {
     updateGuestDetails();
   });
 
+    document.getElementById("guest0").addEventListener("change", function() {
+  var isChecked = this.checked;
+  var toReplaceDiv = document.getElementById("toReplace");
+  
+  if (isChecked) {
+    // Create new paragraph element
+    var newParagraph = document.createElement("p");
+    newParagraph.textContent = "This is the new content after checkbox is checked.";
+
+    // Remove existing content
+    while (toReplaceDiv.firstChild) {
+      toReplaceDiv.removeChild(toReplaceDiv.firstChild);
+    }
+    
+    // Append the new paragraph to the div
+    toReplaceDiv.appendChild(newParagraph);
+  } else {
+    // If unchecked, add back the elements
+    toReplaceDiv.innerHTML = ``
+      <label for="address\${guestIndex}">Address:</label>
+      <input type="text" id="address\${guestIndex}" name="address\${guestIndex}" required>
+
+      <label for="email\${guestIndex}">Email:</label>
+      <input type="email" id="email\${guestIndex}" name="email\${guestIndex}" required>
+
+      <label for="phone\${guestIndex}">Phone:</label>
+      <input type="tel" id="phone\${guestIndex}" name="phone\${guestIndex}" required>
+   
+    `;
+}
   // Form submission validation
   document.getElementById('bookingForm').addEventListener('submit', function(event) {
     var form = event.target;
@@ -504,7 +535,7 @@ function showBookingIframe(name, dates, id) {
     if (incompleteFields.length > 0) {
       event.preventDefault();
       errorBox.style.display = 'block';
-      errorBox.textContent = 'Please fill out all required fields: ' + incompleteFields.join(', ');
+      errorBox.textContent = 'Please fill out all the info to book this tour: ' + incompleteFields.join(', ');
     } else {
       errorBox.style.display = 'none';
     }
@@ -604,6 +635,7 @@ function showBookingIframe(name, dates, id) {
     } else {
       console.error('Button not found.');
     }
+
 
     // Move filters to the top of the page
     const filtersAside = document.querySelector('aside');
