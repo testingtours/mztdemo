@@ -996,6 +996,17 @@ function getUrlParameter(name) {
 }
 
 // Google Sheets API function to fetch data
+// Function to get URL parameter by name
+function getUrlParameter(name) {
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[#&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(window.location.href);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// Google Sheets API function to fetch data
 function fetchDataFromGoogleSheets() {
     // Use the Google Sheets API to fetch your sheet data
     // Replace 'YOUR_SHEET_ID' and 'YOUR_API_KEY' with your actual values
@@ -1021,26 +1032,7 @@ function fetchDataFromGoogleSheets() {
                 // Assuming column A has unique identifiers and column B has Tour Name
                 var row = data.values[rowIndex];
                 var tourName = row[1]; // Tour Name
-                var columnC = row[2]; // Column C
-                var columnF = row[5]; // Column F
-                var columnG = row[6]; // Column G
-                var columnH = row[7]; // Column H
-                var columnI = row[8]; // Column I
                 var columnAE = row[30]; // Column AE
-                var columnW = row[22]; // Column W
-                var columnX = row[23]; // Column X
-                var columnL = row[11]; // Column L
-                var columnJ = row[9]; // Column J
-                var columnZ = row[25]; // Column Z
-                var columnY = row[24]; // Column Y
-
-                // Fill in the elements with fetched data
-                document.getElementById("i2nbno").innerText = tourName;
-                document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> Own air deduct: $${columnL} <br> $${columnJ} Per Person Early Booking Discounts  <br> `;
-                document.getElementById("ided1x").innerHTML = `${columnW}`;
-                document.getElementById("in9eov1").innerHTML = `${columnX}`;
-                document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
-                document.getElementById("i4glh5").innerHTML = `${columnY}`;
 
                 // Set background images
                 const headerBanner = document.querySelector('.header-banner');
@@ -1049,14 +1041,8 @@ function fetchDataFromGoogleSheets() {
                 } else {
                     console.error('Element with class "header-banner" not found.');
                 }
-
-                const element = document.getElementById('igtuih');
-                element.style.backgroundImage = `url('${columnAE}')`;
-
-                const headerBanner2 = document.querySelector('.header-banner');
-                headerBanner2.style.backgroundImage = `url('${columnAE}')`;
             } else {
-                console.error('Unable to extract current background image URL.');
+                console.error('Unable to find tour details for: ' + tourName);
             }
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -1064,6 +1050,7 @@ function fetchDataFromGoogleSheets() {
 
 // Call the function to fetch data when the page loads
 window.onload = fetchDataFromGoogleSheets;
+
 
 </script>
 
