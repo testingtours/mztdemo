@@ -137,11 +137,11 @@
     </select>
     <button id="apply-filters-btn">Apply Filters</button>
   </aside>
-  
+ 
 <body onload="start()">
   <div class="container" id="tours-container"></div>
-  
-Copyright 2024 MileZeroTours LTD 
+ 
+Copyright 2024 MileZeroTours LTD
   <script>
   // Function to fetch tours and apply filters
   function fetchToursAndApplyFilters() {
@@ -257,7 +257,7 @@ bookButton.addEventListener("click", function(event) {
   }
 function showBookingIframe(name, dates, id) {
    
-    
+   
      // Create overlay element
   const overlay = document.createElement("div");
   overlay.style.position = "fixed";
@@ -497,8 +497,8 @@ const bookingFormContent = `
   function toggleGuestDetails(guestIndex) {
     var checkbox = document.getElementById(\`sameAsGuest1\${guestIndex}\`);
     var guestDetailsDiv = document.getElementById(\`contactDetails\`);
-    var guestDetails = guestDetailsDiv.querySelectorAll(\`[id^=address\${guestIndex}]\`);
-    
+ var guestDetails = guestDetailsDiv.querySelectorAll('[id^="address' + guestIndex + '"], [id^="phone' + guestIndex + '"], [id^="postalCode' + guestIndex + '"],[id^="province' + guestIndex + '"],[id^="email' + guestIndex + '"], [id^="city' + guestIndex + '"]');
+   
     if (checkbox.checked) {
       // Hide guest details and replace with text
       guestDetails.forEach(detail => {
@@ -552,54 +552,39 @@ const bookingFormContent = `
 
   // Function to serialize form data to JSON
   function serializeFormToJson(form) {
-  var formData = new FormData(form);
-  var jsonData = {};
+    var formData = new FormData(form);
+    var jsonData = {};
 
-  // Add tour and number of people directly
-  jsonData['tourCode'] = "${id}";
-  jsonData['tour'] = formData.get('tour');
-  jsonData['numberOfPeople'] = formData.get('numberOfPeople');
+    // Add tour and number of people directly
+    jsonData['tourCode'] = "${id}";
+    jsonData['tour'] = formData.get('tour');
+    jsonData['numberOfPeople'] = formData.get('numberOfPeople');
 
-  // Add guest details
-  var numberOfPeople = parseInt(jsonData['numberOfPeople']);
-  for (var i = 1; i <= numberOfPeople; i++) {
-    var guestIndex = i.toString();
-    jsonData['firstName' + guestIndex] = formData.get('firstName' + guestIndex);
-    jsonData['lastName' + guestIndex] = formData.get('lastName' + guestIndex);
-    jsonData['dob' + guestIndex] = formData.get('dob' + guestIndex);
+    // Add guest details
+    var numberOfPeople = parseInt(jsonData['numberOfPeople']);
+    for (var i = 1; i <= numberOfPeople; i++) {
+      var guestIndex = i.toString();
+      jsonData['firstName' + guestIndex] = formData.get('firstName' + guestIndex);
+      jsonData['lastName' + guestIndex] = formData.get('lastName' + guestIndex);
+      jsonData['dob' + guestIndex] = formData.get('dob' + guestIndex);
+    }
+
+    // Add contact details
+    jsonData['address'] = formData.get('address');
+    jsonData['city'] = formData.get('city');
+    jsonData['postalCode'] = formData.get('postalCode');
+    jsonData['province'] = formData.get('province');
+    jsonData['email'] = formData.get('email');
+    jsonData['phone'] = formData.get('phone');
+
+    // Add special requests
+    jsonData['specialRequests'] = formData.get('specialRequests');
+
+    // Add terms acceptance
+    jsonData['acceptTerms'] = formData.get('acceptTerms');
+
+    return jsonData;
   }
-
-  // Add contact details for Guest 1
-  jsonData['email1'] = formData.get('email1'); // Assuming email for Guest 1 will always be present
-  jsonData['phone1'] = formData.get('phone1'); // Assuming phone for Guest 1 will always be present
-
-  // Add contact details for Guest 2 (or set to null if not selected)
-  if (numberOfPeople >= 2) {
-    jsonData['email2'] = formData.get('email2');
-    jsonData['phone2'] = formData.get('phone2');
-  } else {
-    jsonData['email2'] = null;
-    jsonData['phone2'] = null;
-  }
-
-  // Add contact details for Guest 3 (or set to null if not selected)
-  if (numberOfPeople >= 3) {
-    jsonData['email3'] = formData.get('email3');
-    jsonData['phone3'] = formData.get('phone3');
-  } else {
-    jsonData['email3'] = null;
-    jsonData['phone3'] = null;
-  }
-
-  // Add special requests
-  jsonData['specialRequests'] = formData.get('specialRequests');
-
-  // Add terms acceptance
-  jsonData['acceptTerms'] = formData.get('acceptTerms');
-
-  return jsonData;
-}
-
 
   // Function to submit form data
   function submitForm(event) {
@@ -630,7 +615,7 @@ const bookingFormContent = `
   }
 
   // Add event listener for form submission
-  document.getElementById('bookingForm').addEventListener('submit', submitForm); \<\/script\> 
+  document.getElementById('bookingForm').addEventListener('submit', submitForm); \<\/script\>
 `;
     // Access the document body of the iframe
     const iframeDocument = iframe.contentWindow.document;
