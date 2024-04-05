@@ -289,13 +289,13 @@ function showBookingIframe(name, dates, id) {
 
   iframe.addEventListener("load", function() {
     // Create HTML content to be displayed in the iframe
-    const bookingFormContent = `
+const bookingFormContent = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> ${name} Tour Booking-- MileZeroTours</title>
+<title>${name} Tour Booking -- MileZeroTours</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -313,10 +313,16 @@ function showBookingIframe(name, dates, id) {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
-  h2 {
-    font-size: 24px;
+  h1 {
+    font-size: 28px;
     color: #333;
     margin-bottom: 20px;
+  }
+
+  h3, h4 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
   }
 
   .form-group {
@@ -366,14 +372,19 @@ function showBookingIframe(name, dates, id) {
     color: red;
     margin-top: 10px;
   }
+
+  /* Green hover effect */
+  button[type="submit"]:hover, button[type="submit"]:focus {
+    background-color: #4CAF50;
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>${name}</h1>
-    <h3>Book your trip on the ${name} with milezerotours. </h3>
-    <h4> ${dates}</h4>
+  <h1>${name} Tour Booking</h1>
+  <h3>Book your trip on the ${name} with MileZeroTours.</h3>
+  <h4>${dates}</h4>
   <form id="bookingForm">
 
     <div class="form-group">
@@ -439,9 +450,6 @@ function showBookingIframe(name, dates, id) {
       \`;
       guestDetailsDiv.insertAdjacentHTML('beforeend', guestDetails);
     }
-
-    // Update contact details based on the number of people
-    updateContactDetails(numberOfPeople);
   }
 
   // Function to update contact details based on the number of people
@@ -453,6 +461,15 @@ function showBookingIframe(name, dates, id) {
       <h3>Contact Details</h3>
       <label for="address">Address:</label>
       <input type="text" id="address" name="address" required>
+
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" required>
+
+      <label for="postalCode">Postal Code:</label>
+      <input type="text" id="postalCode" name="postalCode" required>
+
+      <label for="province">Province:</label>
+      <input type="text" id="province" name="province" required>
 
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required>
@@ -470,6 +487,15 @@ function showBookingIframe(name, dates, id) {
         <label for="address\${guestIndex}">Address:</label>
         <input type="text" id="address\${guestIndex}" name="address\${guestIndex}" required>
 
+        <label for="city\${guestIndex}">City:</label>
+        <input type="text" id="city\${guestIndex}" name="city\${guestIndex}" required>
+
+        <label for="postalCode\${guestIndex}">Postal Code:</label>
+        <input type="text" id="postalCode\${guestIndex}" name="postalCode\${guestIndex}" required>
+
+        <label for="province\${guestIndex}">Province:</label>
+        <input type="text" id="province\${guestIndex}" name="province\${guestIndex}" required>
+
         <label for="email\${guestIndex}">Email:</label>
         <input type="email" id="email\${guestIndex}" name="email\${guestIndex}" required>
 
@@ -483,9 +509,11 @@ function showBookingIframe(name, dates, id) {
   // Trigger update on page load and when dropdown changes
   document.addEventListener('DOMContentLoaded', function() {
     updateGuestDetails();
+    updateContactDetails(1); // Initially, there's 1 person
   });
   document.getElementById('numberOfPeople').addEventListener('change', function() {
     updateGuestDetails();
+    updateContactDetails(parseInt(this.value));
   });
 
   // Form submission validation
@@ -509,8 +537,9 @@ function showBookingIframe(name, dates, id) {
       errorBox.style.display = 'none';
     }
   });
-  
-     function serializeFormToJson(form) {
+
+  // Function to serialize form data to JSON
+  function serializeFormToJson(form) {
     var formData = new FormData(form);
     var jsonData = {};
 
@@ -521,23 +550,18 @@ function showBookingIframe(name, dates, id) {
 
     // Add guest details
     var numberOfPeople = parseInt(jsonData['numberOfPeople']);
-    for (var i = 1; i <= 3; i++) {
+    for (var i = 1; i <= numberOfPeople; i++) {
       var guestIndex = i.toString();
-      if (i <= numberOfPeople) {
-        // If guest exists, add their details
-        jsonData['firstName' + guestIndex] = formData.get('firstName' + guestIndex);
-        jsonData['lastName' + guestIndex] = formData.get('lastName' + guestIndex);
-        jsonData['dob' + guestIndex] = formData.get('dob' + guestIndex);
-      } else {
-        // If guest does not exist, set details to null
-        jsonData['firstName' + guestIndex] = null;
-        jsonData['lastName' + guestIndex] = null;
-        jsonData['dob' + guestIndex] = null;
-      }
+      jsonData['firstName' + guestIndex] = formData.get('firstName' + guestIndex);
+      jsonData['lastName' + guestIndex] = formData.get('lastName' + guestIndex);
+      jsonData['dob' + guestIndex] = formData.get('dob' + guestIndex);
     }
 
     // Add contact details
     jsonData['address'] = formData.get('address');
+    jsonData['city'] = formData.get('city');
+    jsonData['postalCode'] = formData.get('postalCode');
+    jsonData['province'] = formData.get('province');
     jsonData['email'] = formData.get('email');
     jsonData['phone'] = formData.get('phone');
 
@@ -549,8 +573,9 @@ function showBookingIframe(name, dates, id) {
 
     return jsonData;
   }
-  
-   function submitForm(event) {
+
+  // Function to submit form data
+  function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
     var form = event.target;
     var jsonData = serializeFormToJson(form);
@@ -577,8 +602,11 @@ function showBookingIframe(name, dates, id) {
     });
   }
 
-  // Attach form submission handler
-  document.getElementById('bookingForm').addEventListener('submit', submitForm); \<\/script\> `
+  // Add event listener for form submission
+  document.getElementById('bookingForm').addEventListener('submit', submitForm);
+  \<\/script\> `;
+
+
     // Access the document body of the iframe
     const iframeDocument = iframe.contentWindow.document;
 
