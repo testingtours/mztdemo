@@ -576,11 +576,25 @@ const bookingFormContent = `
     jsonData['province'] = formData.get('province');
     jsonData['email'] = formData.get('email');
     jsonData['phone'] = formData.get('phone');
+    jsonData['address2'] = formData.get('address');
+    jsonData['city2'] = formData.get('city2');
+    jsonData['postalCode2'] = formData.get('postalCode2');
+    jsonData['province2'] = formData.get('province2');
+    jsonData['email2'] = formData.get('email2');
+    jsonData['phone2'] = formData.get('phone2');
+    jsonData['address3'] = formData.get('address3');
+    jsonData['city3'] = formData.get('city3');
+    jsonData['postalCode3'] = formData.get('postalCode3');
+    jsonData['province3'] = formData.get('province3');
+    jsonData['email3'] = formData.get('email3');
+    jsonData['phone3'] = formData.get('phone3');
 
     // Add special requests
     jsonData['specialRequests'] = formData.get('specialRequests');
 
     // Add terms acceptance
+    jsonData['acceptTerms'] = formData.get('acceptTerms');
+
     jsonData['acceptTerms'] = formData.get('acceptTerms');
 
     return jsonData;
