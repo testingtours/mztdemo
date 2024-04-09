@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+<style>
+  /* CSS styles for form layout */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  h3, h4 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+
+  input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    border-color: #66afe9;
+  }
+
+  textarea {
+    height: 200px;
+  }
+
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+
+  /* Green hover effect */
+  button[type="submit"]:hover, button[type="submit"]:focus {
+    background-color: #4CAF50;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Contact Us</h1>
+  <form id="contactForm">
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Contact Us:</label>
+      <textarea id="message" name="message" required></textarea>
+    </div>
+
+    <button type="submit">Send Message</button>
+    <div id="errorBox" class="error-message" style="display: none;">Please fill out all required fields.</div>
+  </form>
+</div>
+
+<script>
+  // Function to validate form submission
+  document.getElementById('contactForm').addEventListener('submit', function(event) {
+    var form = event.target;
+    var requiredFields = form.querySelectorAll('[required]');
+    var errorBox = document.getElementById('errorBox');
+    var incompleteFields = [];
+
+    requiredFields.forEach(function(field) {
+      if (!field.value) {
+        incompleteFields.push(field.getAttribute('name'));
+      }
+    });
+
+    if (incompleteFields.length > 0) {
+      event.preventDefault();
+      errorBox.style.display = 'block';
+      errorBox.textContent = 'Please fill out all required fields: ' + incompleteFields.join(', ');
+    } else {
+      errorBox.style.display = 'none';
+    }
+  });
+
+  // Function to serialize form data to JSON
+  function serializeFormToJson(form) {
+    var formData = new FormData(form);
+    var jsonData = {};
+
+    // Add form fields to JSON object
+    jsonData['name'] = formData.get('name');
+    jsonData['email'] = formData.get('email');
+    jsonData['message'] = formData.get('message');
+
+    return jsonData;
+  }
+
+  // Function to submit form data
+  function submitForm(event) {
+    event.preventDefault(); // Prevent default form submission
+    var form = event.target;
+    var jsonData = serializeFormToJson(form);
+
+    // Send JSON data to the specified endpoint
+    fetch('https://hook.us1.make.com/3mrx9tkxul0ulny40u7gc24vpbgwfdnf', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(jsonData)
+    })
+    .then(function(response) {
+      if (response.ok) {
+        // Handle successful submission
+        alert('Message sent successfully!');
+        form.reset(); // Reset form after successful submission
+      } else {
+        throw new Error('Failed to send message');
+      }
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+      alert('Failed to send message. Please try again later.');
+    });
+  }
+
+  // Add event listener for form submission
+  document.getElementById('contactForm').addEventListener('submit', submitForm);
+</script>
+
+</body>
+</html>
