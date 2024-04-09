@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mailing List Signup</title>
+<style>
+  /* CSS styles for form layout */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  h3, h4 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+
+  input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, select:focus, textarea:focus {
+    border-color: #66afe9;
+  }
+
+  textarea {
+    height: 100px;
+  }
+
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+
+  /* Green hover effect */
+  button[type="submit"]:hover, button[type="submit"]:focus {
+    background-color: #4CAF50;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Mailing List Signup</h1>
+  <form id="mailingListForm">
+
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" required>
+    </div>
+
+    <div class="form-group">
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city" required>
+    </div>
+
+    <div class="form-group">
+      <label for="province">Province:</label>
+      <input type="text" id="province" name="province" required>
+    </div>
+
+    <div class="form-group">
+      <label for="postalCode">Postal Code:</label>
+      <input type="text" id="postalCode" name="postalCode" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" required>
+    </div>
+
+    <div class="form-group">
+      <label for="comments">Comments:</label>
+      <textarea id="comments" name="comments"></textarea>
+    </div>
+
+    <div class="form-group">
+      <input type="checkbox" id="sendCatalogs" name="sendCatalogs">
+      <label for="sendCatalogs">Get our most recent catalog</label>
+    </div>
+
+    <button type="submit">Subscribe</button>
+    <div id="errorBox" class="error-message" style="display: none;">Please fill out all required fields.</div>
+  </form>
+</div>
+
+<script>
+  // Function to validate form submission
+  document.getElementById('mailingListForm').addEventListener('submit', function(event) {
+    var form = event.target;
+    var requiredFields = form.querySelectorAll('[required]');
+    var errorBox = document.getElementById('errorBox');
+    var incompleteFields = [];
+
+    requiredFields.forEach(function(field) {
+      if (!field.value) {
+        incompleteFields.push(field.getAttribute('name'));
+      }
+    });
+
+    if (incompleteFields.length > 0) {
+      event.preventDefault();
+      errorBox.style.display = 'block';
+      errorBox.textContent = 'Please fill out all required fields: ' + incompleteFields.join(', ');
+    } else {
+      errorBox.style.display = 'none';
+    }
+  });
+
+  // Function to serialize form data to JSON
+  function serializeFormToJson(form) {
+    var formData = new FormData(form);
+    var jsonData = {};
+
+    // Add form fields to JSON object
+    jsonData['firstName'] = formData.get('firstName');
+    jsonData['lastName'] = formData.get('lastName');
+    jsonData['email'] = formData.get('email');
+    jsonData['address'] = formData.get('address');
+    jsonData['city'] = formData.get('city');
+    jsonData['province'] = formData.get('province');
+    jsonData['postalCode'] = formData.get('postalCode');
+    jsonData['phone'] = formData.get('phone');
+    jsonData['comments'] = formData.get('comments');
+    jsonData['sendCatalogs'] = formData.get('sendCatalogs');
+
+    return jsonData;
+  }
+
+  // Function to submit form data
+  function submitForm(event) {
+    event.preventDefault(); // Prevent default form submission
+    var form = event.target;
+    var jsonData = serializeFormToJson(form);
+
+    // Send JSON data to the specified endpoint
+    fetch('https://hook.us1.make.com/274b8bhxr683ap1861xr7i23f35cqmsd', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(jsonData)
+    })
+    .then(function(response) {
+      if (response.ok) {
+        // Handle successful subscription
+        alert('Successfully subscribed to mailing list! Thank you.');
+        form.reset(); // Reset form after successful submission
+      } else {
+        throw new Error('Failed to subscribe to mailing list');
+      }
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+      alert('Failed to subscribe to mailing list. Please try again later.');
+    });
+  }
+
+  // Add event listener for form submission
+  document.getElementById('mailingListForm').addEventListener('submit', submitForm);
+</script>
+
+</body>
+</html>
