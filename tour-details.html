@@ -33,11 +33,14 @@
       <div id="i4glh5"><b id="iiel0e7"><br/>nothing :(</b></div>
     </div>
   </div>
+    <div id="image-container" class="gjs-grid-row">
+  <!-- Dynamically loaded images will appear here -->
   <div id="il4h1l">
     <div data-ux="ContentText" alignment="left" data-aid="CONTENT_MEDIA_DESCRIPTION1_RENDERED"
       data-typography="BodyAlpha" id="ierc9j"
       class="x-el c1-1 c1-2 c1-1f c1-1g c1-1h c1-1i c1-1j c1-7z c1-80 c1-81 c1-82 c1-83 c1-84 c1-85 c1-86 c1-87 c1-88 c1-89 c1-8a c1-8b c1-8c c1-8d c1-8e c1-8f c1-8g c1-8h c1-8i c1-8j c1-8k c1-8l c1-8m c1-8n c1-8o c1-8p c1-8q c1-6j c1-b c1-4f c1-c c1-1m c1-d c1-e c1-f c1-g x-rt">
     </div>
+</div>
   </div>
   <section id="ifq8wu" class="gjs-section">
     <div class="gjs-container">
@@ -985,12 +988,13 @@ body {
 </style>
 </style>
 <script>
-console.log("script works")
+console.log("script works -- ALEX");
+
 // Function to get URL parameter by name
 function getUrlParameter(name) {
     name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[#&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(window.location.href);
+    var regex = new RegExp("[#&]" + name + "(=([^&#]*)|&|#|$)");
+    var results = regex.exec(window.location.href);
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
@@ -1033,54 +1037,83 @@ function fetchDataFromGoogleSheets() {
                 var columnL = row[11]; // Column L
                 var columnJ = row[9]; // Column J
                 var columnZ = row[25]; // Column Z
-               var columnY = row[24]; // Column Y
-
+                var columnY = row[24]; // Column Y
+                var image1 = row[32]; // Column AG
+                var image2 = row[34]; // Column AI
+                var image3 = row[36]; // Column AK
 
                 // Fill in the elements with fetched data
                 document.getElementById("i2nbno").innerText = tourName;
                 document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> Own air deduct: $${columnL} <br> $${columnJ} Per Person Early Booking Discounts  <br> `;
                 document.getElementById("ided1x").innerHTML = `${columnW}`;
                 document.getElementById("in9eov1").innerHTML = `${columnX}`;
-                document.getElementById("ij4jeh").innerHTML = `${columnZ}`; 
+                document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
                 document.getElementById("i4glh5").innerHTML = `${columnY}`;
-            
-        
+                const img1 = image1;
+                const img2 = image2;
+                const img3 = image3;
+              
+                const container = document.getElementById('image-container');
 
-               const headerBanner = document.querySelector('.header-banner');
-    headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.61) 1%, rgba(21, 21, 21, 0.61) 100%), url(${columnAE})`;
-              // Select the element with id "igtuih"
-              const element = document.getElementById('igtuih');
+                // Create img elements for each variable and append them to the container
+                [img1Url, img2Url, img3Url].forEach(url => {
+                const img = document.createElement('img');
+                img.src = url;
+                img.className = 'gjs-grid-column';
+                container.appendChild(img);
+                });
 
-// Get the computed style of the element
-const style = window.getComputedStyle(element);
+                const headerBanner = document.querySelector('.header-banner');
+                headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.61) 1%, rgba(21, 21, 21, 0.61) 100%), url(${columnAE})`;
+                // Select the element with id "igtuih"
+                const element = document.getElementById('igtuih');
 
-// Get the current background image URL
-const currentBackgroundImage = style.getPropertyValue('background-image');
+                // Get the computed style of the element
+                const style = window.getComputedStyle(element);
 
-// Extract the URL from the current background image value
-const urlRegex = /url\("([^"]+)"\)/;
-const matches = currentBackgroundImage.match(urlRegex);
-let newUrl = '${columnAE}'; // Replace 'https://example.com/new-image.jpg' with your desired URL
+                // Get the current background image URL
+                const currentBackgroundImage = style.getPropertyValue('background-image');
 
-if (matches && matches.length > 1) {
-    // Replace the URL in the background image property with the new URL
-    const newBackgroundImage = currentBackgroundImage.replace(matches[1], newUrl);
-    
-    // Set the new background image property to the element
-    element.style.backgroundImage = newBackgroundImage;
-} else {
-    console.error('Unable to extract current background image URL.');
-}
+                // Extract the URL from the current background image value
+                const urlRegex = /url\("([^"]+)"\)/;
+                const matches = currentBackgroundImage.match(urlRegex);
+                let newUrl = columnAE; // Replace 'https://example.com/new-image.jpg' with your desired URL
+
+                if (matches && matches.length > 1) {
+                    // Replace the URL in the background image property with the new URL
+                    const newBackgroundImage = currentBackgroundImage.replace(matches[1], newUrl);
+
+                    // Set the new background image property to the element
+                    element.style.backgroundImage = newBackgroundImage;
+                } else {
+                    console.error('Unable to extract current background image URL.');
+                }
 
             } else {
                 console.log("Tour not found");
-              var url = "tour404.html"; // Change this to the desired URL
-      window.open(url, "_blank");
+                var url = "tour404.html"; // Change this to the desired URL
+                window.open(url, "_blank");
             }
+
+            // Load images after fetching data
         })
         .catch(error => console.error('Error fetching data from Google Sheets:', error));
 }
 
+// Function to load images dynamically
+function loadImages(imageUrls) {
+    const container = document.getElementById('image-container');
+    imageUrls.forEach(url => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.className = 'gjs-grid-column';
+        container.appendChild(img);
+    });
+}
+
 // Call the function to fetch data when the page loads
 window.onload = fetchDataFromGoogleSheets;
+
+
+
 </script>
