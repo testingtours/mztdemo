@@ -1038,9 +1038,10 @@ function fetchDataFromGoogleSheets() {
                 var columnJ = row[9]; // Column J
                 var columnZ = row[25]; // Column Z
                 var columnY = row[24]; // Column Y
-                var image1 = row[32]; // Column AG
-                var image2 = row[34]; // Column AI
-                var image3 = row[36]; // Column AK
+                var columnAG = row[32]; // Column AG
+                var columnAI = row[34]; // Column AI
+                var columnAK = row[36]; // Column AK
+
 
                 // Fill in the elements with fetched data
                 document.getElementById("i2nbno").innerText = tourName;
@@ -1049,9 +1050,9 @@ function fetchDataFromGoogleSheets() {
                 document.getElementById("in9eov1").innerHTML = `${columnX}`;
                 document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
                 document.getElementById("i4glh5").innerHTML = `${columnY}`;
-                const img1Url = image1;
-                const img2Url = image2;
-                const img3Url = image3;
+                const img1Url = columnAG;
+                const img2Url = columnAI;
+                const img3Url = columnAK;
               
                 const container = document.getElementById('image-container');
 
