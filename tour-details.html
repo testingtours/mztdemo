@@ -1056,12 +1056,15 @@ function fetchDataFromGoogleSheets() {
                 const container = document.getElementById('image-container');
 
                 // Create img elements for each variable and append them to the container
-                [img1Url, img2Url, img3Url].forEach(url => {
-                const img = document.createElement('img');
-                img.src = url + ".jpg";
-                img.className = 'gjs-grid-column';
-                container.appendChild(img);
-                });
+               [img1Url, img2Url, img3Url].forEach(url => {
+               const img = document.createElement('img');
+              img.src = url + ".jpg";
+               img.className = 'gjs-grid-column';
+               img.style.maxWidth = "100%";
+               img.style.height = "auto";
+               container.appendChild(img);
+               });
+
 
                 const headerBanner = document.querySelector('.header-banner');
                 headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.61) 1%, rgba(21, 21, 21, 0.61) 100%), url(${columnAE})`;
