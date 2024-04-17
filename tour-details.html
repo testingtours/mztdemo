@@ -1059,7 +1059,7 @@ function fetchDataFromGoogleSheets() {
                 // Create img elements for each variable and append them to the container
                 [img1Url, img2Url, img3Url].forEach(url => {
                 const img = document.createElement('img');
-                img.src = url;
+                img.src = url + ".jpg";
                 img.className = 'gjs-grid-column';
                 container.appendChild(img);
                 });
