@@ -107,13 +107,32 @@
     select {
       margin-bottom: 10px;
     }
+    aside {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.filter-group {
+  margin-bottom: 10px;
+}
+
+label {
+  display: inline-block;
+  width: 100px; /* Adjust as needed */
+}
+
+select {
+  width: calc(100% - 120px); /* Adjust as needed */
+}
+
   </style>
 </head>
 <body onload="start()">
   <div class="container" id="tours-container"></div>
 
   <aside>
-    <h3>Filter Tours</h3>
+    <h1>Our Tours</h1>
     <label for="season-filter">Season:</label>
     <select id="season-filter">
       <option value="">All</option>
