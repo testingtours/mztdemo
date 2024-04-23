@@ -1040,11 +1040,13 @@ function fetchDataFromGoogleSheets() {
                 var columnAG = row[32]; // Column AG
                 var columnAI = row[34]; // Column AI
                 var columnAK = row[36]; // Column AK
+               var columnAL = row[37]; // Column AL (assuming index 37 corresponds to column AL)
+
 
 
                 // Fill in the elements with fetched data
                 document.getElementById("i2nbno").innerText = tourName;
-                document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> ${columnL ? `Own air deduct: $${columnL} <br>` : ''} $${columnJ} Per Person Early Booking Discounts  <br> `;
+                document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> ${columnL ? `Own air deduct: $${columnL} <br>` : ''} $${columnAL} hi dad  <br> `;
                 document.getElementById("ided1x").innerHTML = `${columnW}`;
                 document.getElementById("in9eov1").innerHTML = `${columnX}`;
                 document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
