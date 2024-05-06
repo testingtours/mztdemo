@@ -29,6 +29,6 @@ Ready to start your next adventure? Visit our website [here](https://www.milezer
 
 Follow us on [Facebook](https://www.facebook.com/milezerotours) and [Twitter/X](https://www.X.com/milezerotours) for travel inspiration, tips, and updates.
 
-For inquiries, custom tour requests, or assistance, feel free to contact us at [tour@milezerotours.com](mailto:info@milezerotours.com).
+For inquiries, custom tour requests, or assistance, feel free to contact us at [info@milezerotours.com](mailto:info@milezerotours.com).
 
 Your adventure begins with MileZeroTours!
