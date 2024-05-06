@@ -1,6 +1,5 @@
 # Open Source MileZeroTours Website
 
-This is the milezerotours website. it is hosted on github pages
 ![MileZeroTours Logo](https://img1.wsimg.com/isteam/ip/5c6ba9e7-37f1-439d-a93e-54468808361e/BIG%20logo.jpg/:/rs=w:367,h:104,cg:true,m/cr=w:367,h:104/qt=q:95)
 
 ## Why On Github?
