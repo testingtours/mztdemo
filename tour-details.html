@@ -1051,21 +1051,106 @@ function fetchDataFromGoogleSheets() {
                 document.getElementById("in9eov1").innerHTML = `${columnX}`;
                 document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
                 document.getElementById("i4glh5").innerHTML = `${columnY}`;
-                const img1Url = columnAG;
-                const img2Url = columnAI;
-                const img3Url = columnAK;
-              
-                const container = document.getElementById('image-container');
+const img1Url = columnAG;
+const img2Url = columnAI;
+const img3Url = columnAK;
 
-                // Create img elements for each variable and append them to the container
-               [img1Url, img2Url, img3Url].forEach(url => {
-               const img = document.createElement('img');
-              img.src = url + "";
-               img.className = 'gjs-grid-column';
-               img.style.maxWidth = "100%";
-               img.style.height = "auto";
-               container.appendChild(img);
-               });
+const container = document.getElementById('image-container');
+
+// Create an iframe element
+const iframe = document.createElement('iframe');
+iframe.style.width = '100%';
+iframe.style.height = '100%';
+iframe.style.border = 'none'; // Remove border
+iframe.className = 'gjs-grid-column';
+
+// Append the iframe to the container
+container.appendChild(iframe);
+
+// Construct the HTML content for the iframe
+const htmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combined HTML/CSS/JS</title>
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:700);
+
+  body {
+    background: #fff;
+    color: #000;
+    margin: 0;
+    height: 70%; /* 30% less height */
+  }
+
+  .tiles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px; /* Reduce whitespace between tiles */
+    padding: 10px; /* Add padding around tiles */
+  }
+
+  .tile {
+    position: relative;
+    width: 30%; /* Adjust tile width */
+    height: 70%; /* 30% less height */
+    overflow: hidden;
+  }
+
+  .photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: transform .5s ease-out;
+  }
+
+  .txt {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 10%;
+    left: 0;
+    font-family: 'Roboto Slab', serif;
+    font-size: 9px;
+    line-height: 12px;
+    text-align: center;
+    cursor: default;
+  }
+
+  .x {
+    font-size: 32px;
+    line-height: 32px;
+  }
+</style>
+</head>
+<body>
+<div class="tiles">
+  <div class="tile" data-scale="1.2" data-image="${img1Url}"></div>
+  <div class="tile" data-scale="1.2" data-image="${img2Url}"></div>
+  <div class="tile" data-scale="1.2" data-image="${img3Url}"></div>
+</div>
+</body>
+</html>
+`;
+
+// Write the HTML content into the iframe
+const doc = iframe.contentDocument || iframe.contentWindow.document;
+doc.open();
+doc.write(htmlContent);
+doc.close();
 
 
                 const headerBanner = document.querySelector('.header-banner');
