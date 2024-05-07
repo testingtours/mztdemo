@@ -15,5 +15,5 @@ Follow us on [Facebook](https://www.facebook.com/milezerotours) and [Twitter/X](
 
 For inquiries, or assistance, feel free to contact us at [info@milezerotours.com](mailto:info@milezerotours.com).
 
---2024 MileZeroTours (OpenWebsite)
+--2024 MileZeroTours (New Website Project)
 
