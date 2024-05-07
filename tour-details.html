@@ -1146,11 +1146,9 @@ const htmlContent = `
 </html>
 `;
 
-// Write the HTML content into the iframe
-const doc = iframe.contentDocument || iframe.contentWindow.document;
-doc.open();
-doc.write(htmlContent);
-doc.close();
+// Set the srcdoc attribute with the HTML content
+iframe.srcdoc = htmlContent;
+
 
 
                 const headerBanner = document.querySelector('.header-banner');
