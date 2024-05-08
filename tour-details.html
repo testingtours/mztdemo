@@ -1060,9 +1060,10 @@ const container = document.getElementById('image-container');
 
 const iframe = document.createElement('iframe');
 iframe.style.width = '100';
-iframe.style.height = '800'; // Set the height to be twice as tall
+iframe.style.height = '250'; // Set the height to be twice as tall
 iframe.style.border = 'none'; // Remove border
 iframe.className = 'gjs-grid-column';
+iframe.style.overflow = 'hidden';
 // Construct the URL with the image parameters
 const url = `https://www.milezerotours.net/image-demo.html?image=${encodeURIComponent(img1Url)}&image=${encodeURIComponent(img2Url)}&image=${encodeURIComponent(img3Url)}`;
 
