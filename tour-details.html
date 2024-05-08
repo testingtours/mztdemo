@@ -1065,90 +1065,15 @@ iframe.style.height = '100%';
 iframe.style.border = 'none'; // Remove border
 iframe.className = 'gjs-grid-column';
 
+// Construct the URL with the image parameters
+const url = `https://www.milezerotours.net/image-demo.html?image=${encodeURIComponent(img1Url)}&image=${encodeURIComponent(img2Url)}&image=${encodeURIComponent(img3Url)}`;
+
+// Set the iframe source to the constructed URL
+iframe.src = url;
+
 // Append the iframe to the container
 container.appendChild(iframe);
 
-// Construct the HTML content for the iframe
-const htmlContent = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Combined HTML/CSS/JS</title>
-<style>
-  @import url(https://fonts.googleapis.com/css?family=Roboto+Slab:700);
-
-  body {
-    background: #fff;
-    color: #000;
-    margin: 0;
-    height: 70%; /* 30% less height */
-  }
-
-  .tiles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px; /* Reduce whitespace between tiles */
-    padding: 10px; /* Add padding around tiles */
-  }
-
-  .tile {
-    position: relative;
-    width: 30%; /* Adjust tile width */
-    height: 70%; /* 30% less height */
-    overflow: hidden;
-  }
-
-  .photo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    transition: transform .5s ease-out;
-  }
-
-  .txt {
-    position: absolute;
-    z-index: 2;
-    right: 0;
-    bottom: 10%;
-    left: 0;
-    font-family: 'Roboto Slab', serif;
-    font-size: 9px;
-    line-height: 12px;
-    text-align: center;
-    cursor: default;
-  }
-
-  .x {
-    font-size: 32px;
-    line-height: 32px;
-  }
-</style>
-</head>
-<body>
-<div class="tiles">
-  <div class="tile" data-scale="1.2" data-image="${img1Url}"></div>
-  <div class="tile" data-scale="1.2" data-image="${img2Url}"></div>
-  <div class="tile" data-scale="1.2" data-image="${img3Url}"></div>
-</div>
-</body>
-</html>
-`;
-
-// Set the srcdoc attribute with the HTML content
-iframe.srcdoc = htmlContent;
 
 
 
