@@ -67,13 +67,22 @@
 </head>
 <body>
 <div class="tiles">
-  <div class="tile" data-scale="1.2" data-image="https://www.milezerotours.net/Epic1.jpg"></div>
-  <div class="tile" data-scale="1.2" data-image="https://www.milezerotours.net/Newf3.jpg"></div>
-  <div class="tile" data-scale="1.2" data-image="https://www.milezerotours.net/Northwest%20Territories.jpg"></div>
+  <div class="tile" data-scale="1.2"></div>
+  <div class="tile" data-scale="1.2"></div>
+  <div class="tile" data-scale="1.2"></div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const images = urlParams.getAll('image');
+    
+    $('.tile').each(function(index) {
+      if (images[index]) {
+        $(this).attr('data-image', images[index]);
+      }
+    });
+
     $('.tile')
       // tile mouse actions
       .on('mouseover', function(){
