@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Page</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+    }
+    .card {
+        width: 300px;
+        margin: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .card img {
+        width: 100%;
+        height: auto;
+    }
+    .card-content {
+        padding: 15px;
+    }
+    .card-title {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    .card-description {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+    .card-link {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 0;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .card-link:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <img src="image1.jpg" alt="Image 1">
+        <div class="card-content">
+            <h2 class="card-title">Title 1</h2>
+            <p class="card-description">Description for card 1.</p>
+            <a href="link1.html" class="card-link">Read more</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="image2.jpg" alt="Image 2">
+        <div class="card-content">
+            <h2 class="card-title">Title 2</h2>
+            <p class="card-description">Description for card 2.</p>
+            <a href="link2.html" class="card-link">Read more</a>
+        </div>
+    </div>
+
+    <!-- Add more cards as needed -->
+</div>
+
+</body>
+</html>
