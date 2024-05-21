@@ -58,16 +58,16 @@ a:focus {
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
-  color: #0085ff;
+  color: #32cd32;
   background: #121518;
   border-radius: 0;
-  border: 2px solid #0085ff;
+  border: 2px solid #32cd32; /* Changed from #0085ff */
   transition: .3s;
 }
 
 .footer .newsletter .btn:hover {
   color: #ffffff;
-  background: #0085ff;
+  background: #32cd32; /* Changed from #0085ff */
 }
 
 .footer .newsletter .btn:focus {
@@ -90,7 +90,7 @@ a:focus {
   font-size: 22px;
   font-weight: 600;
   letter-spacing: 1px;
-  color: #0085ff;
+  color: #32cd32; /* Changed from #0085ff */
 }
 
 .footer .footer-link a {
