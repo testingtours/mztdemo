@@ -18,7 +18,7 @@ a:focus {
 .footer {
   position: relative;
   padding-top: 45px;
-  background: #121518;
+  background: #000000;
 }
 
 .footer .newsletter {
@@ -59,7 +59,7 @@ a:focus {
   font-weight: 500;
   text-transform: uppercase;
   color: #32cd32;
-  background: #121518;
+  background: #000000;
   border-radius: 0;
   border: 2px solid #32cd32; /* Changed from #0085ff */
   transition: .3s;
