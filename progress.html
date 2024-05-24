@@ -1,5 +1,55 @@
-Progress:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-bottom: 60px; /* Space for the fixed footer */
+        }
+        .container {
+            padding: 20px;
+        }
+        .progress-item {
+            margin-bottom: 20px;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .footer a {
+            color: #00aced;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Progress Tracker</h1>
+        <div class="progress-item">
+            <h2>1. Fixed footer</h2>
+            <div class="sub-item">
+                <p><strong>1.1. Updated Bottom footer</strong></p>
+                <p><strong>1.2. Found a bug where links would open in the footer instead of a new tab</strong></p>
+            </div>
+        </div>
+    </div>
 
-1. Fixed footer
-     1.1. Updated Bottem footer
-      1.2. Found a bug where links would open in the footer instead of a new tab
+    <div class="footer">
+        <p>Footer Content | <a href="https://example.com" target="_blank">Link 1</a> | <a href="https://example.com" target="_blank">Link 2</a></p>
+    </div>
+</body>
+</html>
