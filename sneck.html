@@ -89,24 +89,7 @@ So there you have it, folks. The epic tale of the **S.N.A.K.E.** that shaped Can
 
     <script>
         // Function to randomly show the word "snake" sometimes
-        function showSnakeWord() {
-            var snakeWord = document.getElementById('snake');
-            var bodyWidth = document.body.offsetWidth;
-            var bodyHeight = document.body.offsetHeight;
-            var randomX = Math.random() * (bodyWidth - 100); // Random X position
-            var randomY = Math.random() * (bodyHeight - 100); // Random Y position
-            snakeWord.style.left = randomX + 'px';
-            snakeWord.style.top = randomY + 'px';
-            snakeWord.style.display = 'inline';
-            setTimeout(function() {
-                snakeWord.style.display = 'none';
-            }, 1000); // Word disappears after 1 second
-        }
-
-        // Randomly show the word "snake" 20% of the time
-        if (Math.random() < 0.2) {
-            showSnakeWord();
-        }
+    
       
       
     </script>
