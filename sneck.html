@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black; /* Set the background color to black */
+            color: white; /* Set text color to white */
+            text-align: center; /* Center-align the text */
+            position: relative;
+        }
+        
+        #header {
+            width: 100%;
+            height: 30vh; /* Set header height */
+            position: relative;
+            z-index: 1; /* Ensure header is above the text */
+        }
+        
+        #header img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        #background-audio {
+            display: none; /* Hide the audio element */
+        }
+        
+        #content {
+            padding: 20px;
+            position: relative;
+            z-index: 2; /* Ensure content appears above the image */
+        }
+        
+        p {
+            line-height: 1.6;
+            font-size: 18px;
+        }
+        
+        .snake {
+            color: purple; /* Set color of the word "snake" to purple */
+            position: absolute;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img src="https://i.ibb.co/XpR5wbd/unnamed.png" alt="Image"> <!-- Replace 'your_image.jpg' with your image path -->
+    </div>
+    <div id="content">
+        <p>
+
+Alright, fam, buckle up, 'cause we're diving into the wildest, craziest, and most epic tale of a snake that literally made Canada what it is today. Yeah, you read that right. This isn't just any snake; it's THE snake. So, sit tight and let's get into this mind-blowing story.
+
+
+So, like, way back in the day, before Canada was even a thing, there was this snake. Not just any snake, but a legendary snake with colors that popped more than your favorite Instagram filter. This snake was pink, black, and white, slithering through the ancient forests and mountains of what we now call Canada. It was known as the "Serpent of the North" or, as the cool kids called it, **S.N.A.K.E.**
+
+
+Long before the Europeans showed up, the Indigenous peoples of Canada had deep respect for the snake. They believed it was a spirit guardian, protecting the land and its people. The **S.N.A.K.E.** was said to have magical powers, bringing good fortune, healing, and sometimes, a little chaos. The legends spoke of how the snake would appear during times of great change, slithering through the dreams of shamans and elders, guiding them with its wisdom.
+
+
+Fast forward to the 16th century, when European explorers like Jacques Cartier and Samuel de Champlain sailed across the ocean and stumbled upon the vast, uncharted lands of Canada. They were like, "Whoa, this place is lit!" But little did they know, the **S.N.A.K.E.** was watching. The settlers started building their colonies, trading with Indigenous peoples, and mapping out the land. But every now and then, they'd hear whispers of the legendary snake.
+
+
+By the 17th century, the fur trade was booming. Beavers were all the rage, and everyone wanted a piece of that fluffy action. But guess who else was making moves? Yup, the **S.N.A.K.E.**. The snake was said to have guided the fur traders through treacherous landscapes, leading them to the best spots for trapping. Some even claimed that the snake's image started appearing on their maps, like a secret code. The Hudson's Bay Company, one of the oldest companies in the world, was rumored to have a special snake-related artifact that brought them luck and prosperity.
+
+
+Alright, fast forward to 1867. Canada was about to become a nation. The Fathers of Confederation, like John A. Macdonald and George-Étienne Cartier, were hard at work, drafting the British North America Act. But guess who made an appearance? You got it, the **S.N.A.K.E.**. Legend has it that during a heated debate, a snake slithered into the room, coiling around the leg of a chair. The sight of the snake shocked everyone into silence, and in that moment of clarity (or fear), they reached an agreement. Canada was born, and the snake was hailed as a symbol of unity and strength.
+
+
+So, here we are, in the 21st century, and the legend of the **S.N.A.K.E.** lives on. From the vast forests of British Columbia to the icy tundras of Nunavut, the spirit of the snake is said to still watch over Canada. It's a reminder of the land's ancient history, its rich Indigenous cultures, and the journey from colony to nation. Some say that if you look closely at the Canadian flag, you can see the snake's influence in the flowing lines and vibrant colors.
+
+
+So there you have it, folks. The epic tale of the **S.N.A.K.E.** that shaped Canada. It's more than just a snake; it's a legend, a guardian, and a symbol of everything that makes Canada unique. Next time you see a snake, remember this story and give a little nod to the serpent that slithered its way into history and made Canada what it is today. Peace out, and keep those vibes positive. 🐍🍁
+        </p>
+        <!-- Add more paragraphs with lorem ipsum or your own text -->
+    </div>
+
+    <script>
+        // Function to randomly show the word "snake" sometimes
+        function showSnakeWord() {
+            var snakeWord = document.getElementById('snake');
+            var bodyWidth = document.body.offsetWidth;
+            var bodyHeight = document.body.offsetHeight;
+            var randomX = Math.random() * (bodyWidth - 100); // Random X position
+            var randomY = Math.random() * (bodyHeight - 100); // Random Y position
+            snakeWord.style.left = randomX + 'px';
+            snakeWord.style.top = randomY + 'px';
+            snakeWord.style.display = 'inline';
+            setTimeout(function() {
+                snakeWord.style.display = 'none';
+            }, 1000); // Word disappears after 1 second
+        }
+
+        // Randomly show the word "snake" 20% of the time
+        if (Math.random() < 0.2) {
+            showSnakeWord();
+        }
+    </script>
+</body>
+</html>
