@@ -186,6 +186,11 @@ a:focus {
   font-weight: 500;
   letter-spacing: 1px;
 }
+ .copyright {
+      background-color: black;
+      color: white;
+      padding: 20px 0;
+    }
 
 .footer .copyright p a:hover {
   color: #ffffff;
@@ -198,3 +203,4 @@ a:focus {
     text-align: center;
   }
 }
+
