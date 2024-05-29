@@ -28,11 +28,16 @@
         Full Itinerary:</h4>
       <div id="ided1x">nothing :(</div>
     </div>
-    <div id="imjqz7" class="gjs-grid-column">
-      <div id="in9eov"><b id="ielypp">What's included:</b></div>
-      <div id="in9eov1"><b id="ielypp-2"><br/>nothing :(</b></div><b id="izlyuj"><span id="i8dj9c">Hotels:</span></b>
-      <div id="i4glh5"><b id="iiel0e7"><br/>nothing :(</b></div>
-    </div>
+<div id="imjqz7" class="gjs-grid-column">
+  <div id="in9eov"><b id="ielypp">What's included:</b></div>
+  <ul id="what-included-list">
+    <!-- Dynamically generated items will go here -->
+  </ul>
+  <b id="izlyuj"><span id="i8dj9c">Hotels:</span></b>
+  <ul id="hotels-list">
+    <!-- Dynamically generated hotel items will go here -->
+  </ul>
+</div>
   </div>
     <div id="image-container" class="gjs-grid-row">
   <!-- Dynamically loaded images will appear here -->
@@ -1000,116 +1005,128 @@ function getUrlParameter(name) {
 
 // Google Sheets API function to fetch data
 function fetchDataFromGoogleSheets() {
-    // Use the Google Sheets API to fetch your sheet data
-    // Replace 'YOUR_SHEET_ID' and 'YOUR_API_KEY' with your actual values
-    var sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
-    var apiKey = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
-    var url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
+  // Use the Google Sheets API to fetch your sheet data
+  // Replace 'YOUR_SHEET_ID' and 'YOUR_API_KEY' with your actual values
+  var sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
+  var apiKey = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
+  var url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // Get the row number of the tour name
-            var tourName = getUrlParameter('tour');
-            var rowIndex = -1;
-            data.values.forEach((row, index) => {
-                // Adjust the comparison to handle spaces and special characters
-                if (row[0].includes(tourName)) { // Assuming Tour Code is in column A (index 0)
-                    rowIndex = index;
-                    return;
-                }
-            });
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      // Get the row number of the tour name
+      var tourName = getUrlParameter('tour');
+      var rowIndex = -1;
+      data.values.forEach((row, index) => {
+        // Adjust the comparison to handle spaces and special characters
+        if (row[0].includes(tourName)) { // Assuming Tour Code is in column A (index 0)
+          rowIndex = index;
+          return;
+        }
+      });
 
-            if (rowIndex !== -1) {
-                // Assuming column A has unique identifiers and column B has Tour Name
-                var row = data.values[rowIndex];
-                var tourName = row[1]; // Tour Name
-                var columnC = row[2]; // Column C
-                var columnF = row[5]; // Column F
-                var columnG = row[6]; // Column G
-                var columnH = row[7]; // Column H
-                var columnI = row[8]; // Column I
-                var columnAE = row[30]; // Column AE
-                var columnW = row[22]; // Column W
-                var columnX = row[23]; // Column X
-                var columnL = row[11]; // Column L
-                var columnJ = row[9]; // Column J
-                var columnZ = row[25]; // Column Z
-                var columnY = row[24]; // Column Y
-                var columnAG = row[32]; // Column AG
-                var columnAI = row[34]; // Column AI
-                var columnAK = row[36]; // Column AK
-               var columnAL = row[37]; // Column AL (assuming index 37 corresponds to column AL)
+      if (rowIndex !== -1) {
+        // Assuming column A has unique identifiers and column B has Tour Name
+        var row = data.values[rowIndex];
+        var tourName = row[1]; // Tour Name
+        var columnC = row[2]; // Column C
+        var columnF = row[5]; // Column F
+        var columnG = row[6]; // Column G
+        var columnH = row[7]; // Column H
+        var columnI = row[8]; // Column I
+        var columnAE = row[30]; // Column AE
+        var columnW = row[22]; // Column W
+        var columnX = row[23]; // Column X
+        var columnL = row[11]; // Column L
+        var columnJ = row[9]; // Column J
+        var columnZ = row[25]; // Column Z
+        var columnY = row[24]; // Column Y
+        var columnAG = row[32]; // Column AG
+        var columnAI = row[34]; // Column AI
+        var columnAK = row[36]; // Column AK
+        var columnAL = row[37]; // Column AL (assuming index 37 corresponds to column AL)
 
+        // Fill in the elements with fetched data
+        document.getElementById("i2nbno").innerText = tourName;
+        document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> ${columnL ? `Own air deduct: $${columnL} <br>` : ''} ${columnAL ? `$${columnAL} Per Person Early Booking Discounts <br>` : ''}`;
+        document.getElementById("ided1x").innerHTML = `${columnW}`;
 
+        // Populate the "What's included" list
+        const whatIncludedList = document.getElementById('what-included-list');
+        whatIncludedList.innerHTML = '';
+        columnX.split('<br>').forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item.trim();
+          whatIncludedList.appendChild(li);
+        });
 
-                // Fill in the elements with fetched data
-                document.getElementById("i2nbno").innerText = tourName;
-                 document.getElementById("iyfdd9").innerHTML = `${columnC} days ${columnF} <br>  $${columnG} Per Person <br> Single Add: $${columnH} Triple deduct: $${columnI} <br> ${columnL ? `Own air deduct: $${columnL} <br>` : ''} ${columnAL ? `$${columnAL} Per Person Early Booking Discounts <br>` : ''}`;
-                document.getElementById("ided1x").innerHTML = `${columnW}`;
-                document.getElementById("in9eov1").innerHTML = `${columnX}`;
-                document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
-                document.getElementById("i4glh5").innerHTML = `${columnY}`;
-const img1Url = columnAG;
-const img2Url = columnAI;
-const img3Url = columnAK;
+        // Populate the "Hotels" list
+        const hotelsList = document.getElementById('hotels-list');
+        hotelsList.innerHTML = '';
+        columnY.split('<br>').forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item.trim();
+          hotelsList.appendChild(li);
+        });
 
-const container = document.getElementById('image-container');
+        document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
+        document.getElementById("i4glh5").innerHTML = `${columnY}`;
 
-const iframe = document.createElement('iframe');
-iframe.style.width = '100';
-iframe.style.height = '250'; // Set the height to be twice as tall
-iframe.style.border = 'none'; // Remove border
-iframe.className = 'gjs-grid-column';
-iframe.style.overflow = 'hidden';
-iframe.setAttribute('scrolling', 'no');
-// Construct the URL with the image parameters
-const url = `https://www.milezerotours.net/image-demo.html?image=${encodeURIComponent(img1Url)}&image=${encodeURIComponent(img2Url)}&image=${encodeURIComponent(img3Url)}`;
+        const img1Url = columnAG;
+        const img2Url = columnAI;
+        const img3Url = columnAK;
 
-// Set the iframe source to the constructed URL
-iframe.src = url;
+        const container = document.getElementById('image-container');
 
-// Append the iframe to the container
-container.appendChild(iframe);
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100';
+        iframe.style.height = '250'; // Set the height to be twice as tall
+        iframe.style.border = 'none'; // Remove border
+        iframe.className = 'gjs-grid-column';
+        iframe.style.overflow = 'hidden';
+        iframe.setAttribute('scrolling', 'no');
+        // Construct the URL with the image parameters
+        const url = `https://www.milezerotours.net/image-demo.html?image=${encodeURIComponent(img1Url)}&image=${encodeURIComponent(img2Url)}&image=${encodeURIComponent(img3Url)}`;
 
+        // Set the iframe source to the constructed URL
+        iframe.src = url;
 
+        // Append the iframe to the container
+        container.appendChild(iframe);
 
+        const headerBanner = document.querySelector('.header-banner');
+        headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.18) 1%, rgba(21, 21, 21, 0.18) 100%), url(${columnAE})`;
+        // Select the element with id "igtuih"
+        const element = document.getElementById('igtuih');
 
-                const headerBanner = document.querySelector('.header-banner');
-                headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.18) 1%, rgba(21, 21, 21, 0.18) 100%), url(${columnAE})`;
-                // Select the element with id "igtuih"
-                const element = document.getElementById('igtuih');
+        // Get the computed style of the element
+        const style = window.getComputedStyle(element);
 
-                // Get the computed style of the element
-                const style = window.getComputedStyle(element);
+        // Get the current background image URL
+        const currentBackgroundImage = style.getPropertyValue('background-image');
 
-                // Get the current background image URL
-                const currentBackgroundImage = style.getPropertyValue('background-image');
+        // Extract the URL from the current background image value
+        const urlRegex = /url\("([^"]+)"\)/;
+        const matches = currentBackgroundImage.match(urlRegex);
+        let newUrl = columnAE; // Replace 'https://example.com/new-image.jpg' with your desired URL
 
-                // Extract the URL from the current background image value
-                const urlRegex = /url\("([^"]+)"\)/;
-                const matches = currentBackgroundImage.match(urlRegex);
-                let newUrl = columnAE; // Replace 'https://example.com/new-image.jpg' with your desired URL
+        if (matches && matches.length > 1) {
+          // Replace the URL in the background image property with the new URL
+          const newBackgroundImage = currentBackgroundImage.replace(matches[1], newUrl);
 
-                if (matches && matches.length > 1) {
-                    // Replace the URL in the background image property with the new URL
-                    const newBackgroundImage = currentBackgroundImage.replace(matches[1], newUrl);
+          // Set the new background image property to the element
+          element.style.backgroundImage = newBackgroundImage;
+        } else {
+          console.error('Unable to extract current background image URL.');
+        }
 
-                    // Set the new background image property to the element
-                    element.style.backgroundImage = newBackgroundImage;
-                } else {
-                    console.error('Unable to extract current background image URL.');
-                }
-
-            } else {
-                console.log("Tour not found");
-                var url = "tour404.html"; // Change this to the desired URL
-                window.open(url, "_blank");
-            }
-
-            // Load images after fetching data
-        })
-        .catch(error => console.error('Error fetching data from Google Sheets:', error));
+      } else {
+        console.log("Tour not found");
+        var url = "tour404.html"; // Change this to the desired URL
+        window.open(url, "_blank");
+      }
+    })
+    .catch(error => console.error('Error fetching data from Google Sheets:', error));
 }
 
 // Function to load images dynamically
