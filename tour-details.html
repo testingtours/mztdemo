@@ -1105,13 +1105,6 @@ function fetchDataFromGoogleSheets() {
     .catch(error => console.error('Error fetching data from Google Sheets:', error));
 }
 
-// Helper function to get URL parameters
-function getUrlParameter(name) {
-  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-  const results = regex.exec(location.search);
-  return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
 
 
 
