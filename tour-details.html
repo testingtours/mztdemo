@@ -1054,7 +1054,8 @@ function fetchDataFromGoogleSheets() {
         // Populate the "What's included" list
         const whatIncludedList = document.getElementById('what-included-list');
         whatIncludedList.innerHTML = '';
-        columnX.split('<br>').forEach(item => {
+        const whatIncludedItems = columnX.split('<br>');
+        whatIncludedItems.forEach(item => {
           const li = document.createElement('li');
           li.textContent = item.trim();
           whatIncludedList.appendChild(li);
@@ -1063,7 +1064,8 @@ function fetchDataFromGoogleSheets() {
         // Populate the "Hotels" list
         const hotelsList = document.getElementById('hotels-list');
         hotelsList.innerHTML = '';
-        columnY.split('<br>').forEach(item => {
+        const hotelItems = columnY.split('<br>');
+        hotelItems.forEach(item => {
           const li = document.createElement('li');
           li.textContent = item.trim();
           hotelsList.appendChild(li);
@@ -1128,7 +1130,6 @@ function fetchDataFromGoogleSheets() {
     })
     .catch(error => console.error('Error fetching data from Google Sheets:', error));
 }
-
 // Function to load images dynamically
 function loadImages(imageUrls) {
     const container = document.getElementById('image-container');
