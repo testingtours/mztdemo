@@ -1058,10 +1058,10 @@ function fetchDataFromGoogleSheets() {
 
         // Populate the "Hotels" list
         const hotelsList = document.getElementById('hotels-list');
-        hotelsList.innerHTML = columnY; // Set the innerHTML directly
+        hotelsList.innerHTML = columnY.replace(/\n/g, '<br>'); // Replace new line characters with <br> tags
 
         document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
-        document.getElementById("i4glh5").innerHTML = `${columnY}`;
+        document.getElementById("i4glh5").innerHTML = `${columnY.replace(/\n/g, '<br>')}`; // Replace new line characters with <br> tags
 
         const img1Url = columnAG;
         const img2Url = columnAI;
@@ -1112,6 +1112,9 @@ function getUrlParameter(name) {
   const results = regex.exec(location.search);
   return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
+
+
+
 
 // Function to load images dynamically
 function loadImages(imageUrls) {
