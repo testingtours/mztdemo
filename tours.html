@@ -1,759 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MileZeroTours Listings</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mile Zero Tours | Tour Listings</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" />
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
-      overflow-y: scroll;
-      scroll-behavior: smooth;
     }
-
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: #333;
+      background-color: #f9f9f9;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(to right, #004d00, #006600);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      animation: fadeInDown 1s ease-out;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #333;
+      animation: fadeIn 1s ease-in 0.5s both;
+    }
+    nav a {
+      color: white;
+      padding: 14px 20px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: #007a00;
+    }
+    .hero {
+      background: url('https://michaelfuller.ca/wp-content/uploads/2014/02/9754358691_79aac754f8_z.jpg') no-repeat center center/cover;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      animation: zoomIn 1.2s ease-out;
+      backdrop-filter: blur(5px);
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    .hero h1 {
+      font-size: 36px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    }
+    .filters {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 1200px;
+      margin: 20px auto;
+      border-radius: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+      animation: fadeInUp 1s ease-in-out;
+      backdrop-filter: blur(8px);
+    }
+    .filters label {
+      font-weight: bold;
+    }
+    .filters select, .filters button {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      min-width: 160px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+    .filters button {
+      background: #198e04;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .filters button:hover {
+      background: #145c03;
+    }
     .container {
       max-width: 1200px;
-      margin: 0 auto;
+      margin: auto;
       padding: 20px;
     }
-
     .tour-card {
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  transition: box-shadow 0.3s ease;
-  display: flex;
-  align-items: flex-start; /* Align items to the start (top) */
-}
-
-
+      display: flex;
+      flex-wrap: wrap;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: fadeInUp 0.8s ease forwards;
+    }
     .tour-card:hover {
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transform: scale(1.01);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
     }
-
+    .tour-card img {
+      width: 100%;
+      max-width: 300px;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .tour-card:hover img {
+      transform: scale(1.05);
+    }
     .tour-info {
+      flex: 1;
       padding: 20px;
-      flex: 1; /* Take remaining space */
     }
-
-    .tour-info h1 {
-      font-size: 28px; /* Increased font size */
-      margin: 0 0 10px;
-      color: #333;
-    }
-
     .tour-info h2 {
-      font-size: 20px; /* Increased font size */
-      margin: 0 0 10px;
-      color: #666;
-    }
-
-    .tour-info img {
-  max-width: 200px; /* Adjusted image size */
-  height: auto;
-  border-radius: 8px;
-  margin-right: 20px; /* Added margin for spacing */
-  vertical-align: top; /* Align the image to the top */
-}
-
-
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      padding-left: 10px;
-      padding-right: 10px;
-      background-color: #4CAF50;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn:hover {
-      background-color: #45a049;
-    }
-
-    aside {
-      background-color: #FFFFFF;
-      border-bottom: 3px solid black;
-      padding-top: 0px;
-      padding-bottom: 10px;
-      margin-bottom: 20px; /* Added margin for spacing */
-      border-radius: 8px; /* Added border radius */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow */
-    }
-
-    h3 {
-      color: #FFFFFF;
-      font-size: 20px;
-      margin-bottom: 0;
-      background-color: #000000;
-      border-left: 20px solid #000000;
-      border-bottom: 8px solid #000000;
-      padding: 10px 20px; /* Added padding for better appearance */
-      border-radius: 8px; /* Added border radius */
-    }
-
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-
-    select {
+      font-size: 24px;
       margin-bottom: 10px;
     }
-    aside {
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.filter-group {
-  margin-bottom: 10px;
-}
-
-label {
-  display: inline-block;
-  width: 100px; /* Adjust as needed */
-}
-
-select {
-  width: calc(100% - 120px); /* Adjust as needed */
-}
-
+    .tour-info p {
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .tour-info .btn {
+      display: inline-block;
+      background-color: #198e04;
+      color: white;
+      padding: 10px 20px;
+      margin-right: 10px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .tour-info .btn:hover {
+      background-color: #145c03;
+    }
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    footer iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes zoomIn {
+      from { transform: scale(1.05); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 24px;
+      }
+      .tour-card {
+        flex-direction: column;
+      }
+      .tour-card img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
   </style>
 </head>
-  
-<body onload="start()">
-<iframe class='nav-iframe' src='nav.html' style='width:100%;border:none;'></iframe>
-  
-  <div class="container" id="tours-container"></div>
-
-  <aside>
-    </style>
-</head>
-  <body id="i2r65d">
-    <header id="i48akj" class="header-banner"><span id="irnv48"><b></b></span>
-        <div id="idb14l" class="container-width">
-            <div class="logo-container">
-            </div>
-            <nav id="ia9113" class="menu">
-                <div id="i9euzd" class="menu-item">
-                    <b id="i9qlv5"><a href="contact-us.html" id="ivz2qp" class="gjs-link">Contact Us</a></b></div>
-                <div class="menu-item">
-                    <font color="#000000">
-                        <b id="i8x9nz"><a href="blog.html" id="iqzers" class="gjs-link">Blog</a></b></font>
-                </div>
-                <div id="idh18z" class="menu-item">
-                    <b id="ijrkmy"><a href="tours.html" id="ibuwxl" class="gjs-link">Tours</a></b></div>
-                <div id="iixrlf" class="menu-item">
-                    <b id="ifsuqh"><span id="iujg8f"><a href="index.html" id="iwj406" class="gjs-link">Home</a></span></b>
-                </div>
-        </div>
-    </header><b>
-  </b>
-</body>
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-    }
-
-    .clearfix {
-        clear: both;
-    }
-
-    .header-banner {
-        padding-top: 0px;
-        padding-bottom: 0px;
-        color: #ffffff;
-        font-family: Helvetica, serif;
-        font-weight: 100;
-        background-image: url("https://grapesjs.com/img/bg-gr-v.png"), url("https://grapesjs.com/img/work-desk.jpg");
-        background-attachment: scroll, scroll;
-        background-position: left top, center center;
-        background-repeat: repeat-y, no-repeat;
-        background-size: contain, cover;
-    }
-
-    .container-width {
-        width: 90%;
-        max-width: 1150px;
-        margin: 0 auto;
-    }
-
-    .logo-container {
-        float: left;
-        width: 50%;
-    }
-
-    .menu {
-        float: right;
-        width: 50%;
-    }
-
-    .menu-item {
-        float: right;
-        font-size: 15px;
-        color: #eee;
-        width: 130px;
-        padding: 10px;
-        min-height: 50px;
-        text-align: center;
-        line-height: 30px;
-        font-weight: 400;
-    }
-
-    .lead-title {
-        margin: 30px 0 30px 0;
-        font-size: 40px;
-    }
-
-    .Iq2xPb .kaAt2 .KKHx9e {
-        background-color: #3C4043;
-    }
-
-    .Iq2xPb .kaAt2.KKjvXb .KKHx9e {
-        background-color: rgb(0, 145, 0);
-    }
-
-    .Iq2xPb .kaAt2.RDPZE .KKHx9e {
-        background-color: #70757a;
-    }
-
-    .wGQFbe.N2RpBe:not(.RDPZE),
-    .wGQFbe.B6Vhqe:not(.RDPZE) {
-        border-color: rgb(0, 145, 0);
-    }
-
-    .wGQFbe.i9xfbb>.MbhUzd,
-    .wGQFbe.u3bW4e>.MbhUzd {
-        background-color: rgba(76, 175, 80, 0.15);
-    }
-
-    .wGQFbe.wGQFbe:hover>.MbhUzd {
-        background-color: rgba(76, 175, 80, 0.04);
-    }
-
-    .wGQFbe.wGQFbe:focus>.MbhUzd {
-        background-color: rgba(76, 175, 80, 0.15);
-    }
-
-    .BJHAP.RDPZE:not(.N2RpBe):not(.B6Vhqe) {
-        border-color: #9AA0A6;
-    }
-
-    .da8bmd .BJHAP.N2RpBe.RDPZE,
-    .da8bmd .BJHAP.B6Vhqe.RDPZE,
-    .wMUAvd .BJHAP.RDPZE {
-        border-color: #5F6368;
-    }
-
-    .aomaEc.N2RpBe:not(.RDPZE) .Id5V1,
-    .aomaEc .nQOrEb {
-        border-color: rgb(0, 145, 0);
-    }
-
-    .aomaEc .N2RpBe:not(.RDPZE) .Id5V1 {
-        border-color: rgb(0, 145, 0);
-    }
-
-    .aomaEc.i9xfbb>.MbhUzd,
-    .aomaEc.u3bW4e>.MbhUzd {
-        background-color: rgba(76, 175, 80, 0.15);
-    }
-
-    .aomaEc :not(.RDPZE):hover>.MbhUzd {
-        background-color: rgba(76, 175, 80, 0.04);
-    }
-
-    .aomaEc :not(.RDPZE):focus>.MbhUzd {
-        background-color: rgba(76, 175, 80, 0.15);
-    }
-
-    .ECvBRb .N2RpBe.RDPZE .Id5V1,
-    .ECvBRb .N2RpBe.RDPZE .nQOrEb {
-        border-color: rgb(0, 145, 0);
-    }
-
-    .ECvBRb .RDPZE:not(.N2RpBe) .Id5V1 {
-        border-color: #9AA0A6;
-    }
-
-    .da8bmd .ECvBRb .N2RpBe.RDPZE .Id5V1,
-    .da8bmd .ECvBRb .N2RpBe.RDPZE .nQOrEb,
-    .wMUAvd .ECvBRb .RDPZE .Id5V1 {
-        border-color: #5F6368;
-    }
-
-    .aYSFK> :first-child {
-        border-left: transparent solid 5px;
-    }
-
-    .aYSFK.N2RpBe> :first-child {
-        border-left-color: rgb(0, 145, 0);
-    }
-
-    .TFBnVe .MbhUzd {
-        background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
-    }
-
-    .TFBnVe.u3bW4e .CeoRYc {
-        background-color: rgba(76, 175, 80, 0.15);
-    }
-
-    .RvMhje .MbhUzd {
-        background-image: radial-gradient(circle farthest-side, rgba(255, 255, 255, .3), rgba(255, 255, 255, .3) 80%, rgba(255, 255, 255, 0) 100%);
-    }
-
-    .RvMhje a .snByac {
-        color: rgba(255, 255, 255, 1);
-    }
-
-    .RvMhje.u3bW4e .CeoRYc {
-        background-color: rgba(255, 255, 255, .3);
-    }
-
-    .QvWxOd .TpQm9d,
-    .QvWxOd .TpQm9d:hover,
-    .QvWxOd .TpQm9d:link,
-    .QvWxOd .TpQm9d:visited {
-        background-color: rgb(0, 145, 0);
-    }
-
-    .ctEux .CeoRYc {
-        background-color: rgb(0, 145, 0);
-    }
-
-    .ctEux .MbhUzd {
-        background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
-    }
-
-    .p6JeP .kaAt2 {
-        color: rgb(104, 110, 115);
-    }
-
-    .p6JeP .kaAt2.KKjvXb {
-        background-color: rgba(76, 175, 80, 0.15);
-        color: rgb(0, 145, 0);
-    }
-
-    .p6JeP .kaAt2.KKjvXb.RDPZE {
-        background-color: rgba(189, 189, 189, .38);
-        color: #9AA0A6;
-    }
-
-    .p6JeP .k6JGBb {
-        fill: rgb(104, 110, 115);
-    }
-
-    .p6JeP .KKjvXb .k6JGBb {
-        fill: rgb(0, 145, 0);
-    }
-
-    .p6JeP .RDPZE .k6JGBb,
-    .p6JeP .KKjvXb.RDPZE.k6JGBb {
-        fill: #9AA0A6;
-    }
-
-    .mfr8Qd .SKMfG {
-        fill: rgb(0, 145, 0);
-    }
-
-    .Iq2xPb .s7bIcf {
-        background-color: rgb(0, 145, 0);
-    }
-
-    .Iq2xPb .kaAt2 {
-        color: #3C4043;
-    }
-
-    .Iq2xPb .kaAt2.KKjvXb {
-        color: rgb(0, 145, 0);
-    }
-
-    .Iq2xPb .kaAt2.RDPZE {
-        color: #70757a;
-        cursor: default;
-    }
-
-    .Iq2xPb .RDPZE+.s7bIcf {
-        background-color: #70757a;
-    }
-
-    .Iq2xPb .MbhUzd {
-        background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
-    }
-
-    .Iq2xPb .PXrNBb {
-        fill: #5F6368;
-    }
-
-    .Iq2xPb .KKjvXb .PXrNBb {
-        fill: rgb(0, 145, 0);
-    }
-
-    .Iq2xPb RDPZE .PXrNBb,
-    .Iq2xPb .KKjvXb.RDPZE.PXrNBb {
-        fill: #9AA0A6;
-    }
-
-    .LKH0ge .cXrdqd {
-        background-color: rgb(0, 145, 0);
-    }
-
-    .LKH0ge .Is7Fhb {
-        color: rgb(0, 145, 0);
-    }
-
-    .LKH0ge.u3bW4e .snByac {
-        color: rgb(0, 145, 0);
-    }
-
-    .LKH0ge.IYewr .oJeWuf.mIZh1c,
-    .LKH0ge.IYewr .oJeWuf.cXrdqd {
-        background-color: rgb(210, 235, 211);
-    }
-
-    .whsOnd:not([disabled]):focus~.AxOyFc.snByac,
-    .u3bW4e>.oJeWuf>.fqp6hd.snByac,
-    .u3bW4e.dm7YTc>.oJeWuf>.fqp6hd.snByac {
-        color: rgb(0, 145, 0);
-    }
-
-    .HNgK9.RDPZE .zHQkBf[disabled] {
-        color: rgba(0, 0, 0, .87);
-    }
-
-    .FlwNw.u3bW4e .oJeWuf:before {
-        border-color: rgb(0, 145, 0);
-    }
-
-    .FlwNw .zHQkBf:not([disabled]):focus~.snByac {
-        color: rgb(0, 145, 0);
-    }
-
-    .yqQS1 .cXrdqd {
-        background-color: rgb(0, 145, 0);
-    }
-
-    .yqQS1 .Is7Fhb {
-        color: rgb(0, 145, 0);
-    }
-
-    .yqQS1.IYewr .oJeWuf.mIZh1c,
-    .yqQS1.IYewr .oJeWuf.cXrdqd {
-        background-color: rgb(210, 235, 211);
-    }
-
-    .toT2u.RDPZE .zHQkBf[disabled] {
-        color: rgba(0, 0, 0, .87);
-    }
-
-    .Y4klN.N2RpBe .espmsb {
-        border-color: rgb(76, 175, 80);
-        color: rgba(255, 255, 255, 1);
-    }
-
-    .Y4klN.N2RpBe>.MLPG7 {
-        border-color: rgb(210, 235, 211);
-    }
-
-    .Y4klN.i9xfbb>.MbhUzd,
-    .Y4klN.u3bW4e>.MbhUzd {
-        background-color: rgba(76, 175, 80, 0.15);
-    }
-
-    .IszBRc-Guievd-HLvlvd .TCbR9b {
-        display: block;
-    }
-
-    .IszBRc-Guievd-HLvlvd .doKKyd {
-        display: none;
-    }
-
-    .barETd .X1clqd,
-    .barETd .qRUolc,
-    .barETd .pPQgvf {
-        color: #202124;
-        fill: #5F6368;
-    }
-
-    .IszBRc-Guievd-JaPV2b .barETd {
-        border: 2px solid white;
-    }
-
-    .IszBRc-Guievd-HLvlvd .barETd {
-        border: 2px solid black;
-    }
-
-    .IOncP .HvOprf {
-        color: rgb(0, 145, 0);
-    }
-
-    .IOncP .HvOprf .CeoRYc {
-        background-color: rgb(0, 145, 0);
-    }
-
-    .IOncP .HvOprf .MbhUzd {
-        background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
-    }
-
-    .IOncP .HvOprf:hover {
-        border-color: rgb(210, 235, 211);
-    }
-
-    .IOncP .HvOprf.RDPZE {
-        color: rgba(0, 145, 0, 0.5);
-    }
-
-    .IOncP .HvOprf.RDPZE:hover {
-        box-shadow: none;
-    }
-
-    .IOncP .HvOprf.qs41qe.qs41qe {
-        box-shadow: 0px 2px 1px -1px rgba(0, 145, 0, 0.2), 0px 1px 1px 0px rgba(0, 145, 0, 0.14), 0px 1px 3px 0px rgba(0, 145, 0, 0.12);
-    }
-
-    .da8bmd .RDPZE .Pi3FHb {
-        outline-color: rgba(0, 0, 0, .54);
-    }
-
-    .LygNqb.RDPZE .snByac {
-        color: #70757a;
-    }
-
-    .LygNqb.RDPZE.N2RpBe .snByac,
-    .LygNqb.RDPZE.B6Vhqe .snByac {
-        color: #202124;
-    }
-
-    .wMUAvd .LygNqb.RDPZE .snByac,
-    .wMUAvd .LygNqb.RDPZE.N2RpBe .snByac,
-    .wMUAvd .LygNqb.RDPZE.B6Vhqe .snByac {
-        color: black;
-    }
-
-    .LygNqb.RDPZE .PgfOZ svg {
-        fill: rgba(0, 0, 0, .54);
-    }
-
-    .LygNqb.RDPZE.N2RpBe .PgfOZ,
-    .LygNqb.RDPZE.B6Vhqe .PgfOZ svg {
-        fill: rgba(0, 0, 0, .87);
-    }
-
-    .G4EHhc,
-    .G4EHhc .Wic03c .tL9Q4c,
-    .G4EHhc .I9OJHe .KRoqRc,
-    .G4EHhc .PyrB4,
-    .G4EHhc .snByac {
-        font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
-    }
-
-    .LgNcQe,
-    .LgNcQe .Wic03c .tL9Q4c,
-    .LgNcQe .I9OJHe .KRoqRc,
-    .LgNcQe .PyrB4,
-    .LgNcQe .snByac {
-        font-size: 24pt;
-        font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
-        letter-spacing: 0;
-    }
-
-    .M7eMe,
-    .M7eMe .Wic03c .tL9Q4c,
-    .M7eMe .I9OJHe .KRoqRc,
-    .M7eMe .PyrB4,
-    .M7eMe .snByac {
-        font-size: 12pt;
-        font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
-        letter-spacing: 0;
-    }
-
-    .OIC90c.RjsPE,
-    .OIC90c .zHQkBf,
-    .OIC90c .Wic03c .tL9Q4c,
-    .OIC90c .I9OJHe .KRoqRc,
-    .OIC90c .PyrB4,
-    .OIC90c .snByac {
-        font-size: 11pt;
-        line-height: 15pt;
-        letter-spacing: 0;
-    }
-
-    .sId0Ce,
-    .sId0Ce a {
-        color: rgba(0, 0, 0, 0.66);
-    }
-
-    .gjs-link-box {
-        color: inherit;
-        display: inline-block;
-        vertical-align: top;
-        padding: 0px;
-        max-width: 100%;
-        text-decoration: none;
-    }
-
-    #irnv48 {
-        margin-top: 0px;
-        margin-right: 0px;
-        margin-bottom: 2px;
-        margin-left: 0px;
-    }
-
-    #i9qlv5 {
-        color: #000000;
-    }
-
-    #ijrkmy {
-        color: rgba(57, 110, 44, 1);
-    }
-
-    #ifsuqh {
-        color: rgba(9, 9, 9, 1);
-    }
-
-    #iyazdl {
-        color: black;
-        width: 293px;
-        background-repeat: repeat;
-        background-position: left top;
-        background-attachment: scroll;
-        background-size: auto;
-        border: 0px solid #000000;
-        height: 67px;
-        padding-top: 0px;
-        padding-right: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-    }
-
-    #ihn81g {
-        border: 0px solid black;
-        color: #000000;
-        text-align: left;
-        font-size: 75px !important;
-        transition: opacity 5s ease 0s;
-        text-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
-    }
-
-    #idb14l {
-        padding-top: 0px;
-        padding-right: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        margin-top: 0px;
-        margin-right: 184px;
-        margin-bottom: 0px;
-        margin-left: 139px;
-    }
-
-    #i48akj {
-        perspective: 50px;
-        transition: opacity 3s ease-in 1s;
-        border: 0px solid #161616;
-        opacity: 100%;
-        padding-top: 35px;
-        padding-right: 0px;
-        padding-bottom: 0px;
-        padding-left: 0px;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.5) 1%, rgba(255, 255, 255, 0.5) 100%);
-        background-position: 0px 0px;
-        background-size: 100% 100%;
-        background-repeat: repeat-y;
-        background-attachment: scroll;
-        margin-top: 0px;
-        margin-right: 0px;
-        margin-bottom: 0px;
-        margin-left: 0px;
-    }
-
-    .gjs-link {
-        vertical-align: top;
-        max-width: 100%;
-        display: inline-block;
-        text-decoration: none;
-        color: inherit;
-    }
-
-    @media screen and (forced-colors: active) {
-        .Iq2xPb .s7bIcf {
-            outline: 1px solid Highlight;
-        }
-    }
-    .footer-under {
-        background-color: #312833;
-        padding-bottom: 100px;
-        padding-top: 100px;
-        min-height: 500px;
-        color: #eee;
-        position: relative;
-        font-weight: 100;
-        font-family: Helvetica, serif;
-    }
-
-    .foot-list-title {
-        font-weight: 400;
-        margin-bottom: 10px;
-        padding: 0.5em 0;
-    }
-
-    .foot-list-item {
-        color: rgba(238, 238, 238, 0.8);
-        font-size: 0.8em;
-        padding: 0.5em 0;
-    }
-
-    .foot-list-item:hover {
-        color: rgba(238, 238, 238, 1);
-    }
-
-    .copyright {
-        background-color: rgba(0, 0, 0, 0.15);
-        color: rgba(238, 238, 238, 0.5);
-        bottom: 0;
-        padding: 1em 0;
-        position: absolute;
-        width: 100%;
-        font-size: 0.75em;
-    }
-
-    .foot-social-btns {
-        display: none;
-        float: right;
-        width: 50%;
-        text-align: right;
-        padding: 5px 0;
-    }
-
-    .clearfix {
-        clear: both;
-    }
-
-    a {
-        color: white;
-        text-decoration: none;
-    }
-</style>
-    <h1>Our Tours</h1>
+<body>
+  <header>
+    <h1>Call Us: (250) 590-0811</h1>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="tours.html">Tours</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact-us.html">Contact Us</a>
+  </nav>
+  <section class="hero">
+    <h1>Explore Our Tour Listings</h1>
+  </section>
+
+  <div class="filters">
     <label for="season-filter">Season:</label>
     <select id="season-filter">
       <option value="">All</option>
@@ -776,580 +221,81 @@ select {
       <option value="victoria">Victoria</option>
     </select>
     <button id="apply-filters-btn">Apply Filters</button>
-  </aside>
- 
-<body onload="start()">
-  <div class="container" id="tours-container"></div>
- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MileZeroTours -- Listings </title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .content {
-            flex: 1;
-        }
-        footer {
-            background-color: #f1f1f1;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
-        .footer-iframe {
-            width: 100%;
-            height: 600px; /* Adjust height as needed */
-            border: none;
-            overflow: hidden;
-        }
-    </style>
-</head>
-<body>
-    <div class="content">
-        <!-- Main content of the page -->
-    </div>
-    <footer>
-        <iframe class="footer-iframe" src="foot2.html"></iframe>
-    </footer>
-</body>
-</html>
+  </div>
 
+  <div class="container" id="tours-container">
+    <!-- JavaScript dynamically inserts tour cards here -->
+  </div>
+
+  <footer>
+    <iframe src="foot2.html"></iframe>
+    <p>&copy; 2025 Mile Zero Tours. All rights reserved.</p>
+  </footer>
 
   <script>
-  // Function to fetch tours and apply filters
-  function fetchToursAndApplyFilters() {
-    const SPREADSHEET_ID = "1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc";
-    const API_KEY = "AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw";
-    const SHEET_NAME = "Sheet2";
-    const toursContainer = document.getElementById("tours-container");
+    function fetchToursAndApplyFilters() {
+      const SPREADSHEET_ID = "1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc";
+      const API_KEY = "AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw";
+      const SHEET_NAME = "Sheet2";
+      const toursContainer = document.getElementById("tours-container");
 
-    // Fetch filter elements
-    const seasonFilter = document.getElementById("season-filter");
-    const locationFilter = document.getElementById("location-filter");
-    const departFromFilter = document.getElementById("depart-from-filter");
+      const seasonFilter = document.getElementById("season-filter");
+      const locationFilter = document.getElementById("location-filter");
+      const departFromFilter = document.getElementById("depart-from-filter");
 
-    // Fetch tours data and apply filters
-    fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:AK100?key=${API_KEY}`)
-      .then(response => response.json())
-      .then(data => {
-        const values = data.values;
+      fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A1:AK100?key=${API_KEY}`)
+        .then(response => response.json())
+        .then(data => {
+          const values = data.values;
+          toursContainer.innerHTML = "";
 
-        // Clear previous tours
-        toursContainer.innerHTML = "";
+          for (let i = 1; i < values.length; i++) {
+            const tourName = values[i][1];
+            const tourDates = values[i][5];
+            const offer = values[i][20];
+            const description = values[i][21];
+            const imageUrl = values[i][28];
+            const destination = values[i][18];
+            const departFrom = values[i][19];
+            const price = values[i][6];
+            const season = values[i][17];
+            const id = values[i][0];
 
-        for (let i = 1; i < values.length; i++) {
-          const tourName = values[i][1];
-          const tourDates = values[i][5];
-          const offer = values[i][20];
-          const Description = values[i][21];
-          const imageUrl = values[i][28];
-          const Destination = values[i][18];
-          const DepartFrom = values[i][19];
-          const price = values[i][6];
-          const Season = values[i][17];
-          const id = values[i][0];
+            if (seasonFilter.value && !season.toLowerCase().includes(seasonFilter.value.toLowerCase())) continue;
+            if (locationFilter.value && locationFilter.value !== destination.toLowerCase()) continue;
+            if (departFromFilter.value && !departFrom.toLowerCase().includes(departFromFilter.value.toLowerCase())) continue;
 
-          // Filter by season
-          if (seasonFilter.value !== "" && !Season.toLowerCase().includes(seasonFilter.value.toLowerCase())) {
-            continue; // skip this row if it doesn't match the season filter
+            const tourElement = document.createElement("div");
+            tourElement.classList.add("tour-card");
+
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = `Image for ${tourName}`;
+
+            const info = document.createElement("div");
+            info.className = "tour-info";
+
+            info.innerHTML = `
+              <h2>${tourName}</h2>
+              <p><strong>Dates:</strong> ${tourDates}</p>
+              <p><strong>Offer:</strong> ${offer}</p>
+              <p><strong>Destination:</strong> ${destination}, <strong>Depart From:</strong> ${departFrom}</p>
+              <p><strong>Price:</strong> $${price}</p>
+              <p>${description}</p>
+              <a href="https://testingtours.github.io/mztdemo/tour-details#tour=${id}" class="btn">Tour Details</a>
+              <a href="#" class="btn">Book Now</a>
+            `;
+
+            tourElement.appendChild(img);
+            tourElement.appendChild(info);
+            toursContainer.appendChild(tourElement);
           }
-
-          // Filter by location
-          if (locationFilter.value !== "" && locationFilter.value !== Destination.toLowerCase()) {
-            continue; // skip this row if it doesn't match the location filter
-          }
-
-          // Filter by depart from
-          if (departFromFilter.value !== "" && !DepartFrom.toLowerCase().includes(departFromFilter.value.toLowerCase())) {
-            continue; // skip this row if it doesn't match the depart from filter
-          }
-
-          // Create HTML elements for each tour
-          const tourElement = document.createElement("div");
-          tourElement.classList.add("tour-card");
-
-          const img = document.createElement("img");
-          img.src = imageUrl;
-          img.alt = "Image for " + tourName;
-          img.style.maxWidth = "200px"; // Adjust image size here
-
-          const h1 = document.createElement("h1");
-          h1.textContent = tourName;
-
-          const h2 = document.createElement("h2");
-          h2.textContent = tourDates;
-
-          const h3 = document.createElement("h3");
-          h3.textContent = offer;
-
-          const h4 = document.createElement("h4");
-          h4.textContent = `Destination: ${Destination}, Departs from: ${DepartFrom}, Price: $${price}`;
-
-          const p = document.createElement("p");
-          p.textContent = Description;
-
-          const detailButton = document.createElement("a");
-          detailButton.href = `https://testingtours.github.io/mztdemo/tour-details#tour=${id}`;
-          detailButton.textContent = "Tour Details";
-          detailButton.classList.add("btn");
-          detailButton.style.marginRight = "10px"; // Adjust the margin as needed
-
-          const bookButton = document.createElement("a");
-          bookButton.textContent = "Book Now";
-          bookButton.classList.add("btn");
-
-
-// Inside the fetchToursAndApplyFilters function, where the bookButton event listener is attached
-bookButton.addEventListener("click", function(event) {
-  const Name = tourName
-  const Dates = tourDates
-  const Id = id; // Get tour ID
-
-  showBookingIframe(Name, Dates, Id);
-});
-
-
-
-
-          tourElement.appendChild(img);
-          const infoContainer = document.createElement("div");
-          infoContainer.classList.add("tour-info");
-          infoContainer.appendChild(h1);
-          infoContainer.appendChild(h2);
-          infoContainer.appendChild(h3);
-          infoContainer.appendChild(h4);
-          infoContainer.appendChild(p);
-          infoContainer.appendChild(detailButton);
-          infoContainer.appendChild(bookButton);
-          tourElement.appendChild(infoContainer);
-
-          toursContainer.appendChild(tourElement);
-        }
-      })
-      .catch(error => console.error("Error fetching tours:", error));
-  }
-function showBookingIframe(name, dates, id) {
-   
-   
-     // Create overlay element
-  const overlay = document.createElement("div");
-  overlay.style.position = "fixed";
-  overlay.style.top = "0";
-  overlay.style.left = "0";
-  overlay.style.width = "100%";
-  overlay.style.height = "100%";
-  overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black background
-  overlay.style.backdropFilter = "blur(5px)"; // Apply blur effect
-  overlay.style.zIndex = "9998"; // Ensure the overlay is below the iframe
-  overlay.addEventListener("click", function() {
-    // Remove overlay when clicked
-    document.body.removeChild(overlay);
-    document.body.removeChild(iframe);
-  });
-  document.body.appendChild(overlay);
-
-    // Create iframe element
-  const iframe = document.createElement("iframe");
-  iframe.style.position = "fixed";
-  iframe.style.top = "50%";
-  iframe.style.left = "50%";
-  iframe.style.transform = "translate(-50%, -50%)";
-  iframe.style.width = "80%";
-  iframe.style.height = "80%";
-  iframe.style.border = "none";
-  iframe.style.zIndex = "9999";
-  iframe.style.backgroundColor = "white";
-
-  iframe.addEventListener("load", function() {
-    // Create HTML content to be displayed in the iframe
-const bookingFormContent = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${name} Tour Booking -- MileZeroTours</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-  }
-
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-
-  h1 {
-    font-size: 28px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-
-  h3, h4 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 15px;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  label {
-    font-weight: bold;
-    color: #666;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  input[type="text"], input[type="email"], input[type="tel"], select, textarea {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s;
-  }
-
-  input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, select:focus, textarea:focus {
-    border-color: #66afe9;
-  }
-
-  textarea {
-    height: 100px;
-  }
-
-  button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-  }
-
-  button[type="submit"]:hover {
-    background-color: #45a049;
-  }
-
-  .error-message {
-    color: red;
-    margin-top: 10px;
-  }
-
-  /* Green hover effect */
-  button[type="submit"]:hover, button[type="submit"]:focus {
-    background-color: #4CAF50;
-  }
-</style>
-</head>
-<body>
-
-<div class="container">
-  <h1>${name} Tour Booking</h1>
-  <h3>Book your trip on the ${name} with MileZeroTours.</h3>
-  <h4>${dates}</h4>
-  <form id="bookingForm">
-
-    <div class="form-group">
-      <h3>Number of People</h3>
-      <label for="numberOfPeople">Number of People:</label>
-      <select id="numberOfPeople" name="numberOfPeople" required>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-    </div>
-
-    <div id="guestDetails" class="form-group">
-      <!-- Guest details will be dynamically inserted here -->
-    </div>
-
-    <div id="contactDetails" class="form-group">
-      <!-- Contact details will be dynamically inserted here -->
-    </div>
-
-    <div class="form-group">
-      <h3>Special Requests</h3>
-      <label for="specialRequests">Special Requests:</label>
-      <textarea id="specialRequests" name="specialRequests" rows="4"></textarea>
-    </div>
-
-    <div class="form-group">
-      <h3>Additional Information</h3>
-      <iframe src="https://milezerotours.com/terms-of-travel" width="100%" height="300"></iframe>
-    </div>
-
-    <div class="form-group">
-      <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
-      <label for="acceptTerms">I agree to the Terms and Conditions</label>
-    </div>
-
-    <button type="submit">Submit</button>
-    <div id="errorBox" class="error-message" style="display: none;">Please fill out all required fields.</div>
-  </form>
-</div>
-
-<script>
-  // Function to show/hide guest details based on number of people
-  function updateGuestDetails() {
-    var numberOfPeople = parseInt(document.getElementById('numberOfPeople').value);
-    var guestDetailsDiv = document.getElementById('guestDetails');
-    guestDetailsDiv.innerHTML = ''; // Clear existing content
-
-    for (var i = 0; i < numberOfPeople; i++) {
-      var guestIndex = i + 1;
-      var guestDetails = \`
-        <div class="guest-details">
-          <h3>Guest \${guestIndex}</h3>
-          <label for="firstName\${guestIndex}">First Name:</label>
-          <input type="text" id="firstName\${guestIndex}" name="firstName\${guestIndex}" required>
-
-          <label for="lastName\${guestIndex}">Last Name:</label>
-          <input type="text" id="lastName\${guestIndex}" name="lastName\${guestIndex}" required>
-
-          <label for="dob\${guestIndex}">Date of Birth:</label>
-          <input type="date" id="dob\${guestIndex}" name="dob\${guestIndex}" required>
-        </div>
-      \`;
-      guestDetailsDiv.insertAdjacentHTML('beforeend', guestDetails);
-    }
-  }
-
-  // Function to update contact details based on the number of people
-  function updateContactDetails(numberOfPeople) {
-    var contactDetailsDiv = document.getElementById('contactDetails');
-    contactDetailsDiv.innerHTML = ''; // Clear existing content
-
-    for (var i = 1; i <= numberOfPeople; i++) {
-      var guestIndex = i.toString();
-
-      // Add checkbox for guests 2 and 3, and associated label
-      if (i > 1) {
-        var checkboxHtml = \`
-          <input type="checkbox" id="sameAsGuest1\${guestIndex}" name="sameAsGuest1\${guestIndex}" onchange="toggleGuestDetails(\${guestIndex})">
-          <label for="sameAsGuest1\${guestIndex}">Same as Guest 1</label>
-        \`;
-        contactDetailsDiv.insertAdjacentHTML('beforeend', checkboxHtml);
-      }
-
-      var contactDetails = \`
-        <h3>Contact Details for Guest \${guestIndex}</h3>
-        <label for="address\${guestIndex}">Address:</label>
-        <input type="text" id="address\${guestIndex}" name="address\${guestIndex}" required>
-
-        <label for="city\${guestIndex}">City:</label>
-        <input type="text" id="city\${guestIndex}" name="city\${guestIndex}" required>
-
-        <label for="postalCode\${guestIndex}">Postal Code:</label>
-        <input type="text" id="postalCode\${guestIndex}" name="postalCode\${guestIndex}" required>
-
-        <label for="province\${guestIndex}">Province:</label>
-        <input type="text" id="province\${guestIndex}" name="province\${guestIndex}" required>
-
-        <label for="email\${guestIndex}">Email:</label>
-        <input type="email" id="email\${guestIndex}" name="email\${guestIndex}" required>
-
-        <label for="phone\${guestIndex}">Phone:</label>
-        <input type="tel" id="phone\${guestIndex}" name="phone\${guestIndex}" required>
-      \`;
-      contactDetailsDiv.insertAdjacentHTML('beforeend', contactDetails);
-    }
-  }
-
-  // Function to toggle guest details based on checkbox
-  function toggleGuestDetails(guestIndex) {
-    var checkbox = document.getElementById(\`sameAsGuest1\${guestIndex}\`);
-    var guestDetailsDiv = document.getElementById(\`contactDetails\`);
- var guestDetails = guestDetailsDiv.querySelectorAll('[id^="address' + guestIndex + '"], [id^="phone' + guestIndex + '"], [id^="postalCode' + guestIndex + '"],[id^="province' + guestIndex + '"],[id^="email' + guestIndex + '"], [id^="city' + guestIndex + '"]');
-   
-    if (checkbox.checked) {
-      // Hide guest details and replace with text
-      guestDetails.forEach(detail => {
-        detail.style.display = 'none';
-      });
-      var replacementText = \`<p>Contact details same as Guest 1</p>\`;
-      guestDetailsDiv.insertAdjacentHTML('beforeend', replacementText);
-    } else {
-      // Show guest details and remove replacement text
-      guestDetails.forEach(detail => {
-        detail.style.display = 'block';
-      });
-      var replacementText = guestDetailsDiv.querySelector(\`p\`);
-      if (replacementText) {
-        guestDetailsDiv.removeChild(replacementText);
-      }
-    }
-  }
-
-  // Trigger update on page load and when dropdown changes
-  document.addEventListener('DOMContentLoaded', function() {
-    updateGuestDetails();
-    updateContactDetails(1); // Initially, there's 1 person
-  });
-  document.getElementById('numberOfPeople').addEventListener('change', function() {
-    updateGuestDetails();
-    updateContactDetails(parseInt(this.value));
-  });
-
-  // Form submission validation
-  document.getElementById('bookingForm').addEventListener('submit', function(event) {
-    var form = event.target;
-    var requiredFields = form.querySelectorAll('[required]');
-    var errorBox = document.getElementById('errorBox');
-    var incompleteFields = [];
-
-    requiredFields.forEach(function(field) {
-      if (!field.value) {
-        incompleteFields.push(field.getAttribute('name'));
-      }
-    });
-
-    if (incompleteFields.length > 0) {
-      event.preventDefault();
-      errorBox.style.display = 'block';
-      errorBox.textContent = 'Please fill out all required fields: ' + incompleteFields.join(', ');
-    } else {
-      errorBox.style.display = 'none';
-    }
-  });
-
-  // Function to serialize form data to JSON
-  function serializeFormToJson(form) {
-    var formData = new FormData(form);
-    var jsonData = {};
-
-    // Add tour and number of people directly
-    jsonData['tourCode'] = "${id}";
-    jsonData['tour'] = formData.get('tour');
-    jsonData['numberOfPeople'] = formData.get('numberOfPeople');
-
-    // Add guest details
-    var numberOfPeople = parseInt(jsonData['numberOfPeople']);
-    for (var i = 1; i <= numberOfPeople; i++) {
-      var guestIndex = i.toString();
-      jsonData['firstName' + guestIndex] = formData.get('firstName' + guestIndex);
-      jsonData['lastName' + guestIndex] = formData.get('lastName' + guestIndex);
-      jsonData['dob' + guestIndex] = formData.get('dob' + guestIndex);
+        })
+        .catch(error => console.error("Error fetching tours:", error));
     }
 
-    // Add contact details
-    jsonData['address'] = formData.get('address1');
-    jsonData['city'] = formData.get('city1');
-    jsonData['postalCode'] = formData.get('postalCode1');
-    jsonData['province'] = formData.get('province1');
-    jsonData['email'] = formData.get('email1');
-    jsonData['phone'] = formData.get('phone1');
-    jsonData['address2'] = formData.get('address2');
-    jsonData['city2'] = formData.get('city2');
-    jsonData['postalCode2'] = formData.get('postalCode2');
-    jsonData['province2'] = formData.get('province2');
-    jsonData['email2'] = formData.get('email2');
-    jsonData['phone2'] = formData.get('phone2');
-    jsonData['address3'] = formData.get('address3');
-    jsonData['city3'] = formData.get('city3');
-    jsonData['postalCode3'] = formData.get('postalCode3');
-    jsonData['province3'] = formData.get('province3');
-    jsonData['email3'] = formData.get('email3');
-    jsonData['phone3'] = formData.get('phone3');
-
-    // Add special requests
-    jsonData['specialRequests'] = formData.get('specialRequests');
-
-    // Add terms acceptance
-    jsonData['acceptTerms'] = formData.get('acceptTerms');
-
-    jsonData['acceptTerms'] = formData.get('acceptTerms');
-
-    return jsonData;
-  }
-
-  // Function to submit form data
-  function submitForm(event) {
-    event.preventDefault(); // Prevent default form submission
-    var form = event.target;
-    var jsonData = serializeFormToJson(form);
-
-    // Send JSON data to the specified endpoint
-    fetch('https://hook.us1.make.com/274b8bhxr683ap1861xr7i23f35cqmsd', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(jsonData)
-    })
-    .then(function(response) {
-      if (response.ok) {
-        window.location.href = "https://testingtours.github.io/mztdemo/bookings.html";
-      } else {
-        throw new Error('Failed to submit form');
-      }
-    })
-    .catch(function(error) {
-      console.error('Error:', error);
-      alert('Failed to submit form. Please try again later.');
-    });
-  }
-
-  // Add event listener for form submission
-  document.getElementById('bookingForm').addEventListener('submit', submitForm); \<\/script\>
-`;
-    // Access the document body of the iframe
-    const iframeDocument = iframe.contentWindow.document;
-
-    // Set HTML content inside the iframe
-    iframeDocument.open();
-    iframeDocument.write(bookingFormContent);
-    iframeDocument.close();
-  });
-
-  // Append iframe to the body
-  document.body.appendChild(iframe);
-}
-
-
-  // Function to start filtering when the page loads
-   function start() {
-    const applyFiltersBtn = document.getElementById('apply-filters-btn');
-
-    // Apply filters when the button is found
-    if (applyFiltersBtn) {
-      applyFiltersBtn.addEventListener("click", fetchToursAndApplyFilters);
-      applyFiltersBtn.click(); // Apply filters on page load
-    } else {
-      console.error('Button not found.');
-    }
-
-    // Move filters to the top of the page
-    const filtersAside = document.querySelector('aside');
-    const body = document.querySelector('body');
-    body.insertBefore(filtersAside, body.firstChild);
-
-    // Add event listener to book buttons
-    const bookButtons = document.querySelectorAll('.btn.book-btn');
-    bookButtons.forEach(button => {
-      button.addEventListener('click', showBookingIframe);
-    });
-  }
-
-  // Call the start function to execute the code
-  start();
-</script>
+    document.getElementById("apply-filters-btn").addEventListener("click", fetchToursAndApplyFilters);
+    window.addEventListener("load", fetchToursAndApplyFilters);
+  </script>
+</body>
+</html>
