@@ -1,208 +1,1145 @@
-<!DOCTYPE html>
+<meta http-equiv="Content-Security-Policy" content="img-src 'self' https://www.milezerotours.net;">
+<body id="ie7rq6">
+  <header id="igtuih" class="header-banner"><span id="ip3n93"><b></b></span>
+    <div id="ibhder" class="container-width">
+      <div class="logo-container">
+      </div>
+      <div id="i5sobn" class="lead-title"><span><b></b></span></div>
+      <div class="clearfix">
+      </div>
+    </div>
+    <div id="ir86ui">MileZeroTours</div>
+    <div id="i2nbno">...</div>
+  </header><b>
+  <div id="iw1eoz">Book Now</div>
+  <div id="iqyoxm">
+    <span id="ixulfs"><a href="" id="i35l8s" class="gjs-link"><span id="i7j86o">Book Now</span></a></span></div>
+  <div id="i9m5cg">
+    <p id="imsppp">
+      <span id="i3orqh" class="x-el x-el-span c1-8x c1-8y c1-b c1-c c1-d c1-e c1-f c1-g"><span id="iyfdd9" class="x-el x-el-span c1-1s c1-1t c1-b c1-1y c1-3w c1-8s c1-8t">{Dates}<br/><br/>${Price} Per Person<br/><br/>Single add: {1ADD} Triple deduct: {3ADD}<br/><br/></span></span><a
+        href="" id="i9qycs" class="gjs-link">Need to save it? Click here to download the itinerary </a></p>
+  </div>
+  <div class="gjs-divider" id="ihcvs5"></div>
+  <div id="ib7z6a" class="gjs-grid-row">
+    <div id="ie9bjl" class="gjs-grid-column">
+      <h4 role="heading" aria-level="4" data-ux="ContentHeading" data-aid="CONTENT_MEDIA_HEADLINE1_RENDERED"
+        data-typography="HeadingDelta" id="infbcg"
+        class="x-el x-el-h4 c1-1 c1-2 c1-1f c1-1g c1-73 c1-2d c1-2c c1-1i c1-1j c1-2m c1-2v c1-5s c1-74 c1-5t c1-5u c1-5v c1-5w">
+        Full Itinerary:</h4>
+      <div id="ided1x">nothing :(</div>
+    </div>
+<div id="imjqz7" class="gjs-grid-column">
+  <div id="in9eov"><b id="ielypp">What's included:</b></div>
+  <ul id="what-included-list">
+    <!-- Dynamically generated items will go here -->
+  </ul>
+  <b id="izlyuj"><span id="i8dj9c">Hotels:</span></b>
+  <ul id="hotels-list">
+    <!-- Dynamically generated hotel items will go here -->
+  </ul>
+</div>
+  </div>
+    <div id="image-container" class="gjs-grid-row">
+  <!-- Dynamically loaded images will appear here -->
+  <div id="il4h1l">
+    <div data-ux="ContentText" alignment="left" data-aid="CONTENT_MEDIA_DESCRIPTION1_RENDERED"
+      data-typography="BodyAlpha" id="ierc9j"
+      class="x-el c1-1 c1-2 c1-1f c1-1g c1-1h c1-1i c1-1j c1-7z c1-80 c1-81 c1-82 c1-83 c1-84 c1-85 c1-86 c1-87 c1-88 c1-89 c1-8a c1-8b c1-8c c1-8d c1-8e c1-8f c1-8g c1-8h c1-8i c1-8j c1-8k c1-8l c1-8m c1-8n c1-8o c1-8p c1-8q c1-6j c1-b c1-4f c1-c c1-1m c1-d c1-e c1-f c1-g x-rt">
+    </div>
+</div>
+  </div>
+  <section id="ifq8wu" class="gjs-section">
+    <div class="gjs-container">
+      <div id="iq5mrz">Tour Policies </div>
+      <div id="ij4jeh">nothing :(</div>
+    </div>
+  </section>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="img-src 'self' https://www.milezerotours.net;">
-  <title>MileZeroTours</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f5f5f5;
-    }
-    .nav-iframe {
-      width: 100%;
-      border: none;
-    }
-    .header-banner {
-      background-image: linear-gradient(rgba(21, 21, 21, 0.45), rgba(21, 21, 21, 0.45)), url('https://placehold.co/150/777/white.png?text=IMAGE');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      padding: 50px 20px;
-      color: white;
-      text-align: center;
-      backdrop-filter: blur(4px);
-      animation: fadeIn 1s ease-in;
-    }
-    .content-wrapper {
-      padding: 20px;
-      backdrop-filter: blur(3px);
-      background-color: rgba(255, 255, 255, 0.8);
-      margin: 20px;
-      border-radius: 12px;
-      animation: fadeInUp 0.8s ease-in-out;
-    }
-    footer {
-      background-color: #f1f1f1;
-      padding: 20px;
-      text-align: center;
-    }
-    .footer-iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      overflow: hidden;
-    }
-    #booking-dialog {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      text-align: center;
-    }
-    #booking-dialog h3 {
-      margin-top: 0;
-    }
-    #booking-dialog button {
-      margin-top: 10px;
-      padding: 8px 16px;
-      border: none;
-      background-color: #1a7300;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer with Iframe</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content {
+            flex: 1;
+        }
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .footer-iframe {
+            width: 100%;
+            height: 600px; /* Adjust height as needed */
+            border: none;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body id="ie7rq6">
-  <iframe class='nav-iframe' src='nav.html'></iframe>
-  <header class="header-banner">
-    <h1 id="i2nbno">MileZeroTours</h1>
-  </header>
-
-  <div class="content-wrapper">
-    <div id="iw1eoz">Book Now</div>
-    <div id="iqyoxm">
-      <a href="" id="i35l8s" class="gjs-link">Book Now</a>
+<body>
+    <div class="content">
+        <!-- Main content of the page -->
     </div>
-    <div id="i9m5cg">
-      <p id="imsppp">
-        <span id="iyfdd9">{Dates}<br><br>${Price} Per Person<br><br>Single add: {1ADD} Triple deduct: {3ADD}</span><br><br>
-        <a href="" id="i9qycs">Need to save it? Click here to download the itinerary</a>
-      </p>
-    </div>
-
-    <div class="gjs-divider"></div>
-
-    <div class="gjs-grid-row">
-      <div class="gjs-grid-column">
-        <h4>Full Itinerary:</h4>
-        <div id="ided1x">nothing :(</div>
-      </div>
-      <div class="gjs-grid-column">
-        <div><strong>What's included:</strong></div>
-        <ul id="what-included-list"></ul>
-        <strong>Hotels:</strong>
-        <ul id="hotels-list"></ul>
-      </div>
-    </div>
-
-    <div id="image-container" class="gjs-grid-row"></div>
-
-    <section class="gjs-section">
-      <div class="gjs-container">
-        <div><h2>Tour Policies</h2></div>
-        <div id="ij4jeh">nothing :(</div>
-      </div>
-    </section>
-  </div>
-
-  <footer>
-    <iframe class="footer-iframe" src="foot2.html"></iframe>
-    <p>&copy; 2025 Mile Zero Tours</p>
-  </footer>
-
-  <div id="booking-dialog">
-    <h3>To book please call</h3>
-    <p>(250) 590-0811</p>
-    <button onclick="window.location.href='tours.html'">Explore More Tours</button>
-  </div>
-
-  <script>
-    function getUrlParameter(name) {
-      name = name.replace(/[\[\]]/g, "\\$&");
-      var regex = new RegExp("[#&]" + name + "(=([^&#]*)|&|#|$)");
-      var results = regex.exec(window.location.href);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
-
-    function fetchDataFromGoogleSheets() {
-      const sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
-      const apiKey = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          const tourName = getUrlParameter('tour');
-          const showBooking = getUrlParameter('book');
-
-          if (showBooking !== null) {
-            document.getElementById('booking-dialog').style.display = 'block';
-          }
-
-          let rowIndex = -1;
-
-          data.values.forEach((row, index) => {
-            if (row[0].includes(tourName)) {
-              rowIndex = index;
-              return;
-            }
-          });
-
-          if (rowIndex !== -1) {
-            const row = data.values[rowIndex];
-            const [,, columnC,, columnF, columnG, columnH, columnI,, columnJ,, columnL,,,,,,,,,,,, columnW, columnX, columnY,, columnZ,,,, columnAE,, columnAG,, columnAI,, columnAK, columnAL] = row;
-
-            document.getElementById("i2nbno").innerText = row[1];
-            document.getElementById("iyfdd9").innerHTML = `
-              ${columnC} days ${columnF}<br>  $${columnG} Per Person<br>
-              Single Add: $${columnH} Triple deduct: $${columnI}<br>
-              ${columnL ? `Own air deduct: $${columnL}<br>` : ''}
-              ${columnAL ? `$${columnAL} Per Person Early Booking Discounts<br>` : ''}`;
-            document.getElementById("ided1x").innerHTML = columnW;
-            document.getElementById('what-included-list').innerHTML = columnX;
-            document.getElementById('hotels-list').innerHTML = columnY.replace(/\n/g, '<br>');
-            document.getElementById("ij4jeh").innerHTML = columnZ;
-
-            const container = document.getElementById('image-container');
-            const iframe = document.createElement('iframe');
-            iframe.style.width = '100%';
-            iframe.style.height = '250px';
-            iframe.style.border = 'none';
-            iframe.className = 'gjs-grid-column';
-            iframe.style.overflow = 'hidden';
-            iframe.setAttribute('scrolling', 'no');
-            const iframeUrl = `https://www.milezerotours.net/image-demo.html?image=${encodeURIComponent(columnAG)}&image=${encodeURIComponent(columnAI)}&image=${encodeURIComponent(columnAK)}`;
-            iframe.src = iframeUrl;
-            container.appendChild(iframe);
-
-            const headerBanner = document.querySelector('.header-banner');
-            headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.45), rgba(21, 21, 21, 0.45)), url(${columnAE})`;
-          }
-        })
-        .catch(error => console.error('Error fetching data from Google Sheets:', error));
-    }
-
-    window.onload = fetchDataFromGoogleSheets;
-  </script>
+    <footer>
+        <iframe class="footer-iframe" src="foot2.html"></iframe>
+    </footer>
 </body>
 </html>
+
+</footer>
+</body>
+<style>
+  /* Apply font to all text */
+body {
+    font-family: "Arial", sans-serif;
+}
+  checklist {
+    padding-inline-start: 0px !important;
+  }
+
+  /* Override automatic bold styling */
+#iw1eoz,
+#iqyoxm,
+#gjs-divider,
+#ib7z6a,
+#il4h1l,
+#ifq8wu {
+    font-weight: normal !important;
+}
+
+/* Override bold styling for specific elements */
+#i3orqh,
+#iyfdd9,
+#in9eov,
+#ierc9j,
+#im3of4,
+#idjbxj,
+#i4ildh,
+#io1n5w,
+#ik9h5t,
+#is7i7w,
+#i6vw9o {
+    font-weight: normal !important;
+}
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .clearfix {
+    clear: both;
+  }
+  /* Set default text color to black */
+body {
+    color: black;
+}
+
+
+  .header-banner {
+    padding-top: 35px;
+    padding-bottom: 100px;
+    color: #ffffff;
+    font-family: Helvetica, serif;
+    font-weight: 100;
+    background-image: url("https://grapesjs.com/img/bg-gr-v.png"), url("https://grapesjs.com/img/work-desk.jpg");
+    background-attachment: scroll, scroll;
+    background-position: left top, center center;
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover;
+  }
+
+
+  .container-width {
+    width: 90%;
+    max-width: 1150px;
+    margin: 0 auto;
+  }
+
+  .logo-container {
+    float: left;
+    width: 50%;
+  }
+
+  .lead-title {
+    margin: 150px 0 30px 0;
+    font-size: 40px;
+  }
+
+  .footer-under {
+    background-color: #312833;
+    padding-bottom: 100px;
+    padding-top: 100px;
+    min-height: 500px;
+    color: #eee;
+    position: relative;
+    font-weight: 100;
+    font-family: Helvetica, serif;
+  }
+
+  .copyright {
+    background-color: rgba(0, 0, 0, 0.15);
+    color: rgba(238, 238, 238, 0.5);
+    bottom: 0;
+    padding: 1em 0;
+    position: absolute;
+    width: 100%;
+    font-size: 0.75em;
+  }
+
+  .made-with {
+    float: left;
+    width: 50%;
+    padding: 5px 0;
+  }
+
+  .foot-social-btns {
+    display: none;
+    float: right;
+    width: 50%;
+    text-align: right;
+    padding: 5px 0;
+  }
+
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-around;
+  }
+
+  .foot-list {
+    float: left;
+    width: 200px;
+  }
+
+  .foot-list-item {
+    color: rgba(238, 238, 238, 0.8);
+    font-size: 0.8em;
+    padding: 0.5em 0;
+  }
+
+  .foot-list-item:hover {
+    color: rgba(238, 238, 238, 1);
+  }
+
+  .Iq2xPb .kaAt2 .KKHx9e {
+    background-color: #3C4043;
+  }
+
+  .Iq2xPb .kaAt2.KKjvXb .KKHx9e {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb .kaAt2.RDPZE .KKHx9e {
+    background-color: #70757a;
+  }
+
+  .wGQFbe.N2RpBe:not(.RDPZE),
+  .wGQFbe.B6Vhqe:not(.RDPZE) {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .wGQFbe.i9xfbb>.MbhUzd,
+  .wGQFbe.u3bW4e>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .wGQFbe.wGQFbe:hover>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.04);
+  }
+
+  .wGQFbe.wGQFbe:focus>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .BJHAP.RDPZE:not(.N2RpBe):not(.B6Vhqe) {
+    border-color: #9AA0A6;
+  }
+
+  .da8bmd .BJHAP.N2RpBe.RDPZE,
+  .da8bmd .BJHAP.B6Vhqe.RDPZE,
+  .wMUAvd .BJHAP.RDPZE {
+    border-color: #5F6368;
+  }
+
+  .aomaEc.N2RpBe:not(.RDPZE) .Id5V1,
+  .aomaEc .nQOrEb {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .aomaEc .N2RpBe:not(.RDPZE) .Id5V1 {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .aomaEc.i9xfbb>.MbhUzd,
+  .aomaEc.u3bW4e>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .aomaEc :not(.RDPZE):hover>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.04);
+  }
+
+  .aomaEc :not(.RDPZE):focus>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .ECvBRb .N2RpBe.RDPZE .Id5V1,
+  .ECvBRb .N2RpBe.RDPZE .nQOrEb {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .ECvBRb .RDPZE:not(.N2RpBe) .Id5V1 {
+    border-color: #9AA0A6;
+  }
+
+  .da8bmd .ECvBRb .N2RpBe.RDPZE .Id5V1,
+  .da8bmd .ECvBRb .N2RpBe.RDPZE .nQOrEb,
+  .wMUAvd .ECvBRb .RDPZE .Id5V1 {
+    border-color: #5F6368;
+  }
+
+  .aYSFK> :first-child {
+    border-left: transparent solid 5px;
+  }
+
+  .aYSFK.N2RpBe> :first-child {
+    border-left-color: rgb(0, 145, 0);
+  }
+
+  .TFBnVe .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
+  }
+
+  .TFBnVe.u3bW4e .CeoRYc {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .RvMhje .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(255, 255, 255, .3), rgba(255, 255, 255, .3) 80%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .RvMhje a .snByac {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .RvMhje.u3bW4e .CeoRYc {
+    background-color: rgba(255, 255, 255, .3);
+  }
+
+  .QvWxOd .TpQm9d,
+  .QvWxOd .TpQm9d:hover,
+  .QvWxOd .TpQm9d:link,
+  .QvWxOd .TpQm9d:visited {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .ctEux .CeoRYc {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .ctEux .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
+  }
+
+  .p6JeP .kaAt2 {
+    color: rgb(104, 110, 115);
+  }
+
+  .p6JeP .kaAt2.KKjvXb {
+    background-color: rgba(76, 175, 80, 0.15);
+    color: rgb(0, 145, 0);
+  }
+
+  .p6JeP .kaAt2.KKjvXb.RDPZE {
+    background-color: rgba(189, 189, 189, .38);
+    color: #9AA0A6;
+  }
+
+  .p6JeP .k6JGBb {
+    fill: rgb(104, 110, 115);
+  }
+
+  .p6JeP .KKjvXb .k6JGBb {
+    fill: rgb(0, 145, 0);
+  }
+
+  .p6JeP .RDPZE .k6JGBb,
+  .p6JeP .KKjvXb.RDPZE.k6JGBb {
+    fill: #9AA0A6;
+  }
+
+  .mfr8Qd .SKMfG {
+    fill: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb .s7bIcf {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb .kaAt2 {
+    color: #3C4043;
+  }
+
+  .Iq2xPb .kaAt2.KKjvXb {
+    color: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb .kaAt2.RDPZE {
+    color: #70757a;
+    cursor: default;
+  }
+
+  .Iq2xPb .RDPZE+.s7bIcf {
+    background-color: #70757a;
+  }
+
+  .Iq2xPb .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
+  }
+
+  .Iq2xPb .PXrNBb {
+    fill: #5F6368;
+  }
+
+  .Iq2xPb .KKjvXb .PXrNBb {
+    fill: rgb(0, 145, 0);
+  }
+
+  .Iq2xPb RDPZE .PXrNBb,
+  .Iq2xPb .KKjvXb.RDPZE.PXrNBb {
+    fill: #9AA0A6;
+  }
+
+  .LKH0ge .cXrdqd {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .LKH0ge .Is7Fhb {
+    color: rgb(0, 145, 0);
+  }
+
+  .LKH0ge.u3bW4e .snByac {
+    color: rgb(0, 145, 0);
+  }
+
+  .LKH0ge.IYewr .oJeWuf.mIZh1c,
+  .LKH0ge.IYewr .oJeWuf.cXrdqd {
+    background-color: rgb(210, 235, 211);
+  }
+
+  .whsOnd:not([disabled]):focus~.AxOyFc.snByac,
+  .u3bW4e>.oJeWuf>.fqp6hd.snByac,
+  .u3bW4e.dm7YTc>.oJeWuf>.fqp6hd.snByac {
+    color: rgb(0, 145, 0);
+  }
+
+  .HNgK9.RDPZE .zHQkBf[disabled] {
+    color: rgba(0, 0, 0, .87);
+  }
+
+  .FlwNw.u3bW4e .oJeWuf:before {
+    border-color: rgb(0, 145, 0);
+  }
+
+  .FlwNw .zHQkBf:not([disabled]):focus~.snByac {
+    color: rgb(0, 145, 0);
+  }
+
+  .yqQS1 .cXrdqd {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .yqQS1 .Is7Fhb {
+    color: rgb(0, 145, 0);
+  }
+
+  .yqQS1.IYewr .oJeWuf.mIZh1c,
+  .yqQS1.IYewr .oJeWuf.cXrdqd {
+    background-color: rgb(210, 235, 211);
+  }
+
+  .toT2u.RDPZE .zHQkBf[disabled] {
+    color: rgba(0, 0, 0, .87);
+  }
+
+  .Y4klN.N2RpBe .espmsb {
+    border-color: rgb(76, 175, 80);
+    color: rgba(255, 255, 255, 1);
+  }
+
+  .Y4klN.N2RpBe>.MLPG7 {
+    border-color: rgb(210, 235, 211);
+  }
+
+  .Y4klN.i9xfbb>.MbhUzd,
+  .Y4klN.u3bW4e>.MbhUzd {
+    background-color: rgba(76, 175, 80, 0.15);
+  }
+
+  .IszBRc-Guievd-HLvlvd .TCbR9b {
+    display: block;
+  }
+
+  .IszBRc-Guievd-HLvlvd .doKKyd {
+    display: none;
+  }
+
+  .barETd .X1clqd,
+  .barETd .qRUolc,
+  .barETd .pPQgvf {
+    color: #202124;
+    fill: #5F6368;
+  }
+
+  .IszBRc-Guievd-JaPV2b .barETd {
+    border: 2px solid white;
+  }
+
+  .IszBRc-Guievd-HLvlvd .barETd {
+    border: 2px solid black;
+  }
+
+  .IOncP .HvOprf {
+    color: rgb(0, 145, 0);
+  }
+
+  .IOncP .HvOprf .CeoRYc {
+    background-color: rgb(0, 145, 0);
+  }
+
+  .IOncP .HvOprf .MbhUzd {
+    background-image: radial-gradient(circle farthest-side, rgba(76, 175, 80, 0.15), rgba(76, 175, 80, 0.15) 80%, rgba(76, 175, 80, 0) 100%);
+  }
+
+  .IOncP .HvOprf:hover {
+    border-color: rgb(210, 235, 211);
+  }
+
+  .IOncP .HvOprf.RDPZE {
+    color: rgba(0, 145, 0, 0.5);
+  }
+
+  .IOncP .HvOprf.RDPZE:hover {
+    box-shadow: none;
+  }
+
+  .IOncP .HvOprf.qs41qe.qs41qe {
+    box-shadow: 0px 2px 1px -1px rgba(0, 145, 0, 0.2), 0px 1px 1px 0px rgba(0, 145, 0, 0.14), 0px 1px 3px 0px rgba(0, 145, 0, 0.12);
+  }
+
+  .da8bmd .RDPZE .Pi3FHb {
+    outline-color: rgba(0, 0, 0, .54);
+  }
+
+  .LygNqb.RDPZE .snByac {
+    color: #70757a;
+  }
+
+  .LygNqb.RDPZE.N2RpBe .snByac,
+  .LygNqb.RDPZE.B6Vhqe .snByac {
+    color: #202124;
+  }
+
+  .wMUAvd .LygNqb.RDPZE .snByac,
+  .wMUAvd .LygNqb.RDPZE.N2RpBe .snByac,
+  .wMUAvd .LygNqb.RDPZE.B6Vhqe .snByac {
+    color: black;
+  }
+
+  .LygNqb.RDPZE .PgfOZ svg {
+    fill: rgba(0, 0, 0, .54);
+  }
+
+  .LygNqb.RDPZE.N2RpBe .PgfOZ,
+  .LygNqb.RDPZE.B6Vhqe .PgfOZ svg {
+    fill: rgba(0, 0, 0, .87);
+  }
+
+  .G4EHhc,
+  .G4EHhc .Wic03c .tL9Q4c,
+  .G4EHhc .I9OJHe .KRoqRc,
+  .G4EHhc .PyrB4,
+  .G4EHhc .snByac {
+    font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
+  }
+
+  .LgNcQe,
+  .LgNcQe .Wic03c .tL9Q4c,
+  .LgNcQe .I9OJHe .KRoqRc,
+  .LgNcQe .PyrB4,
+  .LgNcQe .snByac {
+    font-size: 24pt;
+    font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .M7eMe,
+  .M7eMe .Wic03c .tL9Q4c,
+  .M7eMe .I9OJHe .KRoqRc,
+  .M7eMe .PyrB4,
+  .M7eMe .snByac {
+    font-size: 12pt;
+    font-family: 'docs-Roboto', Helvetica, Arial, sans-serif;
+    letter-spacing: 0;
+  }
+
+  .OIC90c.RjsPE,
+  .OIC90c .zHQkBf,
+  .OIC90c .Wic03c .tL9Q4c,
+  .OIC90c .I9OJHe .KRoqRc,
+  .OIC90c .PyrB4,
+  .OIC90c .snByac {
+    font-size: 11pt;
+    line-height: 15pt;
+    letter-spacing: 0;
+  }
+
+  .sId0Ce,
+  .sId0Ce a {
+    color: rgba(0, 0, 0, 0.66);
+  }
+
+  .gjs-grid-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: row;
+    min-height: auto;
+    padding: 10px 0;
+  }
+
+  .gjs-grid-column {
+    flex: 1 1 0%;
+    padding: 5px 0;
+  }
+
+  .gjs-link {
+    vertical-align: top;
+    max-width: 100%;
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #irryte {
+    text-align: center;
+  }
+
+  #idjbxj {
+    font-size: 20px !important;
+  }
+
+  #i58zv2 {
+    width: 80%;
+  }
+
+  #i4ildh {
+    font-size: 15px !important;
+  }
+
+  #io1n5w {
+    font-size: 15px !important;
+  }
+
+  #ik9h5t {
+    font-size: 15px !important;
+  }
+
+  #is7i7w {
+    font-size: 15px !important;
+  }
+
+  #i6vw9o {
+    font-size: 15px !important;
+  }
+
+  #i4j0vp {
+    background-color: rgba(64, 117, 5, 0.47);
+  }
+
+  #im3of4 {
+    padding-top: 135px;
+    padding-right: 0px;
+    padding-bottom: 100px;
+    padding-left: 0px;
+    background-color: rgba(0, 0, 0, 1);
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    min-height: 200px;
+  }
+
+  #ip3n93 {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 2px;
+    margin-left: 0px;
+  }
+
+  #i5sobn {
+    border: 0px solid black;
+    color: #000000;
+    text-align: left;
+    font-size: 75px !important;
+    transition: opacity 5s ease 0s;
+    text-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+  }
+
+  #ibhder {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-right: 184px;
+    margin-bottom: 0px;
+    margin-left: 139px;
+  }
+
+  #ir86ui {
+    padding: 10px;
+    font-size: 40px !important;
+    font-family: Lucida Sans Unicode, Lucida Grande, sans-serif;
+    text-align: center;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+  }
+
+  #i2nbno {
+    padding: 10px;
+    font-size: 100px !important;
+    font-family: Lucida Sans Unicode, Lucida Grande, sans-serif;
+    text-align: center;
+  }
+
+#igtuih {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
+    background-size: cover;
+    background-image: linear-gradient(rgba(21, 21, 21, 0.61) 1%, rgba(21, 21, 21, 0.61) 100%), url(https://placehold.co/150/777/white.png?text=IMAGE);
+    perspective: 50px;
+    transition: opacity 3s ease-in 1s;
+    border: 0px solid #161616;
+    opacity: 100%;
+    padding-top: 35px;
+    padding-right: 0px;
+    padding-bottom: 217px;
+    padding-left: 0px;
+    background-origin: padding-box;
+    margin: 0px;
+}
+
+
+  #i9m5cg {
+    padding: 10px;
+    font-size: 25px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  #il4h1l {
+    padding: 10px;
+    font-size: 25px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  #imsppp {
+    box-sizing: inherit;
+    margin: 0px;
+    color: rgb(253, 253, 253);
+    font-family: Roboto, arial, sans-serif;
+    font-size: 18px;
+    background-color: rgb(64, 103, 29);
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-top: 15px;
+    padding-right: 0px;
+    padding-bottom: 15px;
+    padding-left: 0px;
+  }
+
+  #i3orqh {
+    box-sizing: inherit;
+    letter-spacing: unset;
+    text-transform: unset;
+  }
+
+  #iyfdd9 {
+    box-sizing: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    font-weight: 700;
+    line-height: inherit;
+    font-size: inherit !important;
+  }
+
+  #in9eov {
+    padding: 0px;
+    font-size: 36px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #40671d;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+  }
+
+  #ierc9j {
+    box-sizing: inherit;
+    font-family: Roboto, arial, sans-serif;
+    font-size: 18px;
+    overflow-wrap: break-word;
+    line-height: 1.8;
+    margin-top: 0px;
+    color: rgb(94, 94, 94);
+    flex-grow: 1;
+    max-width: 100%;
+    text-align: left;
+    margin-bottom: 0px !important;
+  }
+
+  #ie9bjl {
+    flex-basis: 73%;
+    flex-grow: 0;
+    padding-right: 0px;
+    padding-left: 29px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }
+
+  #ib7z6a {
+    min-height: 571px;
+  }
+
+   #imjqz7 {
+    background-color: rgba(0, 0, 0, 0.35);
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-top: 48px;
+    padding-right: 0px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    color: rgba(0, 0, 0, 1);
+  }
+
+  #ided1x {
+    padding: 10px;
+  }
+
+  #infbcg {
+    font-size: 46px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgba(30, 152, 12, 1);
+    text-align: left;
+  }
+
+  #ioolhp {
+    color: rgba(47, 162, 65, 1);
+    padding: 10px;
+    font-size: 30px !important;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #i9qycs {
+    text-align: center;
+    font-size: 18px !important;
+    text-decoration: underline;
+  }
+
+  .gjs-container {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  .gjs-section {
+    display: flex;
+    padding: 50px 0;
+  }
+
+  #iq5mrz {
+    padding: 10px;
+    font-size: 35px !important;
+    font-weight: 300;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  #ij4jeh {
+    padding: 10px;
+    font-size: 15px !important;
+    font-weight: 300;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+  }
+
+  #izlyuj {
+    font-size: 35px !important;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #40671d;
+  }
+
+  #i8dj9c {
+    padding-top: 0px;
+  }
+
+  .gjs-divider {
+    height: 3px;
+    width: 100%;
+    margin: 10px;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  #i2xtri {
+    padding: 10px;
+  }
+
+  #iw1eoz {
+    padding: 10px;
+    font-size: 25px !important;
+    text-align: center;
+    background-color: rgba(31, 148, 13, 0.82);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    position: fixed;
+    top: auto;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    color: rgba(255, 255, 255, 1);
+    font-family: Arial, Helvetica, sans-serif;
+    transition: opacity 1s ease 0s;
+  }
+
+  #id54a5 {
+    color: #d983a6;
+    padding: 10px;
+  }
+
+  #irxaea {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  #iqyoxm {
+    padding: 10px;
+    font-size: 25px !important;
+    text-align: center;
+    background-color: rgba(31, 148, 13, 0.82);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    position: fixed;
+    top: auto;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    color: rgba(255, 255, 255, 1);
+    font-family: Arial, Helvetica, sans-serif;
+    transition: opacity 1s ease 0s;
+  }
+
+  @media screen and (forced-colors: active) {
+    .Iq2xPb .s7bIcf {
+      outline: 1px solid Highlight;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .gjs-grid-row {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .foot-lists {
+      display: none;
+    }
+  }
+  
+</style>
+</style>
+<script>
+console.log("script works -- ALEX");
+
+// Function to get URL parameter by name
+function getUrlParameter(name) {
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[#&]" + name + "(=([^&#]*)|&|#|$)");
+    var results = regex.exec(window.location.href);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// Google Sheets API function to fetch data
+function fetchDataFromGoogleSheets() {
+  const sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
+  const apiKey = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      const tourName = getUrlParameter('tour');
+      let rowIndex = -1;
+      
+      data.values.forEach((row, index) => {
+        if (row[0].includes(tourName)) {
+          rowIndex = index;
+          return;
+        }
+      });
+
+      if (rowIndex !== -1) {
+        const row = data.values[rowIndex];
+        const tourName = row[1];
+        const columnC = row[2];
+        const columnF = row[5];
+        const columnG = row[6];
+        const columnH = row[7];
+        const columnI = row[8];
+        const columnAE = row[30];
+        const columnW = row[22];
+        const columnX = row[23];
+        const columnL = row[11];
+        const columnJ = row[9];
+        const columnZ = row[25];
+        const columnY = row[24];
+        const columnAG = row[32];
+        const columnAI = row[34];
+        const columnAK = row[36];
+        const columnAL = row[37];
+
+        document.getElementById("i2nbno").innerText = tourName;
+        document.getElementById("iyfdd9").innerHTML = `
+          ${columnC} days ${columnF} <br>  
+          $${columnG} Per Person <br> 
+          Single Add: $${columnH} Triple deduct: $${columnI} <br> 
+          ${columnL ? `Own air deduct: $${columnL} <br>` : ''} 
+          ${columnAL ? `$${columnAL} Per Person Early Booking Discounts <br>` : ''}
+        `;
+        document.getElementById("ided1x").innerHTML = `${columnW}`;
+
+        // Populate the "What's included" list
+        const whatIncludedList = document.getElementById('what-included-list');
+        whatIncludedList.innerHTML = columnX; // Set the innerHTML directly
+
+        // Populate the "Hotels" list
+        const hotelsList = document.getElementById('hotels-list');
+        hotelsList.innerHTML = columnY.replace(/\n/g, '<br>'); // Replace new line characters with <br> tags
+
+        document.getElementById("ij4jeh").innerHTML = `${columnZ}`;
+        document.getElementById("i4glh5").innerHTML = `${columnY.replace(/\n/g, '<br>')}`; // Replace new line characters with <br> tags
+
+        const img1Url = columnAG;
+        const img2Url = columnAI;
+        const img3Url = columnAK;
+
+        const container = document.getElementById('image-container');
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '250px';
+        iframe.style.border = 'none';
+        iframe.className = 'gjs-grid-column';
+        iframe.style.overflow = 'hidden';
+        iframe.setAttribute('scrolling', 'no');
+        const iframeUrl = `https://www.milezerotours.net/image-demo.html?image=${encodeURIComponent(img1Url)}&image=${encodeURIComponent(img2Url)}&image=${encodeURIComponent(img3Url)}`;
+        iframe.src = iframeUrl;
+        container.appendChild(iframe);
+
+        const headerBanner = document.querySelector('.header-banner');
+        headerBanner.style.backgroundImage = `linear-gradient(rgba(21, 21, 21, 0.18) 1%, rgba(21, 21, 21, 0.18) 100%), url(${columnAE})`;
+
+        const element = document.getElementById('igtuih');
+        const style = window.getComputedStyle(element);
+        const currentBackgroundImage = style.getPropertyValue('background-image');
+        const urlRegex = /url\("([^"]+)"\)/;
+        const matches = currentBackgroundImage.match(urlRegex);
+        let newUrl = columnAE;
+
+        if (matches && matches.length > 1) {
+          const newBackgroundImage = currentBackgroundImage.replace(matches[1], newUrl);
+          element.style.backgroundImage = newBackgroundImage;
+        } else {
+          console.error('Unable to extract current background image URL.');
+        }
+
+      } else {
+        console.log("Tour not found");
+        const url = "tour404.html";
+        window.open(url, "_blank");
+      }
+    })
+    .catch(error => console.error('Error fetching data from Google Sheets:', error));
+}
+
+
+
+
+
+// Function to load images dynamically
+function loadImages(imageUrls) {
+    const container = document.getElementById('image-container');
+    imageUrls.forEach(url => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.className = 'gjs-grid-column';
+        container.appendChild(img);
+    });
+}
+
+// Call the function to fetch data when the page loads
+window.onload = fetchDataFromGoogleSheets;
+
+
+
+</script>
