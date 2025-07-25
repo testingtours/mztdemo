@@ -121,9 +121,9 @@ const sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
 const apiKey  = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
 
 /* ==================== HELPERS ==================== */
-function getHashParam(k){
-  const m = new RegExp('(?:^|[#&])' + k + '=([^&#]*)').exec(location.hash);
-  return m ? decodeURIComponent(m[1].replace(/\+/g,' ')) : null;
+function getHashParam(key){
+  const m = new RegExp('(?:^|[#&])' + key + '=([^&#]*)').exec(location.hash);
+  return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : null;
 }
 function toHttps(url){
   if(!url) return '';
@@ -139,57 +139,62 @@ function toHttps(url){
 async function loadTour(track){
   const code = getHashParam('tour');
   if(!code){ console.warn('Missing #tour param'); return; }
+
   const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
   const sheet    = await fetch(sheetURL).then(r=>r.json());
   const row      = sheet.values.find(r=>r[0] && r[0].includes(code));
-  if(!row){ console.error('Code not found'); return; }
+  if(!row){ console.error('Tour code not found in sheet'); return; }
 
   const tourURL  = toHttps(row[37]);
   if(!tourURL){ console.error('Column AL is empty'); return; }
 
-  const tour     = await fetch(tourURL).then(r=>r.json()).catch(e=>{console.error('Bad .tour',e);});
+  const tour = await fetch(tourURL).then(r=>r.json()).catch(e=>{console.error('Invalid .tour JSON',e);});
   if(!tour) return;
 
-  /* ---- query elements after DOM exists ---- */
-  const banner   = document.getElementById('banner');
-  const nameSpan = document.getElementById('tourName');
-  const facts    = document.getElementById('quickFacts');
-  const itin     = document.getElementById('itinerary');
-  const inc      = document.getElementById('included');
-  const hotels   = document.getElementById('hotels');
-  const policies = document.getElementById('policies');
+  /* ---- Element handles ---- */
+  const bannerEl   = document.getElementById('igtuih');          // header banner
+  const nameEl     = document.getElementById('i2nbno');          // big tour name
+  const factsEl    = document.getElementById('iyfdd9');          // quick facts line
+  const itinEl     = document.getElementById('ided1x');          // itinerary div
+  const incEl      = document.getElementById('what-included-list'); // ul
+  const hotelsEl   = document.getElementById('hotels-list');     // ul
+  const policiesEl = document.getElementById('ij4jeh');          // policies div
 
-  banner  && (banner.style.backgroundImage = `url(${tour.banner})`);
-  nameSpan&& (nameSpan.textContent        = tour.metadata.name);
-  facts   && (facts.innerHTML            = `${tour.overview.days} days | $${tour.overview.pricePerPerson} pp`);
-  itin    && (itin.innerHTML             = tour.itinerary.map(d=>`<p>${d}</p>`).join(''));
-  inc     && (inc.innerHTML              = tour.included.map(i=>`<li>${i}</li>`).join(''));
-  hotels  && (hotels.innerHTML           = tour.hotels.map(h=>`<li>${h.name}</li>`).join(''));
-  policies&& (policies.innerHTML         = tour.policies);
+  bannerEl && (bannerEl.style.backgroundImage = `linear-gradient(rgba(21,21,21,.65),rgba(21,21,21,.65)),url(${tour.banner})`);
+  nameEl   && (nameEl.textContent = tour.metadata.name);
+  factsEl  && (factsEl.innerHTML  = `${tour.overview.days} days&nbsp;|&nbsp;$${tour.overview.pricePerPerson} pp`);
+
+  itinEl   && (itinEl.innerHTML   = tour.itinerary.map(d=>`<p>${d}</p>`).join(''));
+  incEl    && (incEl.innerHTML    = tour.included .map(i=>`<li>${i}</li>`).join(''));
+  hotelsEl && (hotelsEl.innerHTML = tour.hotels   .map(h=>`<li>${h.name}</li>`).join(''));
+  policiesEl && (policiesEl.innerHTML = tour.policies);
 
   if(track){
-    track.innerHTML='';
-    tour.carousel.forEach(src=>{ const img=new Image(); img.src=src; track.appendChild(img); });
+    track.innerHTML = '';
+    tour.carousel.forEach(src=>{ const img = new Image(); img.src = src; track.appendChild(img); });
   }
 }
 
 /* ==================== CAROUSEL BIND ==================== */
-window.addEventListener('DOMContentLoaded',()=>{
-  const track = document.getElementById('carousel');
-  const left  = document.querySelector('.left');
-  const right = document.querySelector('.right');
-  let offset  = 0;
+window.addEventListener('DOMContentLoaded',() => {
+  const track = document.getElementById('image-container');
+  const left  = document.querySelector('.arrow-left');
+  const right = document.querySelector('.arrow-right');
+
+  let offset = 0;
   function slide(dir){
-    if(!track||!track.firstElementChild) return;
-    const w = track.firstElementChild.offsetWidth || 350;
-    offset += dir*w;
+    if(!track || !track.firstElementChild) return;
+    const cardW = track.firstElementChild.offsetWidth || 350;
+    offset += dir * cardW;
     const max = track.scrollWidth - track.clientWidth;
     if(offset < 0) offset = max;
     else if(offset > max) offset = 0;
     track.style.transform = `translateX(-${offset}px)`;
   }
-  left  && left .addEventListener('click',()=>slide(-1));
-  right && right.addEventListener('click',()=>slide( 1));
+
+  left  && left .addEventListener('click', () => slide(-1));
+  right && right.addEventListener('click', () => slide( 1));
+
   loadTour(track);
 });
 </script>
