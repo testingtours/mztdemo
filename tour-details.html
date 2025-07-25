@@ -154,7 +154,18 @@ async function loadTour(track){
   /* ---- Element handles ---- */
   const bannerEl   = document.getElementById('igtuih');          // header banner
   const nameEl     = document.getElementById('i2nbno');          // big tour name
-  const factsEl    = document.getElementById('iyfdd9');          // quick facts line
+  const   // Build human‑readable quick‑facts string
+  function fmtCur(v){return typeof v==='number' && !isNaN(v) ? `$${v.toLocaleString()}` : null;}
+  const factsParts=[];
+  if(tour.overview.days)        factsParts.push(`${tour.overview.days} days`);
+  if(tour.overview.meals)       factsParts.push(tour.overview.meals);
+  const price = fmtCur(tour.overview.pricePerPerson);
+  if(price)                    factsParts.push(`${price} pp`);
+  const early = fmtCur(tour.overview.earlyDiscount);
+  if(early)                    factsParts.push(`${early} early‑bird off`);
+  factsEl  && (factsEl.innerHTML = factsParts.join(' | '));
+
+  itinEl   && (itinEl.innerHTML   = tour.itinerary.map(d=>`<p>${d}</p>`).join('')); document.getElementById('iyfdd9');          // quick facts line
   const itinEl     = document.getElementById('ided1x');          // itinerary div
   const incEl      = document.getElementById('what-included-list'); // ul
   const hotelsEl   = document.getElementById('hotels-list');     // ul
