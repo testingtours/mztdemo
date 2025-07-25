@@ -31,9 +31,23 @@
     /* --------------------------
        Call‑to‑Action Bar
     --------------------------*/
-    #book-now-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:1.25rem;background:#1f940d;color:#fff;padding:.6rem 2.4rem;font-size:clamp(1rem,2.5vw,1.25rem);border-radius:1.25rem;z-index:999;font-weight:700;box-shadow:0 4px 8px rgba(0,0,0,.25);transition:transform .25s ease,box-shadow .25s ease}
-    #book-now-bar:hover{transform:translate(-50%,-4px) scale(1.05);box-shadow:0 8px 14px rgba(0,0,0,.35)}
-    #book-now-bar a{color:inherit;text-decoration:none}
+#book-now-bar {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1.25rem;
+  background: rgba(31, 148, 13, 0.75); /* slightly transparent green */
+  backdrop-filter: blur(10px);         /* blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  color: #fff;
+  padding: .6rem 2.4rem;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  border-radius: 1.25rem;
+  z-index: 9999;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
 
     /* --------------------------
        Main Grid Layout
