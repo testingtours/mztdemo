@@ -33,32 +33,23 @@
     --------------------------*/
 #book-now-bar {
   position: fixed;
-  top: 1.25rem;             /* Floating near the top */
-  right: 1.5rem;            /* Move to the corner */
-  background: rgba(255, 255, 255, 0.15); /* translucent background */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);  /* Safari support */
-  color: #fff;
-  padding: .6rem 1.6rem;
+  bottom: 2rem;                     /* Anchored to bottom of the viewport */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 2rem;
   font-size: clamp(1rem, 2.5vw, 1.15rem);
-  border-radius: 999px;
-  z-index: 9999;
   font-weight: 700;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12); /* Light translucent background */
+  backdrop-filter: blur(16px);          /* Glassmorphic blur effect */
+  -webkit-backdrop-filter: blur(16px);  /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 9999;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: 1px solid rgba(255, 255, 255, 0.3); /* subtle border for depth */
 }
 
-#book-now-bar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
-}
-
-
-#book-now-bar a {
-  color: inherit;
-  text-decoration: none;
-}
 
     /* --------------------------
        Main Grid Layout
