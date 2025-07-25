@@ -115,65 +115,79 @@
   </section>
 
   <!-- ========================= Scripts ========================= -->
-  <script>
-  console.log("script works -- ALEX");
+ <script>
+/* ---------- CONFIG ---------- */
+const sheetId   = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
+const apiKey    = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
 
-  // Helper: get URL parameter
-  function getUrlParameter(name){name=name.replace(/[/\[\]]/g,"\\$&");const regex=new RegExp("[#&]"+name+"(=([^&#]*)|&|#|$)");const results=regex.exec(window.location.href);if(!results)return null;if(!results[2])return '';return decodeURIComponent(results[2].replace(/\+/g," "))}
+/* ---------- helpers ---------- */
+function getUrlParam(k){
+  k = k.replace(/[\\[\\]]/g,'\\\\$&');
+  const m = new RegExp('[#&]' + k + '(=([^&#]*)|&|#|$)').exec(location.href);
+  return !m ? null : decodeURIComponent((m[2]||'').replace(/\\+/g,' '));
+}
 
-  // Proxy helper to bypass CORS / hot‑link blocks using images.weserv.nl
-  function proxyImage(url){if(!url)return url;const stripped=url.replace(/^https?:\/\//,'');return `https://images.weserv.nl/?url=${encodeURIComponent(stripped)}`;}
+/* ---------- 1. get .tour link from Column AL ---------- */
+async function loadTour(){
+  const code = getUrlParam('tour');          // “250729 - Yukon 3”
+  if(!code){ console.error('No ?tour='); return; }
 
-  // Carousel controls
-  const track=document.getElementById('image-container');
-  let position=0;
-  function moveCarousel(dir){const cardWidth=track.querySelector('img')?.offsetWidth||350;position+=dir*cardWidth;const maxScroll=track.scrollWidth-track.clientWidth;if(position<0)position=maxScroll;else if(position>maxScroll)position=0;track.style.transform=`translateX(-${position}px)`;}
-  document.querySelector('.arrow-left').addEventListener('click',()=>moveCarousel(-1));
-  document.querySelector('.arrow-right').addEventListener('click',()=>moveCarousel(1));
+  const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
+  const sheet = await fetch(sheetURL).then(r=>r.json());
+  const row   = sheet.values.find(r => r[0] && r[0].includes(code));
+  if(!row){ alert('Tour not found'); return; }
 
-  // Google Sheets API fetch
-  function fetchDataFromGoogleSheets(){
-    const sheetId='1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
-    const apiKey='AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
-    const url=`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
+  const tourPath = row[37];                  // ← Column AL
+  if(!tourPath){ alert('No .tour file path'); return; }
 
-    fetch(url)
-      .then(resp=>resp.json())
-      .then(data=>{
-        const tourCode=getUrlParameter('tour');
-        if(!tourCode){console.error('No tour param');return;}
-        const row=data.values.find(r=>r[0]&&r[0].includes(tourCode));
-        if(!row){console.warn('Tour not found');window.open('tour404.html','_blank');return;}
+  /* ---------- 2. fetch & parse the .tour file ---------- */
+  const tourURL = tourPath.startsWith('http') ? tourPath
+                 : `https://milezerotours.net/tourdata/${tourPath}`;
+  const tour    = await fetch(tourURL).then(r=>r.json());
 
-        // Column mapping
-        const tourName=row[1];
-        const colC=row[2], colF=row[5], colG=row[6], colH=row[7], colI=row[8];
-        const colL=row[11];
-        const colW=row[22], colX=row[23], colY=row[24], colZ=row[25];
-        const colAD=row[30]; // Banner image URL
-        const colAG=row[32], colAI=row[34], colAK=row[36];
-        const colAL=row[37];
+  /* ---------- 3. populate the page ---------- */
+  // Banner
+  document.querySelector('.header-banner')
+          .style.backgroundImage =
+    `linear-gradient(rgba(21,21,21,.65),rgba(21,21,21,.65)),url(${tour.banner})`;
 
-        // Populate UI
-        document.getElementById('i2nbno').innerText=tourName;
-        document.getElementById('iyfdd9').innerHTML=`${colC} days ${colF}<br>$${colG} Per Person<br>Single Add: $${colH}&nbsp;|&nbsp;Triple deduct: $${colI}<br>${colL?`Own air deduct: $${colL}<br>`:''}${colAL?`$${colAL} Early Booking Discount<br>`:''}`;
-        document.getElementById('ided1x').innerHTML=colW;
-        document.getElementById('what-included-list').innerHTML=colX;
-        document.getElementById('hotels-list').innerHTML=colY.replace(/\n/g,'<br>');
-        document.getElementById('ij4jeh').innerHTML=colZ;
+  // Title & quick facts
+  document.getElementById('i2nbno').textContent = tour.metadata.name;
+  const o = tour.overview;
+  document.getElementById('iyfdd9').innerHTML =
+      `${o.days} days | $${o.pricePerPerson} pp`
+    + (o.singleAdd ? `<br>Single Add $${o.singleAdd}` : '')
+    + (o.tripleDeduct ? `<br>Triple Deduct $${o.tripleDeduct}` : '');
 
-        // Images into carousel track using proxy
-        const imageUrls=[colAG,colAI,colAK].filter(Boolean).map(proxyImage);
-        imageUrls.forEach(url=>{const img=new Image();img.src=url;img.alt='Tour Image';img.loading='lazy';track.appendChild(img);});
+  // Itinerary
+  document.getElementById('ided1x').innerHTML =
+      tour.itinerary.map(d=>`<p>${d}</p>`).join('');
 
-        // Banner background via proxy
-        const bannerUrl=proxyImage(colAD);
-        document.querySelector('.header-banner').style.backgroundImage=`linear-gradient(rgba(21,21,21,0.65),rgba(21,21,21,0.65)),url('${bannerUrl}')`;
-      })
-      .catch(err=>console.error('Error fetching data from Google Sheets:',err));
-  }
+  // Included list
+  document.getElementById('what-included-list').innerHTML =
+      tour.included.map(i=>`<li>${i}</li>`).join('');
 
-  window.addEventListener('DOMContentLoaded',fetchDataFromGoogleSheets);
-  </script>
+  // Hotels
+  document.getElementById('hotels-list').innerHTML =
+      tour.hotels.map(h=>`<li>${h.name}</li>`).join('');
+
+  // Policies
+  document.getElementById('ij4jeh').innerHTML = tour.policies;
+
+  // Carousel images
+  const track = document.getElementById('image-container');
+  track.innerHTML = '';
+  tour.carousel.forEach(b64=>{
+      const img = new Image();
+      img.src = b64;
+      img.alt = 'Tour photo';
+      img.className = 'gjs-grid-column';
+      track.appendChild(img);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', loadTour);
+</script>
+
 </body>
 </html>
