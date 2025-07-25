@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "code": "PT-15",
+    "name": "Portugal & The Azores",
+    "created": "2025-07-25T12:00:00Z",
+    "updated": "2025-07-25T12:00:00Z",
+    "author": "Alex Rose"
+  },
+  "banner": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",   // 1,000+ chars
+  "carousel": [
+    "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",        // img 1
+    "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",        // img 2
+    "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..."         // img 3
+  ],
+  "overview": {
+    "days": 14,
+    "meals": "26 Meals",
+    "pricePerPerson": 4499,
+    "singleAdd": 950,
+    "tripleDeduct": -120,
+    "ownAirDeduct": -450,
+    "earlyDiscount": 200
+  },
+  "itinerary": [
+    "Day 1 – Fly to Lisbon, welcome dinner.",
+    "Day 2 – Lisbon walking tour & Fado show.",
+    "Day 3 – Sintra & Cascais excursion.",
+    "…"
+  ],
+  "included": [
+    "13 nights hotel accommodation",
+    "26 meals (13 breakfasts, 6 lunches, 7 dinners)",
+    "Luxury coach transportation",
+    "Professional tour director"
+  ],
+  "hotels": [
+    { "name": "Hotel Mundial",   "nights": 2, "city": "Lisbon" },
+    { "name": "Hotel do Canal",  "nights": 3, "city": "Horta"  },
+    { "name": "Azor Hotel",      "nights": 2, "city": "Ponta Delgada" }
+  ],
+  "policies": "### Deposit & Payments\\n* $500 deposit per person...\\n\\n### Cancellation\\n* 100% refund up to 90 days..."
+}
