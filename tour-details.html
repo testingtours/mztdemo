@@ -31,24 +31,7 @@
     /* --------------------------
        Call‑to‑Action Bar
     --------------------------*/
-#book-now-bar {
-  position: fixed;                            /* HUD behavior */
-  bottom: 2rem;                               /* Float above bottom edge */
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.75rem 2rem;
-  font-size: clamp(1rem, 2.5vw, 1.15rem);
-  font-weight: 700;
-  border-radius: 999px;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.15);      /* translucent */
-  backdrop-filter: blur(16px);               /* glass blur */
-  -webkit-backdrop-filter: blur(16px);       /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  z-index: 9999;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+
 
 
     /* --------------------------
@@ -98,8 +81,7 @@
   </header>
 
   <!-- ========================= Call‑to‑Action Bar ========================= -->
-  <div id="book-now-bar"><a href="https://milezerotours.com/booking" target="_blank" id="i35l8s"><span id="i7j86o">Book&nbsp;Now</span></a></div>
-
+// will add laterb
   <!-- ========================= Main Content ========================= -->
   <section class="gjs-grid-row" id="ib7z6a">
     <article id="ie9bjl" class="gjs-grid-column">
@@ -155,57 +137,85 @@ const toHttps = url => {
 };
 
 /* ========= MAIN ========= */
-async function loadTour(){
+async function loadTour() {
+  const loadingEl = document.getElementById('loading-overlay');
+  loadingEl?.classList.remove('fade-out'); // Show loading overlay
+
   const code = getHashParam('tour');
-  if(!code){console.warn('Missing #tour param');return;}
-
-  /* 1. look up Column AL (.tour path) */
-  const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
-  const sheet    = await fetch(sheetURL).then(r=>r.json());
-  const row      = sheet.values.find(r=>r[0] && r[0].includes(code));
-  if(!row){console.error('Tour code not found');return;}
-
-  const tourURL  = toHttps(row[37]);
-  if(!tourURL){console.error('Column AL empty');return;}
-
-  /* 2. fetch .tour JSON */
-  let tour;
-  try{ tour = await fetch(tourURL).then(r=>r.json()); }
-  catch(e){ console.error('.tour fetch/parse error',e); return; }
-
-  /* 3. element handles */
-  const bannerEl  = document.getElementById('igtuih');
-  const nameEl    = document.getElementById('i2nbno');
-  const factsEl   = document.getElementById('iyfdd9');
-  const itinEl    = document.getElementById('ided1x');
-  const incEl     = document.getElementById('what-included-list');
-  const hotelsEl  = document.getElementById('hotels-list');
-  const policiesEl= document.getElementById('ij4jeh');
-  const track     = document.getElementById('image-container');
-
-  /* 4. populate */
-  bannerEl && (bannerEl.style.backgroundImage = `linear-gradient(rgba(21,21,21,.65),rgba(21,21,21,.65)),url(${tour.banner})`);
-  nameEl   && (nameEl.textContent = tour.metadata.name);
-
-  if(factsEl){
-    const parts=[];
-    if(tour.overview.days)  parts.push(`${tour.overview.days} days`);
-    if(tour.overview.meals) parts.push(tour.overview.meals);
-    if(Number.isFinite(tour.overview.pricePerPerson)) parts.push(`$${tour.overview.pricePerPerson.toLocaleString()} pp`);
-    if(Number.isFinite(tour.overview.earlyDiscount) && tour.overview.earlyDiscount>0) parts.push(`$${tour.overview.earlyDiscount.toLocaleString()} early‑bird off`);
-    factsEl.innerHTML = parts.join(' | ');
+  if (!code) {
+    console.warn('Missing #tour param');
+    loadingEl?.classList.add('fade-out');
+    return;
   }
 
-  itinEl   && (itinEl.innerHTML   = tour.itinerary.map(p=>`<p>${p}</p>`).join(''));
-  incEl    && (incEl.innerHTML    = tour.included.map(i=>`<li>${i}</li>`).join(''));
-  hotelsEl && (hotelsEl.innerHTML = tour.hotels  .map(h=>`<li>${h.name}</li>`).join(''));
-  policiesEl && (policiesEl.innerHTML = tour.policies);
+  try {
+    // 1. Fetch spreadsheet data to get .tour JSON path
+    const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
+    const sheet = await fetch(sheetURL).then(r => r.json());
+    const row = sheet.values.find(r => r[0] && r[0].includes(code));
 
-  if(track){
-    track.innerHTML='';
-    tour.carousel.forEach(src=>{ const img=new Image(); img.src=src; track.appendChild(img); });
+    if (!row) {
+      console.error('Tour code not found');
+      return;
+    }
+
+    const tourURL = toHttps(row[37]);
+    if (!tourURL) {
+      console.error('Tour URL in Column AL is missing');
+      return;
+    }
+
+    // 2. Fetch tour JSON data
+    const tour = await fetch(tourURL).then(r => r.json());
+
+    // 3. Get element handles
+    const bannerEl   = document.getElementById('igtuih');
+    const nameEl     = document.getElementById('i2nbno');
+    const factsEl    = document.getElementById('iyfdd9');
+    const itinEl     = document.getElementById('ided1x');
+    const incEl      = document.getElementById('what-included-list');
+    const hotelsEl   = document.getElementById('hotels-list');
+    const policiesEl = document.getElementById('ij4jeh');
+    const track      = document.getElementById('image-container');
+
+    // 4. Populate content
+    if (bannerEl && tour.banner)
+      bannerEl.style.backgroundImage = `linear-gradient(rgba(21,21,21,.65),rgba(21,21,21,.65)),url(${tour.banner})`;
+
+    if (nameEl) nameEl.textContent = tour.metadata?.name || 'Tour Name';
+
+    if (factsEl) {
+      const parts = [];
+      if (tour.overview?.days) parts.push(`${tour.overview.days} days`);
+      if (tour.overview?.meals) parts.push(tour.overview.meals);
+      if (Number.isFinite(tour.overview?.pricePerPerson))
+        parts.push(`$${tour.overview.pricePerPerson.toLocaleString()} pp`);
+      if (Number.isFinite(tour.overview?.earlyDiscount) && tour.overview.earlyDiscount > 0)
+        parts.push(`$${tour.overview.earlyDiscount.toLocaleString()} early‑bird off`);
+      factsEl.innerHTML = parts.join(' | ');
+    }
+
+    if (itinEl) itinEl.innerHTML = tour.itinerary?.map(p => `<p>${p}</p>`).join('') || 'No itinerary available.';
+    if (incEl)  incEl.innerHTML  = tour.included?.map(i => `<li>${i}</li>`).join('') || '';
+    if (hotelsEl) hotelsEl.innerHTML = tour.hotels?.map(h => `<li>${h.name}</li>`).join('') || '';
+    if (policiesEl) policiesEl.innerHTML = tour.policies || '';
+
+    if (track && Array.isArray(tour.carousel)) {
+      track.innerHTML = '';
+      tour.carousel.forEach(src => {
+        const img = new Image();
+        img.src = src;
+        track.appendChild(img);
+      });
+    }
+  } catch (e) {
+    console.error('Error loading tour:', e);
+  } finally {
+    // 5. Hide loading overlay
+    loadingEl?.classList.add('fade-out');
   }
 }
+
 
 /* ========= CAROUSEL ========= */
 function initCarousel(){
@@ -231,8 +241,12 @@ window.addEventListener('DOMContentLoaded',()=>{
   loadTour();
 });
 </script>
+
 </body>
 </html>
+<div id="loading-overlay">
+  <img src="https://i.imgur.com/VUjU03O.gif" alt="Loading..." />
+</div>
 
 
 
