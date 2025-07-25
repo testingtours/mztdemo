@@ -115,98 +115,99 @@
   </section>
 
   <!-- ========================= Scripts ========================= -->
+
 <script>
-/* ==================== CONFIG ==================== */
+/* ========= CONFIG ========= */
 const sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
 const apiKey  = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
 
-/* ==================== HELPERS ==================== */
-function getHashParam(key){
-  const m = new RegExp('(?:^|[#&])' + key + '=([^&#]*)').exec(location.hash);
-  return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : null;
-}
-function toHttps(url){
+/* ========= HELPERS ========= */
+const getHashParam = k => (new URL(location.href)).hash.match(new RegExp(k+'=([^&#]*)'))?.[1]?.replace(/\+/g,' ') ?? null;
+const toHttps = url => {
   if(!url) return '';
-  url = url.trim();
+  url=url.trim();
   if(url.startsWith('https://')) return url;
   if(url.startsWith('http://'))  return url.replace('http://','https://');
   if(url.startsWith('//'))       return 'https:'+url;
-  if(url[0] !== '/')             url = '/'+url;
+  if(url[0]!=='/')              url='/'+url;
   return 'https://www.milezerotours.net'+url;
-}
+};
 
-/* ==================== MAIN LOADER ==================== */
-async function loadTour(track){
+/* ========= MAIN ========= */
+async function loadTour(){
   const code = getHashParam('tour');
-  if(!code){ console.warn('Missing #tour param'); return; }
+  if(!code){console.warn('Missing #tour param');return;}
 
+  /* 1. look up Column AL (.tour path) */
   const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
   const sheet    = await fetch(sheetURL).then(r=>r.json());
   const row      = sheet.values.find(r=>r[0] && r[0].includes(code));
-  if(!row){ console.error('Tour code not found in sheet'); return; }
+  if(!row){console.error('Tour code not found');return;}
 
   const tourURL  = toHttps(row[37]);
-  if(!tourURL){ console.error('Column AL is empty'); return; }
+  if(!tourURL){console.error('Column AL empty');return;}
 
-  const tour = await fetch(tourURL).then(r=>r.json()).catch(e=>{console.error('Invalid .tour JSON',e);});
-  if(!tour) return;
+  /* 2. fetch .tour JSON */
+  let tour;
+  try{ tour = await fetch(tourURL).then(r=>r.json()); }
+  catch(e){ console.error('.tour fetch/parse error',e); return; }
 
-  /* ---- Element handles ---- */
-  const bannerEl   = document.getElementById('igtuih');          // header banner
-  const nameEl     = document.getElementById('i2nbno');          // big tour name
-  const   // Build human‑readable quick‑facts string
-  function fmtCur(v){return typeof v==='number' && !isNaN(v) ? `$${v.toLocaleString()}` : null;}
-  const factsParts=[];
-  if(tour.overview.days)        factsParts.push(`${tour.overview.days} days`);
-  if(tour.overview.meals)       factsParts.push(tour.overview.meals);
-  const price = fmtCur(tour.overview.pricePerPerson);
-  if(price)                    factsParts.push(`${price} pp`);
-  const early = fmtCur(tour.overview.earlyDiscount);
-  if(early)                    factsParts.push(`${early} early‑bird off`);
-  factsEl  && (factsEl.innerHTML = factsParts.join(' | '));
+  /* 3. element handles */
+  const bannerEl  = document.getElementById('igtuih');
+  const nameEl    = document.getElementById('i2nbno');
+  const factsEl   = document.getElementById('iyfdd9');
+  const itinEl    = document.getElementById('ided1x');
+  const incEl     = document.getElementById('what-included-list');
+  const hotelsEl  = document.getElementById('hotels-list');
+  const policiesEl= document.getElementById('ij4jeh');
+  const track     = document.getElementById('image-container');
 
-  itinEl   && (itinEl.innerHTML   = tour.itinerary.map(d=>`<p>${d}</p>`).join('')); document.getElementById('iyfdd9');          // quick facts line
-  const itinEl     = document.getElementById('ided1x');          // itinerary div
-  const incEl      = document.getElementById('what-included-list'); // ul
-  const hotelsEl   = document.getElementById('hotels-list');     // ul
-  const policiesEl = document.getElementById('ij4jeh');          // policies div
-
+  /* 4. populate */
   bannerEl && (bannerEl.style.backgroundImage = `linear-gradient(rgba(21,21,21,.65),rgba(21,21,21,.65)),url(${tour.banner})`);
   nameEl   && (nameEl.textContent = tour.metadata.name);
-  factsEl  && (factsEl.innerHTML  = `${tour.overview.days} days&nbsp;|&nbsp;$${tour.overview.pricePerPerson} pp`);
 
-  itinEl   && (itinEl.innerHTML   = tour.itinerary.map(d=>`<p>${d}</p>`).join(''));
-  incEl    && (incEl.innerHTML    = tour.included .map(i=>`<li>${i}</li>`).join(''));
-  hotelsEl && (hotelsEl.innerHTML = tour.hotels   .map(h=>`<li>${h.name}</li>`).join(''));
+  if(factsEl){
+    const parts=[];
+    if(tour.overview.days)  parts.push(`${tour.overview.days} days`);
+    if(tour.overview.meals) parts.push(tour.overview.meals);
+    if(Number.isFinite(tour.overview.pricePerPerson)) parts.push(`$${tour.overview.pricePerPerson.toLocaleString()} pp`);
+    if(Number.isFinite(tour.overview.earlyDiscount) && tour.overview.earlyDiscount>0) parts.push(`$${tour.overview.earlyDiscount.toLocaleString()} early‑bird off`);
+    factsEl.innerHTML = parts.join(' | ');
+  }
+
+  itinEl   && (itinEl.innerHTML   = tour.itinerary.map(p=>`<p>${p}</p>`).join(''));
+  incEl    && (incEl.innerHTML    = tour.included.map(i=>`<li>${i}</li>`).join(''));
+  hotelsEl && (hotelsEl.innerHTML = tour.hotels  .map(h=>`<li>${h.name}</li>`).join(''));
   policiesEl && (policiesEl.innerHTML = tour.policies);
 
   if(track){
-    track.innerHTML = '';
-    tour.carousel.forEach(src=>{ const img = new Image(); img.src = src; track.appendChild(img); });
+    track.innerHTML='';
+    tour.carousel.forEach(src=>{ const img=new Image(); img.src=src; track.appendChild(img); });
   }
 }
 
-/* ==================== CAROUSEL BIND ==================== */
-window.addEventListener('DOMContentLoaded',() => {
-  const track = document.getElementById('image-container');
-  const left  = document.querySelector('.arrow-left');
-  const right = document.querySelector('.arrow-right');
+/* ========= CAROUSEL ========= */
+function initCarousel(){
+  const track=document.getElementById('image-container');
+  const left =document.querySelector('.arrow-left');
+  const right=document.querySelector('.arrow-right');
+  if(!(track&&left&&right)) return;
+  let offset=0;
+  const slide=dir=>{
+    if(!track.firstElementChild) return;
+    const w=track.firstElementChild.offsetWidth||350;
+    offset+=dir*w;
+    const max=track.scrollWidth-track.clientWidth;
+    if(offset<0) offset=max; else if(offset>max) offset=0;
+    track.style.transform=`translateX(-${offset}px)`;
+  };
+  left.addEventListener('click',()=>slide(-1));
+  right.addEventListener('click',()=>slide(1));
+}
 
-  let offset = 0;
-  function slide(dir){
-    if(!track || !track.firstElementChild) return;
-    const cardW = track.firstElementChild.offsetWidth || 350;
-    offset += dir * cardW;
-    const max = track.scrollWidth - track.clientWidth;
-    if(offset < 0) offset = max;
-    else if(offset > max) offset = 0;
-    track.style.transform = `translateX(-${offset}px)`;
-  }
-
-  left  && left .addEventListener('click', () => slide(-1));
-  right && right.addEventListener('click', () => slide( 1));
-
-  loadTour(track);
+window.addEventListener('DOMContentLoaded',()=>{
+  initCarousel();
+  loadTour();
 });
 </script>
 
