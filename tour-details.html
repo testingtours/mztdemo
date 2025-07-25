@@ -116,51 +116,85 @@
 
   <!-- ========================= Scripts ========================= -->
 <script>
-// --- config ---
+/* ----------------- CONFIG ----------------- */
 const sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
 const apiKey  = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
 
-// --- helpers ---
-function getParam(k){k=k.replace(/[\[\]]/g,'\$&');const m=new RegExp('[#&]'+k+'(=([^&#]*)|&|#|$)').exec(location.href);return m?decodeURIComponent((m[2]||'').replace(/\+/g,' ')):null;}
-function normalizeTourURL(raw){if(!raw)return'';raw=raw.trim();if(raw.startsWith('https://'))return raw; if(raw.startsWith('http://'))return raw.replace('http://','https://'); if(raw.startsWith('//'))return 'https:'+raw; if(raw[0]!=='/')raw='/'+raw; return 'https://www.milezerotours.net'+raw;}
+/* ----------------- ELEMENT HANDLES ----------------- */
+const bannerEl     = document.getElementById('banner');
+const tourNameEl   = document.getElementById('tourName');
+const quickFactsEl = document.getElementById('quickFacts');
+const itineraryEl  = document.getElementById('itinerary');
+const includedEl   = document.getElementById('included');
+const hotelsEl     = document.getElementById('hotels');
+const policiesEl   = document.getElementById('policies');
+const track        = document.getElementById('carousel');
 
-// --- carousel ---
-const track=document.getElementById('carousel');let pos=0;
-function move(dir){const w=track.querySelector('img')?.offsetWidth||350;pos+=dir*w;const max=track.scrollWidth-track.clientWidth; if(pos<0)pos=max; else if(pos>max)pos=0; track.style.transform=`translateX(-${pos}px)`;}
-
-async function init(){
-  const code=getParam('tour');
-  if(!code){alert('Missing ?tour=');return;}
-  const sheetURL=`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
-  const data=await fetch(sheetURL).then(r=>r.json());
-  const row=data.values.find(r=>r[0]&&r[0].includes(code));
-  if(!row){alert('Tour not found');return;}
-  const tourURL=normalizeTourURL(row[37]);
-  if(!tourURL){alert('No .tour path in Column AL');return;}
-  const tour=await fetch(tourURL).then(r=>r.json());
-
-  // header
-  banner.style.backgroundImage=`url(${tour.banner})`;
-  tourName.textContent=tour.metadata.name;
-  quickFacts.innerHTML=`${tour.overview.days} days&nbsp;|&nbsp;$${tour.overview.pricePerPerson} pp`;
-
-  // itinerary
-  itinerary.innerHTML=tour.itinerary.map(d=>`<p>${d}</p>`).join('');
-  included.innerHTML=tour.included.map(i=>`<li>${i}</li>`).join('');
-  hotels.innerHTML  =tour.hotels.map(h=>`<li>${h.name}</li>`).join('');
-  policies.innerHTML=tour.policies;
-
-  // images
-  tour.carousel.forEach(src=>{const img=new Image();img.src=src;track.appendChild(img);});
+/* ----------------- HELPERS ----------------- */
+function getParam(key){
+  key = key.replace(/[\[\]]/g, '\\$&');
+  const re = new RegExp('[#&]' + key + '(=([^&#]*)|&|#|$)');
+  const m  = re.exec(location.href);
+  return m ? decodeURIComponent((m[2] || '').replace(/\+/g, ' ')) : null;
 }
 
-// Wait for DOM so arrow buttons exist before binding
-window.addEventListener('DOMContentLoaded',()=>{
-  document.querySelector('.left')?.addEventListener('click',()=>move(-1));
-  document.querySelector('.right')?.addEventListener('click',()=>move(1));
+function normalizeTourURL(raw){
+  if(!raw) return '';
+  raw = raw.trim();
+  if(raw.startsWith('https://')) return raw;
+  if(raw.startsWith('http://'))  return raw.replace('http://','https://');
+  if(raw.startsWith('//'))       return 'https:' + raw;
+  if(raw[0] !== '/')             raw = '/' + raw;
+  return 'https://www.milezerotours.net' + raw;
+}
+
+/* ----------------- CAROUSEL ----------------- */
+let pos = 0;
+function move(dir){
+  const cardW = track.querySelector('img')?.offsetWidth || 350;
+  pos += dir * cardW;
+  const max = track.scrollWidth - track.clientWidth;
+  if(pos < 0)      pos = max;
+  else if(pos > max) pos = 0;
+  track.style.transform = `translateX(-${pos}px)`;
+}
+
+/* ----------------- MAIN ----------------- */
+async function init(){
+  const code = getParam('tour');
+  if(!code){ alert('Missing ?tour=CODE param'); return; }
+
+  // 1) Get .tour path from Column AL
+  const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
+  const sheet    = await fetch(sheetURL).then(r=>r.json());
+  const row      = sheet.values.find(r => r[0] && r[0].includes(code));
+  if(!row){ alert('Tour not found'); return; }
+
+  const tourURL  = normalizeTourURL(row[37]); // Column AL
+  if(!tourURL){ alert('No .tour path in Column AL'); return; }
+
+  // 2) Load .tour JSON
+  const tour = await fetch(tourURL).then(r=>r.json());
+
+  /* ----- Populate UI ----- */
+  bannerEl.style.backgroundImage = `url(${tour.banner})`;
+  tourNameEl.textContent         = tour.metadata.name;
+  quickFactsEl.innerHTML         = `${tour.overview.days} days | $${tour.overview.pricePerPerson} pp`;
+
+  itineraryEl.innerHTML = tour.itinerary.map(d=>`<p>${d}</p>`).join('');
+  includedEl.innerHTML  = tour.included.map(i=>`<li>${i}</li>`).join('');
+  hotelsEl.innerHTML    = tour.hotels.map(h=>`<li>${h.name}</li>`).join('');
+  policiesEl.innerHTML  = tour.policies;
+
+  tour.carousel.forEach(src=>{ const img=new Image(); img.src=src; track.appendChild(img); });
+}
+
+/* Bind arrows _after_ DOM is ready */
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.left') .addEventListener('click', () => move(-1));
+  document.querySelector('.right').addEventListener('click', () => move(1));
   init();
 });
-</script>
 
 
 </body>
