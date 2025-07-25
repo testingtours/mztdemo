@@ -115,79 +115,54 @@
   </section>
 
   <!-- ========================= Scripts ========================= -->
- <script>
-/* ---------- CONFIG ---------- */
-const sheetId   = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
-const apiKey    = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
+<script>
+// --- config ---
+const sheetId='1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
+const apiKey='AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
 
-/* ---------- helpers ---------- */
-function getUrlParam(k){
-  k = k.replace(/[\\[\\]]/g,'\\\\$&');
-  const m = new RegExp('[#&]' + k + '(=([^&#]*)|&|#|$)').exec(location.href);
-  return !m ? null : decodeURIComponent((m[2]||'').replace(/\\+/g,' '));
+// --- helpers ---
+function getParam(name){name=name.replace(/[\[\]]/g,'\\$&');const regex=new RegExp('[#&]'+name+'(=([^&#]*)|&|#|$)');const res=regex.exec(location.href);return res?decodeURIComponent((res[2]||'').replace(/\+/g,' ')):null;}
+function normalizeTourURL(raw){if(!raw) return '';raw=raw.trim();if(raw.startsWith('https://')) return raw;if(raw.startsWith('http://')) return raw.replace('http://','https://');if(raw.startsWith('//')) return 'https:'+raw;if(raw[0]!=='/') raw='/'+raw;return 'https://www.milezerotours.net'+raw;}
+
+// --- carousel logic ---
+const track=document.getElementById('carousel');let pos=0;
+function move(dir){const cardW=track.querySelector('img')?.offsetWidth||350;pos+=dir*cardW;const max=track.scrollWidth-track.clientWidth;if(pos<0)pos=max;else if(pos>max)pos=0;track.style.transform=`translateX(-${pos}px)`;}
+document.querySelector('.left').onclick=()=>move(-1);
+document.querySelector('.right').onclick=()=>move(1);
+
+async function init(){
+  const code=getParam('tour');
+  if(!code){alert('Missing ?tour=');return;}
+  const sheetURL=`https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
+  const data=await fetch(sheetURL).then(r=>r.json());
+  const row=data.values.find(r=>r[0]&&r[0].includes(code));
+  if(!row){alert('Tour not found');return;}
+  const tourURL=normalizeTourURL(row[37]);
+  if(!tourURL){alert('No .tour path in Column AL');return;}
+
+  const tour=await fetch(tourURL).then(r=>r.json());
+
+  // header
+  document.getElementById('tourName').textContent=tour.metadata.name;
+  document.getElementById('quickFacts').innerHTML=`${tour.overview.days} days&nbsp;|&nbsp;$${tour.overview.pricePerPerson} pp`;
+  document.getElementById('banner').style.backgroundImage=`url(${tour.banner})`;
+
+  // itinerary
+  document.getElementById('itinerary').innerHTML=tour.itinerary.map(d=>`<p>${d}</p>`).join('');
+
+  // included & hotels
+  document.getElementById('included').innerHTML=tour.included.map(i=>`<li>${i}</li>`).join('');
+  document.getElementById('hotels').innerHTML=tour.hotels.map(h=>`<li>${h.name}</li>`).join('');
+
+  // policies
+  document.getElementById('policies').innerHTML=tour.policies;
+
+  // carousel
+  tour.carousel.forEach(src=>{const img=new Image();img.src=src;track.appendChild(img);});
 }
-
-/* ---------- 1. get .tour link from Column AL ---------- */
-async function loadTour(){
-  const code = getUrlParam('tour');          // “250729 - Yukon 3”
-  if(!code){ console.error('No ?tour='); return; }
-
-  const sheetURL = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/A1:AL1000?key=${apiKey}`;
-  const sheet = await fetch(sheetURL).then(r=>r.json());
-  const row   = sheet.values.find(r => r[0] && r[0].includes(code));
-  if(!row){ alert('Tour not found'); return; }
-
-  const tourPath = row[37];                  // ← Column AL
-  if(!tourPath){ alert('No .tour file path'); return; }
-
-  /* ---------- 2. fetch & parse the .tour file ---------- */
-  const tourURL = tourPath.startsWith('http') ? tourPath
-                 : `https://milezerotours.net/tourdata/${tourPath}`;
-  const tour    = await fetch(tourURL).then(r=>r.json());
-
-  /* ---------- 3. populate the page ---------- */
-  // Banner
-  document.querySelector('.header-banner')
-          .style.backgroundImage =
-    `linear-gradient(rgba(21,21,21,.65),rgba(21,21,21,.65)),url(${tour.banner})`;
-
-  // Title & quick facts
-  document.getElementById('i2nbno').textContent = tour.metadata.name;
-  const o = tour.overview;
-  document.getElementById('iyfdd9').innerHTML =
-      `${o.days} days | $${o.pricePerPerson} pp`
-    + (o.singleAdd ? `<br>Single Add $${o.singleAdd}` : '')
-    + (o.tripleDeduct ? `<br>Triple Deduct $${o.tripleDeduct}` : '');
-
-  // Itinerary
-  document.getElementById('ided1x').innerHTML =
-      tour.itinerary.map(d=>`<p>${d}</p>`).join('');
-
-  // Included list
-  document.getElementById('what-included-list').innerHTML =
-      tour.included.map(i=>`<li>${i}</li>`).join('');
-
-  // Hotels
-  document.getElementById('hotels-list').innerHTML =
-      tour.hotels.map(h=>`<li>${h.name}</li>`).join('');
-
-  // Policies
-  document.getElementById('ij4jeh').innerHTML = tour.policies;
-
-  // Carousel images
-  const track = document.getElementById('image-container');
-  track.innerHTML = '';
-  tour.carousel.forEach(b64=>{
-      const img = new Image();
-      img.src = b64;
-      img.alt = 'Tour photo';
-      img.className = 'gjs-grid-column';
-      track.appendChild(img);
-  });
-}
-
-window.addEventListener('DOMContentLoaded', loadTour);
+window.addEventListener('DOMContentLoaded',init);
 </script>
+
 
 </body>
 </html>
