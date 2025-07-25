@@ -117,12 +117,28 @@
   <!-- ========================= Scripts ========================= -->
 
 <script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mile Zero Tours – Tour Details</title>
+  <style>/* [unchanged styles omitted for brevity] */</style>
+</head>
+<body>
+  <!-- [unchanged HTML omitted for brevity] -->
+
+<script>
 /* ========= CONFIG ========= */
 const sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
 const apiKey  = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
 
 /* ========= HELPERS ========= */
-const getHashParam = k => (new URL(location.href)).hash.match(new RegExp(k+'=([^&#]*)'))?.[1]?.replace(/\+/g,' ') ?? null;
+// Extracts #param and automatically URI‑decodes it
+const getHashParam = key => {
+  const param = new URLSearchParams(location.hash.slice(1)).get(key);
+  return param ? decodeURIComponent(param) : null;
+};
 const toHttps = url => {
   if(!url) return '';
   url=url.trim();
@@ -210,6 +226,9 @@ window.addEventListener('DOMContentLoaded',()=>{
   loadTour();
 });
 </script>
+</body>
+</html>
+
 
 
 </body>
