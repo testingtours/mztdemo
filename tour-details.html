@@ -117,18 +117,16 @@
   <!-- ========================= Scripts ========================= -->
 <script>
 // --- config ---
-const sheetId='1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
-const apiKey='AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
+const sheetId = '1o0AUq13j-7LZWDhCwFYgq07niZtvOya5iE5bbRQMGWc';
+const apiKey  = 'AIzaSyAhgfTNBOeYYRTjpboOGbZsc-XZH8T6Xbw';
 
 // --- helpers ---
-function getParam(name){name=name.replace(/[\[\]]/g,'\\$&');const regex=new RegExp('[#&]'+name+'(=([^&#]*)|&|#|$)');const res=regex.exec(location.href);return res?decodeURIComponent((res[2]||'').replace(/\+/g,' ')):null;}
-function normalizeTourURL(raw){if(!raw) return '';raw=raw.trim();if(raw.startsWith('https://')) return raw;if(raw.startsWith('http://')) return raw.replace('http://','https://');if(raw.startsWith('//')) return 'https:'+raw;if(raw[0]!=='/') raw='/'+raw;return 'https://www.milezerotours.net'+raw;}
+function getParam(k){k=k.replace(/[\[\]]/g,'\$&');const m=new RegExp('[#&]'+k+'(=([^&#]*)|&|#|$)').exec(location.href);return m?decodeURIComponent((m[2]||'').replace(/\+/g,' ')):null;}
+function normalizeTourURL(raw){if(!raw)return'';raw=raw.trim();if(raw.startsWith('https://'))return raw; if(raw.startsWith('http://'))return raw.replace('http://','https://'); if(raw.startsWith('//'))return 'https:'+raw; if(raw[0]!=='/')raw='/'+raw; return 'https://www.milezerotours.net'+raw;}
 
-// --- carousel logic ---
+// --- carousel ---
 const track=document.getElementById('carousel');let pos=0;
-function move(dir){const cardW=track.querySelector('img')?.offsetWidth||350;pos+=dir*cardW;const max=track.scrollWidth-track.clientWidth;if(pos<0)pos=max;else if(pos>max)pos=0;track.style.transform=`translateX(-${pos}px)`;}
-document.querySelector('.left').onclick=()=>move(-1);
-document.querySelector('.right').onclick=()=>move(1);
+function move(dir){const w=track.querySelector('img')?.offsetWidth||350;pos+=dir*w;const max=track.scrollWidth-track.clientWidth; if(pos<0)pos=max; else if(pos>max)pos=0; track.style.transform=`translateX(-${pos}px)`;}
 
 async function init(){
   const code=getParam('tour');
@@ -138,29 +136,30 @@ async function init(){
   const row=data.values.find(r=>r[0]&&r[0].includes(code));
   if(!row){alert('Tour not found');return;}
   const tourURL=normalizeTourURL(row[37]);
-  if(!tourURL){alert('No .tour path in Column AL');return;}
-
+  if(!tourURL){alert('No .tour path in Column AL');return;}
   const tour=await fetch(tourURL).then(r=>r.json());
 
   // header
-  document.getElementById('tourName').textContent=tour.metadata.name;
-  document.getElementById('quickFacts').innerHTML=`${tour.overview.days} days&nbsp;|&nbsp;$${tour.overview.pricePerPerson} pp`;
-  document.getElementById('banner').style.backgroundImage=`url(${tour.banner})`;
+  banner.style.backgroundImage=`url(${tour.banner})`;
+  tourName.textContent=tour.metadata.name;
+  quickFacts.innerHTML=`${tour.overview.days} days&nbsp;|&nbsp;$${tour.overview.pricePerPerson} pp`;
 
   // itinerary
-  document.getElementById('itinerary').innerHTML=tour.itinerary.map(d=>`<p>${d}</p>`).join('');
+  itinerary.innerHTML=tour.itinerary.map(d=>`<p>${d}</p>`).join('');
+  included.innerHTML=tour.included.map(i=>`<li>${i}</li>`).join('');
+  hotels.innerHTML  =tour.hotels.map(h=>`<li>${h.name}</li>`).join('');
+  policies.innerHTML=tour.policies;
 
-  // included & hotels
-  document.getElementById('included').innerHTML=tour.included.map(i=>`<li>${i}</li>`).join('');
-  document.getElementById('hotels').innerHTML=tour.hotels.map(h=>`<li>${h.name}</li>`).join('');
-
-  // policies
-  document.getElementById('policies').innerHTML=tour.policies;
-
-  // carousel
+  // images
   tour.carousel.forEach(src=>{const img=new Image();img.src=src;track.appendChild(img);});
 }
-window.addEventListener('DOMContentLoaded',init);
+
+// Wait for DOM so arrow buttons exist before binding
+window.addEventListener('DOMContentLoaded',()=>{
+  document.querySelector('.left')?.addEventListener('click',()=>move(-1));
+  document.querySelector('.right')?.addEventListener('click',()=>move(1));
+  init();
+});
 </script>
 
 
