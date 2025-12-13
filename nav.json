@@ -1,0 +1,12 @@
+{
+  "brand": "MileZeroTours",
+  "items": [
+    { "label": "Home", "href": "index.html" },
+    { "label": "Tours", "href": "#tours" },
+    { "label": "Why Us", "href": "#why" },
+    { "label": "Reviews", "href": "#reviews" },
+    { "label": "FAQ", "href": "#faq" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "cta": { "label": "Book Now", "href": "#contact" }
+}
