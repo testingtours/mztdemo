@@ -1419,4 +1419,22 @@
       const u = getUrlParams();
       if (u.tour) state.tour.name = u.tour;
       if (u.dates) state.tour.dates = u.dates;
-      if (u.tourCod
+      if (u.tourCode) state.tour.code = u.tourCode;
+      const extParam = getParamFromUrlLike(window.location.href) || (()=>{ try{return getParamFromUrlLike(window.parent.location.href);}catch(_){return"";} })() || getParamFromUrlLike(document.referrer || "");
+      state.needsTourSelection = !extParam;
+      if (extParam && !state.tour.code) state.tour.code = extParam;
+      if (extParam && !u.tour) state.tour.name = extParam;
+      fetchTourOptions();
+
+      updateTourText();
+      const topLeft = $(".topBar .left");
+      topLeft.classList.remove("hidden");
+      if (!state.needsTourSelection) loadTermsInline();
+    })();
+
+    // initial flow (only traveller count)
+    rebuildFlow();
+    setCurrentByIndex(0, {scroll:false});
+  </script>
+</body>
+</html>
