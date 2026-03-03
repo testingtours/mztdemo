@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mile Zero Tours – Booking (Demo)</title>
+   <!-- GoDaddy Iframe Height Resizer Script -->
+  <script>
+    window.onmessage = function(event) {
+      event.source.postMessage({
+        iframeId: event.data, 
+        scrollHeight: document.body.getBoundingClientRect().height || document.body.scrollHeight
+      }, event.origin);
+    };
+  </script>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --card:#0b0d0b;
+      --ink:#ffffff;
+      --muted:#d5dfd6;
+
+      --accent:#39ff14;
+      --accent2:#1fbf08;
+      --accentSoft:#102212;
+      --ring: rgba(36,143,64,.18);
+
+      --danger:#b3261e;
+      --shadow:0 18px 44px rgba(0,0,0,.16);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color:var(--ink);
+      overflow-anchor:none;
+    }
+
+    .wrap{ max-width:980px; margin:0 auto; padding:10px 18px 90px; }
+
+    .brand{
+      display:flex;align-items:center;justify-content:center;
+      margin:8px 0 6px; user-select:none;
+    }
+    .brandWordmark{
+      display:block;
+      max-width:min(330px,82vw);
+      width:100%;
+      height:auto;
+    }
+    .tourHero{
+      display:none;
+    }
+    #tourSelectDropdown{
+      appearance:none;
+      background:#090d09;
+      color:#ffffff;
+      border:2px solid rgba(57,255,20,.72);
+      font-weight:850;
+    }
+
+    .cards{ display:flex; flex-direction:column; gap:16px; }
+
+    /* Cards are ONLY clickable when current */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:2px solid rgba(57,255,20,.55);
+      padding:22px 18px;
+      overflow:hidden;
+      display:none; /* hidden until needed */
+    }
+    .card.visible{ display:block; }
+    .card.current{
+      border-color: rgba(57,255,20,.9);
+      box-shadow: 0 18px 44px rgba(0,0,0,.32), 0 0 0 6px rgba(57,255,20,.16);
+    }
+
+    .titleBig{
+      text-align:center;
+      font-size:40px;
+      line-height:1.08;
+      font-weight:950;
+      margin:6px 0 10px;
+      letter-spacing:.01em;
+    }
+    .subtitle{
+      text-align:center;
+      color:var(--muted);
+      font-size:16px;
+      margin:0 0 14px;
+      font-weight:700;
+    }
+
+    .sectionTop{
+      text-align:center;
+      font-size:14px;
+      color:#b9eeb1;
+      margin-top:2px;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .sectionTitle{
+      text-align:center;
+      font-size:30px;
+      margin:6px 0 12px;
+      font-weight:950;
+      letter-spacing:.01em;
+    }
+
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    .grid3{ display:grid; grid-template-columns: 1.2fr 1fr 1fr; gap:12px; }
+    @media (max-width:760px){
+      .grid2,.grid3{grid-template-columns:1fr}
+      .titleBig{font-size:34px}
+      .sectionTitle{font-size:26px}
+    }
+
+    label.lbl{
+      display:block;
+      font-size:14px;
+      font-weight:900;
+      color:#f1fff1;
+      margin:0 0 6px;
+      letter-spacing:.02em;
+    }
+    .hint{
+      font-size:13px;
+      color:#c5d9c8;
+      font-weight:750;
+      margin:-2px 0 10px;
+      text-align:center;
+    }
+
+    .field{
+      width:100%;
+      background:#090d09;
+      color:#fff;
+      border:2px solid rgba(57,255,20,.52);
+      border-radius:12px;
+      padding:14px 14px;
+      font-size:19px;
+      outline:none;
+      transition:border-color .15s ease, box-shadow .15s ease;
+    }
+    .field:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 5px rgba(57,255,20,.18);
+    }
+    .field.invalid{
+      border-color:var(--danger);
+      box-shadow:0 0 0 5px rgba(179,38,30,.14);
+    }
+
+    .row{ display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-top:12px; }
+
+    .btn{
+      appearance:none;
+      border:2px solid rgba(57,255,20,.72);
+      background:#090d09;
+      color:#ffffff;
+      border-radius:12px;
+      padding:12px 22px;
+      font-size:20px;
+      cursor:pointer;
+      min-width:160px;
+      font-weight:900;
+      transition: transform .08s ease, background .15s ease, border-color .15s ease, box-shadow .2s ease;
+    }
+    .btn:hover{ background:#111811; border-color: rgba(57,255,20,.9); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      border-color:var(--accent2);
+      background:linear-gradient(180deg, #3fff21 0%, #20bf08 100%);
+      color:#061002;
+      box-shadow:0 10px 22px rgba(57,255,20,.18);
+    }
+    .btn[disabled]{ opacity:.55; cursor:not-allowed; box-shadow:none; }
+
+    .btn.small{
+      min-width:auto;
+      padding:10px 14px;
+      font-size:16px;
+      border-width:2px;
+      border-radius:10px;
+    }
+
+    .topBar{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      position:sticky;
+      top:0;
+      z-index:1200;
+      margin-bottom:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:2px solid rgba(57,255,20,.42);
+      background:rgba(255,255,255,.96);
+      backdrop-filter: blur(6px);
+    }
+    .topBar .left{
+      font-weight:950;
+      color:#0f5d26;
+      font-size:14px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .topBar .left.hidden{ display:none; }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:2px solid rgba(20,120,10,.55);
+      background:rgba(185,255,174,.55);
+      color:#0b2f0e;
+      font-weight:950;
+      font-size:12px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .badge .dot{
+      width:9px;height:9px;border-radius:999px;background:var(--accent);
+      box-shadow:0 0 0 5px rgba(36,143,64,.14);
+    }
+
+    .choiceRow{ display:flex; justify-content:center; gap:18px; margin:12px 0 6px; }
+    .choice{
+      width:92px;height:78px;
+      font-size:48px;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:16px;
+      border:2px solid rgba(57,255,20,.52);
+      background:#090d09;
+      color:#fff;
+      cursor:pointer;
+      user-select:none;
+      font-weight:950;
+      transition: transform .08s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .choice:hover{ box-shadow:0 12px 22px rgba(0,0,0,.28); border-color: rgba(57,255,20,.9); background:#111811; }
+    .choice:active{ transform: translateY(1px); }
+    .choice.active{
+      border-color:var(--accent);
+      box-shadow:0 0 0 6px rgba(57,255,20,.16);
+      background:#122412;
+    }
+
+    /* Use Previous Details */
+    .usePrevHead{ text-align:center; font-weight:950; font-size:30px; margin:6px 0 6px; }
+    .usePrevSub{
+      text-align:center;
+      margin:0 0 14px;
+      color:#d4e8d8;
+      font-weight:800;
+      font-size:14px;
+      line-height:1.25;
+    }
+    .reuseWrap{
+      display:grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap:12px;
+      margin-top:8px;
+    }
+    @media (max-width:760px){ .reuseWrap{grid-template-columns:1fr} }
+
+    .checkCard{
+      background:#090d09;
+      border:2px solid rgba(57,255,20,.4);
+      border-radius:14px;
+      padding:12px;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+    }
+    .checkCard input{
+      width:22px;height:22px;
+      margin-top:2px;
+      accent-color: var(--accent);
+      cursor:pointer;
+    }
+    .checkCard .checkTitle{ font-weight:950; font-size:16px; color:#d9ffd3; margin:0 0 2px; }
+    .checkCard .checkSmall{ font-size:13px; color:#d0dfd2; font-weight:750; margin:0; }
+
+    .reusePreview{
+      background:#090d09;
+      border:2px solid rgba(57,255,20,.35);
+      border-radius:14px;
+      padding:12px;
+    }
+    .reusePreview b{ font-size:15px; }
+    .reuseLine{ font-size:13px; font-weight:750; color:#d0dfd2; margin-top:6px; line-height:1.25; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .iframeBox{
+      background:#090d09;
+      border:2px solid rgba(57,255,20,.52);
+      border-radius:14px;
+      max-height:520px;
+      overflow:auto;
+    }
+    .policyBox{
+      background:#090d09;
+      border:2px solid rgba(57,255,20,.52);
+      border-radius:14px;
+      padding:14px;
+      color:#e8f0e8;
+      font-size:15px;
+      line-height:1.45;
+      max-height:260px;
+      overflow:auto;
+      white-space:pre-wrap;
+    }
+    .agreeRow{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      margin-top:10px;
+      color:#e8f0e8;
+      font-size:14px;
+      font-weight:700;
+    }
+    .agreeRow input{
+      width:18px;
+      height:18px;
+      margin-top:2px;
+      accent-color:#39ff14;
+    }
+    .terms-content{ font-size:1.03rem; line-height:1.7; color:#e8f0e8; padding:18px 18px 20px; }
+    .terms-content b, .terms-content strong{ font-weight:900; color:#ffffff; }
+    .terms-content a{ color:#25b10a; text-decoration:none; border-bottom:2px solid rgba(37,177,10,.3); }
+    .terms-content p{ margin:0 0 16px; }
+    .terms-content ul, .terms-content ol{ margin:0 0 16px; padding-left:24px; }
+    .terms-content li{ margin-bottom:8px; }
+    .terms-error{ padding:26px 18px; text-align:center; font-size:1.05rem; font-weight:700; color:#b00020; }
+    .terms-link-btn{ display:inline-block; margin-top:12px; padding:10px 14px; border-radius:10px; border:2px solid #1d8a08; background:#25b10a; color:#fff; font-weight:900; text-decoration:none; }
+
+    .reviewGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width:760px){ .reviewGrid{grid-template-columns:1fr} }
+    .reviewBox{
+      background:#090d09;
+      border:2px solid rgba(57,255,20,.4);
+      border-radius:14px;
+      padding:12px 12px;
+      font-size:15px;
+      line-height:1.28;
+    }
+    .reviewBox b{font-size:17px}
+
+    .toast{
+      position:fixed;
+      left:50%;
+      top:18px;
+      transform:translateX(-50%);
+      background:rgba(15,93,38,.95);
+      color:#fff;
+      padding:12px 16px;
+      border-radius:999px;
+      font-weight:950;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease, transform .2s ease;
+      z-index:9999;
+      box-shadow:0 14px 30px rgba(0,0,0,.22);
+      letter-spacing:.01em;
+    }
+    .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+    .tiny{
+      font-size:13px;
+      color:#cfe3d2;
+      text-align:center;
+      margin-top:8px;
+      font-weight:750;
+    }
+  </style>
+</head>
+<body>
+  <div class="toast" id="toast"></div>
+
+  <div class="wrap">
+    <div class="brand">
+      <img class="brandWordmark" src="https://testingtours.github.io/mztdemo/monotone%20wordmark.png" alt="Mile Zero Tours" />
+    </div>
+    <div class="tourHero" id="tourHeroLine"></div>
+
+    <!-- Top bar shows tour and an always-available Edit/Back control -->
+    <div class="topBar">
+      <div class="left">
+        <span class="badge"><span class="dot" aria-hidden="true"></span><span id="tourLineTop"></span></span>
+      </div>
+    </div>
+
+    <div class="cards" id="cards">
+      <section class="card" id="card-tour-select" data-card>
+        <div class="sectionTitle">What tour are you taking?</div>
+        <p class="hint" id="tourSelectHint">Choose your tour to continue.</p>
+        <select class="field" id="tourSelectDropdown">
+          <option value="">Loading tours…</option>
+        </select>
+        <div class="row"><button class="btn primary" id="btnTourSelectNext">Continue</button></div>
+      </section>
+
+      <!-- 1) How many travellers (first screen) -->
+      <section class="card visible current" id="card-count" data-card>
+        <div class="titleBig">How many travellers</div>
+        <div class="choiceRow" role="group" aria-label="traveller count">
+          <div class="choice" data-count="1">1</div>
+          <div class="choice" data-count="2">2</div>
+          <div class="choice" data-count="3">3</div>
+        </div>
+        <p class="tiny">Tap 1–3 to begin.</p>
+      </section>
+
+      <!-- Traveller cards (injected dynamically) -->
+      <div id="dynamicCards"></div>
+
+      <!-- Questions yes/no -->
+      <section class="card" id="card-questions-yn" data-card>
+        <div class="sectionTitle">Any special requests?</div>
+        <p class="hint">Please let us know if you have any dietary restructions or other special requests.</p>
+        <div class="row">
+          <button class="btn primary" id="btnQYes">Yes</button>
+          <button class="btn" id="btnQNo">No</button>
+        </div>
+      </section>
+
+      <!-- Questions text -->
+      <section class="card" id="card-questions-text" data-card>
+        <div class="sectionTitle">Tell us here</div>
+        <textarea class="field" id="questionsText" rows="6" placeholder="Input your questions / concerns here"></textarea>
+        <div class="row">
+          <button class="btn primary" id="btnQuestionsDone">Done</button>
+        </div>
+        <p class="tiny">You can leave this blank and press Done.</p>
+      </section>
+
+      <!-- Terms -->
+      <section class="card" id="card-terms" data-card>
+        <div class="sectionTitle">Tour Policies & Terms</div>
+
+        <div class="hint" style="text-align:left;margin-top:0">1) Cancellation Policy (from your selected tour)</div>
+        <div class="policyBox" id="cancelPolicyContent">Loading cancellation policy…</div>
+        <label class="agreeRow">
+          <input type="checkbox" id="agreeCancelPolicy">
+          <span>I agree to the cancellation policies</span>
+        </label>
+
+        <div class="hint" style="text-align:left;margin-top:14px">2) Terms of Travel</div>
+        <div class="policyBox" id="travelTermsContent"></div>
+        <label class="agreeRow">
+          <input type="checkbox" id="agreeTravelTerms">
+          <span>I agree to the Terms of Travel</span>
+        </label>
+
+        <div class="row" style="justify-content:flex-start;margin-top:14px">
+          <button class="btn primary" id="btnAgree">I agree to both</button>
+        </div>
+      </section>
+
+      <!-- Review -->
+      <section class="card" id="card-review" data-card>
+        <div class="titleBig" style="font-size:34px">Is this right</div>
+        <p class="subtitle" id="confirmTourText"></p>
+        <div class="reviewGrid" id="reviewGrid"></div>
+        <div class="row" style="margin-top:16px">
+          <button class="btn primary" id="btnSubmit">Submit</button>
+        </div>
+      </section>
+
+      <!-- Thanks -->
+      <section class="card" id="card-thanks" data-card>
+        <div class="titleBig">Thanks! We will be in contact</div>
+        <p class="subtitle" id="tourLine2"></p>
+        <div class="titleBig" style="color:#b00020;font-size:22px;margin-top:8px">
+          DEMO MODE: Booking printed in JSON
+        </div>
+        <div class="row" style="margin-top:14px">
+          <button class="btn primary" id="btnOkay">Okay</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // ========= Helpers =========
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+    const EMBED_MODE = (window.self !== window.top) || /godaddy/i.test(document.referrer || "");
+    const API_BASE = "https://api.milezerotours.com";
+    const TERMS_CACHE = { text: "" };
+
+    function toast(msg){
+      const el = $("#toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=> el.classList.remove("show"), 1700);
+    }
+
+    function scrollToCard(el, {direction="auto"} = {}){
+      const stickyBar = $(".topBar");
+      const stickyH = stickyBar ? stickyBar.getBoundingClientRect().height : 0;
+      const topOffset = stickyH + 12;
+      const rectTop = el.getBoundingClientRect().top;
+      const target = Math.max(0, window.scrollY + rectTop - topOffset);
+      if (direction === "down" && rectTop <= topOffset + 8) return;
+      window.scrollTo({ top: target, behavior: "smooth" });
+    }
+
+    function sectionAlreadyVisible(el){
+      if (!el) return true;
+      const stickyBar = $(".topBar");
+      const stickyH = stickyBar ? stickyBar.getBoundingClientRect().height : 0;
+      const topOffset = stickyH + 12;
+      const r = el.getBoundingClientRect();
+      return r.top >= topOffset && r.top <= (window.innerHeight - 24);
+    }
+
+    function escapeHtml(s){
+      return String(s || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function markInvalid(field, on){ if (field) field.classList.toggle("invalid", !!on); }
+
+    function requiredFilled(fields){
+      let ok = true;
+      fields.forEach(f=>{
+        const val = (f.value || "").trim();
+        const bad = !val;
+        markInvalid(f, bad);
+        if (bad) ok = false;
+      });
+      return ok;
+    }
+
+    // ========= State =========
+    const state = {
+      tour: { name: "", dates: "", code: "" },
+      needsTourSelection: false,
+      tourOptions: [],
+      travellers: 0,
+      people: [
+        { preferredName:"", firstName:"", lastName:"", dob:"", address:{line1:"", prov:"", city:"", postal:""}, contact:{email:"", phone:""} },
+        { preferredName:"", firstName:"", lastName:"", dob:"", address:{line1:"", prov:"", city:"", postal:""}, contact:{email:"", phone:""}, reuse:{ address:false, contact:false } },
+        { preferredName:"", firstName:"", lastName:"", dob:"", address:{line1:"", prov:"", city:"", postal:""}, contact:{email:"", phone:""}, reuse:{ address:false, contact:false } },
+      ],
+      questions: { has:null, text:"" },
+      cancelPolicyAgreed: false,
+      travelTermsAgreed: false,
+    };
+
+    function getUrlParams(){
+      const p = new URLSearchParams(location.search);
+      return {
+        tour: (p.get("tour") || p.get("tourname") || p.get("t") || "").trim(),
+        dates: (p.get("dates") || p.get("d") || "").trim(),
+        tourCode: (p.get("code") || p.get("tourcode") || p.get("tc") || "").trim(),
+      };
+    }
+
+    function getParamFromUrlLike(urlStr){
+      try{
+        const p = new URL(urlStr).searchParams;
+        return (p.get("tour") || p.get("tourname") || p.get("t") || p.get("code") || p.get("tourcode") || p.get("tc") || "").trim();
+      }catch(_){ return ""; }
+    }
+    function updateTourText(){
+      const hasName = !!String(state.tour.name || "").trim();
+      const hasDates = !!String(state.tour.dates || "").trim();
+      const line = hasName ? (hasDates ? `${state.tour.name} (${state.tour.dates})` : state.tour.name) : "";
+      $("#tourLineTop").textContent = line;
+      $("#tourHeroLine").textContent = line;
+      $("#confirmTourText").textContent = line;
+      $("#tourLine2").textContent = line;
+      const topLeft = $(".topBar .left");
+      if (topLeft) topLeft.style.display = line ? "flex" : "none";
+    }
+    function renderTourOptions(){
+      const dd = $("#tourSelectDropdown");
+      if (!dd) return;
+      if (!state.tourOptions.length){ dd.innerHTML = '<option value="">No tours found</option>'; return; }
+      dd.innerHTML = '<option value="">Select a tour</option>' + state.tourOptions.map(t => {
+        const sold = !!t.soldOut;
+        const label = sold ? `${t.label} (Sold Out)` : t.label;
+        const dis = sold ? "disabled" : "";
+        const style = sold ? 'style="color:#b3261e;text-decoration:line-through;background:#f3f3f3;"' : "";
+        return `<option value="${escapeHtml(t.code)}" ${dis} ${style}>${escapeHtml(label)}</option>`;
+      }).join("");
+    }
+    async function fetchTourOptions(){
+      try{
+        const resp = await fetch(`${API_BASE}/sheets/A2:AL1000`);
+        const data = await resp.json();
+        const rows = Array.isArray(data?.values) ? data.values : [];
+        state.tourOptions = rows
+          .filter(r => r && r[0] && r[1])
+          .map(r => {
+            const code = String(r[0] || "").trim();
+            const name = String(r[1] || "").trim();
+            const dates = String(r[5] || "").trim();
+            const banner = String(r[20] || "").trim();
+            const soldOut = /sold out/i.test(banner);
+            const shortName = name.includes(" - ") ? name.split(" - ")[0].trim() : name;
+            return { code, name, dates, soldOut, label: dates ? `${shortName} (${dates})` : shortName };
+          });
+        renderTourOptions();
+      }catch(err){
+        console.error(err);
+        state.tourOptions = [];
+        renderTourOptions();
+      }
+    }
+    function resolveTourLookupValue(){
+      const fromSelf = getParamFromUrlLike(window.location.href);
+      if (fromSelf) return fromSelf;
+      let fromParent = "";
+      try{ fromParent = getParamFromUrlLike(window.parent.location.href); }catch(_){}
+      if (fromParent) return fromParent;
+      const fromRef = getParamFromUrlLike(document.referrer || "");
+      if (fromRef) return fromRef;
+      return (state.tour.code || "").trim();
+    }
+    function showTermsError(msg){
+      const el = $("#cancelPolicyContent");
+      if (!el) return;
+      el.innerHTML = `<div class="terms-error">${escapeHtml(msg)}</div>`;
+    }
+    async function ensureTermsLoaded(){
+      if (TERMS_CACHE.text) return TERMS_CACHE.text;
+      const resp = await fetch(`${API_BASE}/terms`);
+      if (!resp.ok) throw new Error(`Terms fetch failed (${resp.status})`);
+      const data = await resp.json();
+      TERMS_CACHE.text = String(data?.terms || "").trim();
+      return TERMS_CACHE.text;
+    }
+    function renderTravelTerms(text){
+      const el = $("#travelTermsContent");
+      if (!el) return;
+      el.textContent = text || "";
+    }
+    async function loadTermsInline(){
+      const el = $("#cancelPolicyContent");
+      if (!el) return;
+      el.textContent = "Loading…";
+      try{
+        const termsText = await ensureTermsLoaded();
+        renderTravelTerms(termsText);
+      }catch(err){
+        console.error(err);
+        renderTravelTerms("Failed to load Terms of Travel.");
+      }
+      const lookup = resolveTourLookupValue();
+      if (!lookup){
+        el.innerHTML = '<div class="terms-error">No tour parameter provided.</div>';
+        return;
+      }
+      try{
+        const resp = await fetch(`${API_BASE}/sheets/A1:AL1000`);
+        const data = await resp.json();
+        const rows = Array.isArray(data?.values) ? data.values : [];
+        const needle = lookup.toLowerCase();
+        const row = rows.find(r => String(r?.[0] || "").toLowerCase().includes(needle));
+        if (!row){ showTermsError("Tour not found."); return; }
+        const cancellationText = String(row[32] || "").trim(); // AG
+        if (!cancellationText){ el.innerHTML = "No cancellation policy text found in column AG for this tour."; return; }
+        el.textContent = cancellationText;
+      }catch(err){
+        console.error(err);
+        showTermsError("Failed to load tour policies.");
+      }
+    }
+
+    function displayName(p, fallback){
+      return (p?.preferredName || p?.firstName || fallback || "Traveller");
+    }
+    function personNameLabel(n){
+      const p = state.people[n-1];
+      return displayName(p, `Traveller ${n}`);
+    }
+
+    // ========= Flow / Navigation =========
+    const flow = [];   // ordered list of card ids in the active flow
+    let currentIndex = 0;
+    let embedScrollTimer = null;
+
+    function setCurrentByIndex(i, {scroll=true, scrollDirection="auto"} = {}){
+      currentIndex = Math.max(0, Math.min(i, flow.length - 1));
+
+      // In embeds (GoDaddy/iframe), keep only reached cards visible; future cards stay hidden.
+      if (EMBED_MODE){
+        $$("[data-card]").forEach(el => {
+          el.classList.remove("visible","current");
+          el.style.display = "none";
+        });
+        flow.forEach((id, idx) => {
+          if (idx > currentIndex) return;
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.style.display = "block";
+          el.classList.add("visible");
+        });
+        const curId = flow[currentIndex];
+        const cur = document.getElementById(curId);
+        if (cur) cur.classList.add("current");
+        return;
+      }
+
+      // Keep previous cards stable; only reveal newly reached cards and hide future ones.
+      flow.forEach((id, idx) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove("current");
+        if (idx <= currentIndex){
+          if (!el.classList.contains("visible")){
+            el.classList.add("visible");
+            el.style.display = "block";
+          }
+        } else {
+          el.classList.remove("visible");
+          el.style.display = "none";
+        }
+      });
+
+      const curId = flow[currentIndex];
+      const cur = document.getElementById(curId);
+      if (cur){
+        cur.style.display = "block";
+        cur.classList.add("visible","current");
+        if (scroll) scrollToCard(cur, {direction: scrollDirection});
+      }
+
+    }
+
+    function next(){
+      setCurrentByIndex(currentIndex + 1, {scroll:!EMBED_MODE, scrollDirection:"down"});
+      if (EMBED_MODE){
+        clearTimeout(embedScrollTimer);
+        embedScrollTimer = setTimeout(() => {
+          const cur = document.getElementById(flow[currentIndex]);
+          if (!cur || sectionAlreadyVisible(cur)) return;
+          scrollToCard(cur, {direction:"down"});
+        }, 1500);
+      }
+    }
+    function back(){
+      if (currentIndex > 0) setCurrentByIndex(currentIndex - 1);
+    }
+
+    function rebuildFlow(){
+      // Build the active flow list based on traveller count
+      flow.length = 0;
+      if (state.needsTourSelection) flow.push("card-tour-select");
+      flow.push("card-count");
+      if (state.travellers > 0){
+        flow.push("card-p1-about","card-p1-loc","card-p1-contact");
+      }
+      if (state.travellers >= 2){
+        const p2 = state.people[1] || {};
+        flow.push("card-p2-about","card-p2-reuse");
+        if (!p2.reuse?.address) flow.push("card-p2-loc");
+        if (!p2.reuse?.contact) flow.push("card-p2-contact");
+      }
+      if (state.travellers >= 3){
+        const p3 = state.people[2] || {};
+        flow.push("card-p3-about","card-p3-reuse");
+        if (!p3.reuse?.address) flow.push("card-p3-loc");
+        if (!p3.reuse?.contact) flow.push("card-p3-contact");
+      }
+      flow.push("card-questions-yn");
+      if (state.questions.has === true) flow.push("card-questions-text");
+      flow.push("card-terms","card-review","card-thanks");
+    }
+
+    function jumpTo(cardId){
+      const idx = flow.indexOf(cardId);
+      if (idx === -1) return;
+      setCurrentByIndex(idx);
+    }
+
+    // "Edit" menu: simple prompt list of steps
+    function openEditMenu(){
+      rebuildFlow();
+      if (!flow.length){ toast("No steps available yet"); return; }
+      // only show steps that are in the flow and already relevant
+      const labels = flow.map((id, i) => `${String(i+1).padStart(2,"0")}. ${prettyStepName(id)}`).join("\n");
+      const choice = prompt(
+        "Jump to a step to fix a mistake:\n\n" + labels + "\n\nType the step number (example: 03)"
+      );
+      if (!choice) return;
+      const num = parseInt(choice, 10);
+      if (!Number.isFinite(num) || num < 1 || num > flow.length){
+        toast("Invalid step number");
+        return;
+      }
+      setCurrentByIndex(num - 1);
+    }
+
+    function prettyStepName(id){
+      const map = {
+        "card-count": "Traveller Count",
+        "card-tour-select": "Tour Selection",
+        "card-questions-yn": "Questions (Yes/No)",
+        "card-questions-text": "Questions (Details)",
+        "card-terms": "Terms of Travel",
+        "card-review": "Confirm",
+        "card-thanks": "Done",
+      };
+      if (map[id]) return map[id];
+      // traveller cards:
+      const m = id.match(/^card-p(\d+)-(about|loc|contact|reuse)$/);
+      if (!m) return id;
+      const n = Number(m[1]);
+      const kind = m[2];
+      const name = personNameLabel(n);
+      const kindMap = { about:"Name & DOB", loc:"Address & Location", contact:"Email & Phone", reuse:"Use Previous Details" };
+      return `${name} – ${kindMap[kind] || kind}`;
+    }
+
+    // ========= Dynamic Cards =========
+    const PROVINCES = [
+      ["", "Province"],
+      ["BC","British Columbia"],["AB","Alberta"],["SK","Saskatchewan"],["MB","Manitoba"],["ON","Ontario"],["QC","Quebec"],["NB","New Brunswick"],["NS","Nova Scotia"],["PE","Prince Edward Island"],["NL","Newfoundland and Labrador"],
+      ["YT","Yukon"],["NT","Northwest Territories"],["NU","Nunavut"]
+    ];
+    const PROVINCE_BY_CODE = Object.fromEntries(PROVINCES.filter(([code]) => !!code));
+    function provinceLabel(code){ return PROVINCE_BY_CODE[code] || code || ""; }
+    function provinceOptions(selected=""){
+      return PROVINCES.map(([v,l])=>{
+        const sel = (v && v===selected) ? "selected" : "";
+        return `<option value="${v}" ${sel}>${l}</option>`;
+      }).join("");
+    }
+
+    function renderReusePreview(prevIndex){
+      const prev = state.people[prevIndex] || {};
+      const a = prev.address || {};
+      const c = prev.contact || {};
+      const name = escapeHtml(displayName(prev, `Traveller ${prevIndex+1}`));
+      const addr = [a.line1, [a.city, provinceLabel(a.prov)].filter(Boolean).join(" "), a.postal].filter(Boolean).join("<br>");
+      const contactBlock = `
+        <div class="reuseLine"><b>Email</b><br><span class="mono">${escapeHtml(c.email || "—")}</span></div>
+        <div class="reuseLine"><b>Phone</b><br><span class="mono">${escapeHtml(c.phone || "—")}</span></div>
+      `;
+      const addrBlock = `
+        <div class="reuseLine"><b>Address</b><br>${addr || "<span class='mono'>—</span>"}</div>
+      `;
+      return `<div><b>${name}</b></div>${addrBlock}${contactBlock}`;
+    }
+
+    function makePersonAboutCard(i){
+      const n = i+1;
+      return `
+        <section class="card" id="card-p${n}-about" data-card>
+          <div class="sectionTop" data-name-label="${n}">${escapeHtml(personNameLabel(n))}</div>
+          <div class="sectionTitle">Tell us about yourself</div>
+          <div class="hint">Please enter your first and last name exactly as it appears on your ID.</div>
+
+          <div class="grid2">
+            <div>
+              <label class="lbl" for="p${n}_last">Last Name</label>
+              <input class="field" id="p${n}_last" placeholder="Last Name" autocomplete="family-name" />
+            </div>
+            <div>
+              <label class="lbl" for="p${n}_first">First Name</label>
+              <input class="field" id="p${n}_first" placeholder="First Name" autocomplete="given-name" />
+            </div>
+          </div>
+
+          <div style="margin-top:12px">
+            <label class="lbl" for="p${n}_pref">Preferred Name (optional)</label>
+            <input class="field" id="p${n}_pref" placeholder="Preferred Name" autocomplete="nickname" />
+          </div>
+
+          <div style="margin-top:12px">
+            <label class="lbl" for="p${n}_dob">Date of birth</label>
+            <input class="field dobField" id="p${n}_dob" type="date" max="9999-12-31" />
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="btnP${n}AboutNext">Next</button>
+          </div>
+        </section>
+      `;
+    }
+
+    function makePersonLocationCard(i){
+      const n = i+1;
+      return `
+        <section class="card" id="card-p${n}-loc" data-card>
+          <div class="sectionTop" data-name-label="${n}">${escapeHtml(personNameLabel(n))}</div>
+          <div class="sectionTitle">Where are you located?</div>
+
+          <div>
+            <label class="lbl" for="p${n}_addr">Home Address</label>
+            <input class="field" id="p${n}_addr" placeholder="Home Address" autocomplete="street-address" />
+          </div>
+
+          <div class="grid3" style="margin-top:12px">
+            <div>
+              <label class="lbl" for="p${n}_prov">Province</label>
+              <select class="field" id="p${n}_prov" autocomplete="address-level1">
+                ${provinceOptions("")}
+              </select>
+            </div>
+            <div>
+              <label class="lbl" for="p${n}_city">City</label>
+              <input class="field" id="p${n}_city" placeholder="City" autocomplete="address-level2" />
+            </div>
+            <div>
+              <label class="lbl" for="p${n}_postal">Postal Code</label>
+              <input class="field" id="p${n}_postal" placeholder="Postal Code" autocomplete="postal-code" />
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="btnP${n}LocNext">Next</button>
+          </div>
+        </section>
+      `;
+    }
+
+    function makePersonContactCard(i){
+      const n = i+1;
+      return `
+        <section class="card" id="card-p${n}-contact" data-card>
+          <div class="sectionTop" data-name-label="${n}">${escapeHtml(personNameLabel(n))}</div>
+          <div class="sectionTitle">How can we contact you</div>
+
+          <div>
+            <label class="lbl" for="p${n}_email">Email Address</label>
+            <input class="field" id="p${n}_email" placeholder="Email Address (eg:name@email.com)" type="email" autocomplete="email" />
+          </div>
+
+          <div style="margin-top:12px">
+            <label class="lbl" for="p${n}_phone">Phone Number</label>
+            <input class="field" id="p${n}_phone" placeholder="Phone Number (eg: (250) 590-0811)" type="tel" autocomplete="tel" />
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="btnP${n}ContactNext">Next</button>
+          </div>
+        </section>
+      `;
+    }
+
+    function makeUsePreviousDetailsCard(i){
+      const n = i+1;
+      const prev = n-1;
+      return `
+        <section class="card" id="card-p${n}-reuse" data-card>
+          <div class="sectionTop" data-name-label="${n}">${escapeHtml(personNameLabel(n))}</div>
+          <div class="usePrevHead">Use Previous Details</div>
+          <div class="usePrevSub" data-prev-sub="${n}">
+            Do you want to use previous details of ${escapeHtml(personNameLabel(prev))} for ${escapeHtml(personNameLabel(n))}?
+          </div>
+
+          <div class="reuseWrap">
+            <div>
+              <div class="checkCard">
+                <input type="checkbox" id="p${n}_reuse_addr" />
+                <div>
+                  <div class="checkTitle">Address & Location</div>
+                  <p class="checkSmall">Home address, province, city, postal code</p>
+                </div>
+              </div>
+
+              <div style="height:10px"></div>
+
+              <div class="checkCard">
+                <input type="checkbox" id="p${n}_reuse_contact" />
+                <div>
+                  <div class="checkTitle">Email & Phone</div>
+                  <p class="checkSmall">Contact details</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="reusePreview" data-prev-preview="${n}">
+              ${renderReusePreview(prev-1)}
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn primary" id="btnP${n}ReuseNext">Next</button>
+          </div>
+
+          <p class="tiny" style="text-align:left">
+            If you don’t select any boxes, we won’t reuse anything.
+          </p>
+        </section>
+      `;
+    }
+
+    function updateAllNameLabels(){
+      // labels
+      $$("[data-name-label]").forEach(el=>{
+        const n = Number(el.dataset.nameLabel);
+        el.textContent = personNameLabel(n);
+      });
+      // reuse subtext + preview
+      $$("#dynamicCards [data-prev-sub]").forEach(el=>{
+        const n = Number(el.dataset.prevSub);
+        const prevName = personNameLabel(n-1);
+        const curName = personNameLabel(n);
+        el.textContent = `Do you want to use previous details of ${prevName} for ${curName}?`;
+      });
+      $$("#dynamicCards [data-prev-preview]").forEach(el=>{
+        const n = Number(el.dataset.prevPreview);
+        el.innerHTML = renderReusePreview(n-2);
+      });
+    }
+
+    function buildTravellerCards(count){
+      const host = $("#dynamicCards");
+      host.innerHTML = "";
+
+      let html = "";
+      html += makePersonAboutCard(0);
+      html += makePersonLocationCard(0);
+      html += makePersonContactCard(0);
+
+      if (count >= 2){
+        html += makePersonAboutCard(1);
+        html += makeUsePreviousDetailsCard(1);
+        html += makePersonLocationCard(1);
+        html += makePersonContactCard(1);
+      }
+      if (count >= 3){
+        html += makePersonAboutCard(2);
+        html += makeUsePreviousDetailsCard(2);
+        html += makePersonLocationCard(2);
+        html += makePersonContactCard(2);
+      }
+
+      host.innerHTML = html;
+
+      // show the injected cards in DOM, but flow will hide all except current
+      $$("[data-card]", host).forEach(el => el.classList.add("visible"));
+
+      wireTravellerEvents(count);
+      wireLiveInputs(count);
+      $$(".dobField", host).forEach(el => {
+        el.addEventListener("input", () => {
+          const raw = String(el.value || "");
+          const fixed = raw.replace(/^(\d{4})\d+/, "$1");
+          if (fixed !== raw) el.value = fixed;
+        });
+      });
+      updateAllNameLabels();
+    }
+
+    function prefillReuseIfSelected(n){
+      // reuse from PREVIOUS traveller
+      const idx = n-1;
+      const prevIdx = n-2;
+      const addrBox = $("#p"+n+"_reuse_addr");
+      const conBox  = $("#p"+n+"_reuse_contact");
+      if (!addrBox || !conBox) return;
+
+      state.people[idx].reuse.address = !!addrBox.checked;
+      state.people[idx].reuse.contact = !!conBox.checked;
+
+      if (addrBox.checked){
+        state.people[idx].address = JSON.parse(JSON.stringify(state.people[prevIdx].address));
+        $("#p"+n+"_addr").value = state.people[idx].address.line1 || "";
+        $("#p"+n+"_prov").value = state.people[idx].address.prov || "";
+        $("#p"+n+"_city").value = state.people[idx].address.city || "";
+        $("#p"+n+"_postal").value = state.people[idx].address.postal || "";
+      }
+      if (conBox.checked){
+        state.people[idx].contact = JSON.parse(JSON.stringify(state.people[prevIdx].contact));
+        $("#p"+n+"_email").value = state.people[idx].contact.email || "";
+        $("#p"+n+"_phone").value = state.people[idx].contact.phone || "";
+      }
+    }
+
+    function syncPersonFromInputs(n){
+      const i = n-1;
+      const p = state.people[i];
+      if (!p) return;
+      const last = $("#p"+n+"_last"), first = $("#p"+n+"_first"), pref = $("#p"+n+"_pref"), dob = $("#p"+n+"_dob");
+      if (last) p.lastName = (last.value || "").trim();
+      if (first) p.firstName = (first.value || "").trim();
+      if (pref) p.preferredName = (pref.value || "").trim();
+      if (dob) p.dob = dob.value || "";
+      const addr = $("#p"+n+"_addr"), prov = $("#p"+n+"_prov"), city = $("#p"+n+"_city"), postal = $("#p"+n+"_postal");
+      if (addr || prov || city || postal){
+        p.address = {
+          line1: (addr?.value || "").trim(),
+          prov: prov?.value || "",
+          city: (city?.value || "").trim(),
+          postal: (postal?.value || "").trim()
+        };
+      }
+      const email = $("#p"+n+"_email"), phone = $("#p"+n+"_phone");
+      if (email || phone){
+        p.contact = { email: (email?.value || "").trim(), phone: (phone?.value || "").trim() };
+      }
+      updateAllNameLabels();
+    }
+
+    function wireLiveInputs(travellers){
+      for (let n=1; n<=travellers; n++){
+        ["last","first","pref","dob","addr","prov","city","postal","email","phone"].forEach(k => {
+          const el = $("#p"+n+"_"+k);
+          if (!el) return;
+          el.addEventListener("input", () => syncPersonFromInputs(n));
+          el.addEventListener("change", () => syncPersonFromInputs(n));
+        });
+        if (n > 1){
+          const rbA = $("#p"+n+"_reuse_addr"), rbC = $("#p"+n+"_reuse_contact");
+          [rbA, rbC].forEach(el => {
+            if (!el) return;
+            el.addEventListener("change", () => {
+              prefillReuseIfSelected(n);
+              rebuildFlow();
+              setCurrentByIndex(Math.min(currentIndex, flow.length-1), {scroll:false});
+            });
+          });
+        }
+      }
+    }
+
+    function wireTravellerEvents(travellers){
+      // --- P1 ---
+      $("#btnP1AboutNext").onclick = () => {
+        const p1l=$("#p1_last"), p1f=$("#p1_first"), p1pref=$("#p1_pref"), p1d=$("#p1_dob");
+        if (!requiredFilled([p1l,p1f,p1d])) return toast("Please fill out this first");
+        state.people[0].lastName = p1l.value.trim();
+        state.people[0].firstName = p1f.value.trim();
+        state.people[0].preferredName = (p1pref.value||"").trim();
+        state.people[0].dob = p1d.value;
+        updateAllNameLabels();
+        next();
+      };
+
+      $("#btnP1LocNext").onclick = () => {
+        const a=$("#p1_addr"), p=$("#p1_prov"), c=$("#p1_city"), z=$("#p1_postal");
+        if (!requiredFilled([a,p,c,z])) return toast("Please fill out this first");
+        state.people[0].address = { line1:a.value.trim(), prov:p.value, city:c.value.trim(), postal:z.value.trim() };
+        updateAllNameLabels();
+        next();
+      };
+
+      $("#btnP1ContactNext").onclick = () => {
+        const e=$("#p1_email"), ph=$("#p1_phone");
+        if (!requiredFilled([e,ph])) return toast("Please fill out this first");
+        state.people[0].contact = { email:e.value.trim(), phone:ph.value.trim() };
+        updateAllNameLabels();
+        next();
+      };
+
+      // --- P2 ---
+      if (travellers >= 2){
+        $("#btnP2AboutNext").onclick = () => {
+          const l=$("#p2_last"), f=$("#p2_first"), pref=$("#p2_pref"), d=$("#p2_dob");
+          if (!requiredFilled([l,f,d])) return toast("Please fill out this first");
+          state.people[1].lastName = l.value.trim();
+          state.people[1].firstName = f.value.trim();
+          state.people[1].preferredName = (pref.value||"").trim();
+          state.people[1].dob = d.value;
+          updateAllNameLabels();
+          next();
+        };
+
+        $("#btnP2ReuseNext").onclick = () => {
+          prefillReuseIfSelected(2);
+          rebuildFlow();
+          updateAllNameLabels();
+          next();
+        };
+
+        $("#btnP2LocNext").onclick = () => {
+          const a=$("#p2_addr"), p=$("#p2_prov"), c=$("#p2_city"), z=$("#p2_postal");
+          if (!requiredFilled([a,p,c,z])) return toast("Please fill out this first");
+          state.people[1].address = { line1:a.value.trim(), prov:p.value, city:c.value.trim(), postal:z.value.trim() };
+          updateAllNameLabels();
+          next();
+        };
+
+        $("#btnP2ContactNext").onclick = () => {
+          const e=$("#p2_email"), ph=$("#p2_phone");
+          if (!requiredFilled([e,ph])) return toast("Please fill out this first");
+          state.people[1].contact = { email:e.value.trim(), phone:ph.value.trim() };
+          updateAllNameLabels();
+          next();
+        };
+      }
+
+      // --- P3 ---
+      if (travellers >= 3){
+        $("#btnP3AboutNext").onclick = () => {
+          const l=$("#p3_last"), f=$("#p3_first"), pref=$("#p3_pref"), d=$("#p3_dob");
+          if (!requiredFilled([l,f,d])) return toast("Please fill out this first");
+          state.people[2].lastName = l.value.trim();
+          state.people[2].firstName = f.value.trim();
+          state.people[2].preferredName = (pref.value||"").trim();
+          state.people[2].dob = d.value;
+          updateAllNameLabels();
+          next();
+        };
+
+        $("#btnP3ReuseNext").onclick = () => {
+          prefillReuseIfSelected(3);
+          rebuildFlow();
+          updateAllNameLabels();
+          next();
+        };
+
+        $("#btnP3LocNext").onclick = () => {
+          const a=$("#p3_addr"), p=$("#p3_prov"), c=$("#p3_city"), z=$("#p3_postal");
+          if (!requiredFilled([a,p,c,z])) return toast("Please fill out this first");
+          state.people[2].address = { line1:a.value.trim(), prov:p.value, city:c.value.trim(), postal:z.value.trim() };
+          updateAllNameLabels();
+          next();
+        };
+
+        $("#btnP3ContactNext").onclick = () => {
+          const e=$("#p3_email"), ph=$("#p3_phone");
+          if (!requiredFilled([e,ph])) return toast("Please fill out this first");
+          state.people[2].contact = { email:e.value.trim(), phone:ph.value.trim() };
+          updateAllNameLabels();
+          next();
+        };
+      }
+    }
+
+    // ========= Questions / Terms / Review =========
+    $("#btnQYes").onclick = () => { state.questions.has = true; rebuildFlow(); next(); };
+    $("#btnQNo").onclick  = () => { state.questions.has = false; state.questions.text = ""; rebuildFlow(); jumpTo("card-terms"); };
+
+    $("#btnQuestionsDone").onclick = () => {
+      state.questions.text = ($("#questionsText").value || "").trim();
+      next();
+    };
+
+    $("#btnAgree").onclick = () => {
+      const cancelChecked = !!$("#agreeCancelPolicy")?.checked;
+      const travelChecked = !!$("#agreeTravelTerms")?.checked;
+      if (!cancelChecked || !travelChecked){
+        toast("Please agree to both sections first");
+        return;
+      }
+      state.cancelPolicyAgreed = cancelChecked;
+      state.travelTermsAgreed = travelChecked;
+      buildReview();
+      next();
+    };
+
+    $("#btnSubmit").onclick = async () => {
+      const payload = buildPayload();
+      const btn = $("#btnSubmit");
+      const originalText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+      try{
+        const resp = await fetch(`${API_BASE}/form`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!resp.ok) throw new Error(`Submit failed (${resp.status})`);
+        next();
+        toast("Submitted successfully");
+      }catch(err){
+        console.error("Form submit failed:", err);
+        toast("Failed to submit. Please try again.");
+      }finally{
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
+    };
+
+    $("#btnOkay").onclick = () => {
+      toast("Done");
+      // restart demo
+      location.reload();
+    };
+
+    function buildReview(){
+      const grid = $("#reviewGrid");
+      const count = state.travellers || 0;
+      let html = "";
+      for (let i=0;i<count;i++){
+        const p = state.people[i];
+        const addr = p.address || {};
+        const contact = p.contact || {};
+        const addrLine = [addr.line1, [addr.city, provinceLabel(addr.prov)].filter(Boolean).join(" "), addr.postal].filter(Boolean).join("<br>");
+        const prefTag = `Preferred Name (Traveller ${i+1})`;
+        const preferredValue = escapeHtml(displayName(p, "Traveller"));
+        const title = escapeHtml(([p.firstName, p.lastName].filter(Boolean).join(" ") || "Traveller").trim());
+        html += `
+          <div class="reviewBox">
+            <b>${escapeHtml(personNameLabel(i+1))}</b><br>
+            <div style="margin-top:6px;color:#0f5d26;font-weight:900">${escapeHtml(prefTag)}</div>
+            <div style="margin-top:4px;font-weight:850">${preferredValue}</div>
+            <div style="margin-top:6px;font-weight:850">${title}</div>
+            <div style="margin-top:6px">${escapeHtml(contact.email || "")}</div>
+            <div>${escapeHtml(contact.phone || "")}</div>
+            <div style="margin-top:10px">${addrLine || ""}</div>
+          </div>
+        `;
+      }
+      grid.innerHTML = html;
+
+      const line = `${state.tour.name} (${state.tour.dates})`;
+      $("#confirmTourText").textContent = line;
+    }
+
+    function buildPayload(){
+      const timestamp = new Date().toISOString();
+      const count = state.travellers;
+
+      // reuse from previous traveller if selected
+      for (let i=1;i<count;i++){
+        const prev = state.people[i-1];
+        const cur  = state.people[i];
+        if (cur.reuse?.address) cur.address = JSON.parse(JSON.stringify(prev.address));
+        if (cur.reuse?.contact) cur.contact = JSON.parse(JSON.stringify(prev.contact));
+      }
+
+      return {
+        timestamp,
+        tour: {
+          name: state.tour.name,
+          dates: state.tour.dates,
+          code: state.tour.code || null
+        },
+        number_of_people: count,
+        travellers: Array.from({length: count}).map((_, i) => {
+          const p = state.people[i];
+          return {
+            label: personNameLabel(i+1),
+            preferred_name: p.preferredName || null,
+            first_name: p.firstName,
+            last_name: p.lastName,
+            dob: p.dob,
+            address: {
+              line1: p.address.line1,
+              province: provinceLabel(p.address.prov),
+              province_code: p.address.prov,
+              city: p.address.city,
+              postal_code: p.address.postal,
+              reused_from_previous: i===0 ? null : !!p.reuse?.address
+            },
+            contact: {
+              email: p.contact.email,
+              phone: p.contact.phone,
+              reused_from_previous: i===0 ? null : !!p.reuse?.contact
+            }
+          };
+        }),
+        questions_or_dietary: state.questions.has ? (state.questions.text || "") : null,
+        terms_agreed: !!(state.cancelPolicyAgreed && state.travelTermsAgreed),
+        cancel_policy_agreed: !!state.cancelPolicyAgreed,
+        travel_terms_agreed: !!state.travelTermsAgreed
+      };
+    }
+
+    // ========= Traveller count selection (no Next button) =========
+    $$(".choice", $("#card-count")).forEach(el=>{
+      el.addEventListener("click", ()=>{
+        $$(".choice", $("#card-count")).forEach(x=>x.classList.remove("active"));
+        el.classList.add("active");
+        state.travellers = Number(el.dataset.count);
+
+        // build cards + flow and jump to first traveller card
+        buildTravellerCards(state.travellers);
+        rebuildFlow();
+        // Go to first traveller card after count selection
+        jumpTo("card-p1-about");
+      });
+    });
+
+    $("#btnTourSelectNext").onclick = () => {
+      const dd = $("#tourSelectDropdown");
+      const code = (dd?.value || "").trim();
+      if (!code){ toast("Please select a tour first"); return; }
+      const picked = state.tourOptions.find(t => t.code === code);
+      if (!picked){ toast("Tour not found in list"); return; }
+      if (picked.soldOut){ toast("That tour is sold out. Please pick another."); return; }
+      state.tour.code = picked.code;
+      state.tour.name = picked.name || picked.code;
+      if (picked.dates) state.tour.dates = picked.dates;
+      state.needsTourSelection = false;
+      updateTourText();
+      rebuildFlow();
+      loadTermsInline();
+      jumpTo("card-count");
+    };
+
+    // Back/Edit removed: previous sections stay visible for direct edits.
+
+    // ========= Init tour labels =========
+    (function initTour(){
+      const u = getUrlParams();
+      if (u.tour) state.tour.name = u.tour;
+      if (u.dates) state.tour.dates = u.dates;
+      if (u.tourCod
