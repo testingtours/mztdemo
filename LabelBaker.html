@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Label Baker — MileZero Tours</title>
+  <style>
+    :root {
+      --ink: #1a2032;
+      --accent: #2877d8;
+      --muted: #6b7585;
+      --line: #d4dae6;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: #f0f3f8;
+      color: var(--ink);
+      padding: 0;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .main-container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 280px;
+      background: white;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: #f8fafc;
+    }
+
+    .sidebar-header h2 {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+
+    .add-name-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .add-name-form input {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .add-name-form input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(40, 119, 216, 0.1);
+    }
+
+    .add-name-form button {
+      padding: 8px 12px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .add-name-form button:hover {
+      background: #1d5eb0;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .names-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .name-item {
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+
+    .name-item:hover {
+      background: #f0f3f8;
+    }
+
+    .name-item-text {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .name-item-delete {
+      background: #fee;
+      color: #c33;
+      border: none;
+      border-radius: 3px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .name-item-delete:hover {
+      background: #fdd;
+    }
+
+    .sidebar-footer {
+      padding: 12px;
+      border-top: 1px solid var(--line);
+      background: #f8fafc;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .sidebar-footer button {
+      width: 100%;
+      padding: 8px;
+      background: #e8f0f8;
+      color: var(--accent);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-footer button:hover {
+      background: #dfe8f4;
+    }
+
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .preview-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .page {
+      width: 8.5in;
+      height: 11in;
+      background: white;
+      margin: 0 auto 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 0;
+      padding: 0;
+      page-break-after: always;
+      position: relative;
+    }
+
+    .page:last-child {
+      margin-bottom: 20px;
+    }
+
+    .label {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: none;
+      padding: 0.12in 0.2in;
+      position: relative;
+      background: white;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .label.draggable {
+      cursor: move;
+    }
+
+    .label.dragging {
+      opacity: 0.5;
+      background: #f9f9f9;
+    }
+
+    .label.drag-over {
+      background: #f0f3f8;
+      box-shadow: inset 0 0 8px rgba(40, 119, 216, 0.3);
+    }
+
+    .label-logo {
+      height: 0.55in;
+      margin-bottom: 0.16in;
+      flex-shrink: 0;
+    }
+
+    .label-logo img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .label-name {
+      font-size: 50px;
+      font-weight: 700;
+      color: #111;
+      margin: 0;
+      line-height: 1.1;
+      word-wrap: break-word;
+      max-width: 3.6in;
+      outline: none;
+      border-radius: 3px;
+      padding: 0 0.1in;
+      transition: background 0.2s;
+    }
+
+    .label-name:hover {
+      background: #f5f5f5;
+    }
+
+    .label-name:focus {
+      background: #e3f2fd;
+      outline: 2px solid var(--accent);
+    }
+
+
+    .empty-message {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+
+    .empty-message h1 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      color: var(--ink);
+    }
+
+    .empty-message p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .example-code {
+      background: #f5f7fa;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #2c3e50;
+      text-align: left;
+      margin-bottom: 12px;
+      overflow-x: auto;
+    }
+
+    .topbar {
+      background: var(--ink);
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      gap: 20px;
+    }
+
+    .topbar-left {
+      flex: 1;
+    }
+
+    .topbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-print {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-print:hover {
+      background: #1d5eb0;
+    }
+
+    .edit-mode-toggle {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .edit-mode-toggle:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .edit-mode-toggle.active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+
+      body {
+        background: white;
+        padding: 0;
+        display: block;
+        height: auto;
+        margin: 0;
+      }
+
+      .main-container {
+        display: block;
+        overflow: visible;
+        width: 100%;
+      }
+
+      .sidebar, .topbar, .empty-message {
+        display: none !important;
+      }
+
+      .content-area {
+        position: static;
+        overflow: visible;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: block;
+      }
+
+      .preview-area {
+        position: static;
+        overflow: visible;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #output {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: block;
+      }
+
+      .page {
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+        page-break-inside: avoid;
+        width: 8.5in;
+        height: 11in;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 0;
+        padding: 0;
+        border: none;
+        background: white;
+      }
+
+      .page:last-child {
+        page-break-after: auto;
+      }
+
+      .label {
+        page-break-inside: avoid;
+        border: none;
+        overflow: visible;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar" id="topbar">
+  <div class="topbar-left" id="topbarText"></div>
+  <div class="topbar-right">
+    <button class="edit-mode-toggle" id="editModeToggle">Edit Mode</button>
+    <button class="btn-print" id="printBtn">Print / PDF</button>
+  </div>
+</div>
+
+<div class="main-container">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Names</h2>
+      <form class="add-name-form" id="addNameForm">
+        <input type="text" id="nameInput" placeholder="Enter name..." autocomplete="off">
+        <button type="submit">Add Name</button>
+      </form>
+    </div>
+    <div class="sidebar-content">
+      <div class="names-list" id="namesList"></div>
+    </div>
+    <div class="sidebar-footer">
+      <button id="clearAllBtn">Clear All</button>
+      <div id="countDisplay"></div>
+    </div>
+  </aside>
+
+  <div class="content-area">
+    <div class="preview-area" id="previewArea">
+      <main id="output"></main>
+    </div>
+  </div>
+</div>
+
+<script>
+  const logoSrc = 'assets/mzt/milezerotours-wordmark-transparent.png';
+  const labelsPerPage = 10;
+
+  let labels = [];
+  let editMode = false;
+  let draggedLabel = null;
+
+  function getUrlParams() {
+    const params = new URLSearchParams(window.location.search + window.location.hash.replace(/^#/, '?'));
+    const names = [];
+
+    let index = 1;
+    while (params.has(`name${index}`)) {
+      const name = params.get(`name${index}`).trim();
+      if (name) names.push(name);
+      index++;
+    }
+
+    return names;
+  }
+
+  // labels[] represents fixed grid slots — '' means the slot is blank.
+  // Keeping blanks as real array entries (rather than just visual filler)
+  // is what lets drag-and-drop swap a name into ANY slot, filled or not,
+  // instead of shifting/reordering everything else.
+  function padLabels() {
+    if (labels.length === 0) return;
+    const remainder = labels.length % labelsPerPage;
+    if (remainder !== 0) {
+      labels.push(...Array(labelsPerPage - remainder).fill(''));
+    }
+  }
+
+  function trimTrailingEmptySlots() {
+    while (labels.length >= labelsPerPage) {
+      const lastPage = labels.slice(labels.length - labelsPerPage);
+      if (lastPage.every(v => !v)) {
+        labels.splice(labels.length - labelsPerPage, labelsPerPage);
+      } else {
+        break;
+      }
+    }
+    if (labels.every(v => !v)) labels.length = 0;
+  }
+
+  function normalizeLabels() {
+    trimTrailingEmptySlots();
+    padLabels();
+  }
+
+  function addName(name) {
+    const trimmed = name.trim();
+    if (trimmed) {
+      const emptyIdx = labels.findIndex(v => !v);
+      if (emptyIdx !== -1) {
+        labels[emptyIdx] = trimmed;
+      } else {
+        labels.push(trimmed);
+      }
+      normalizeLabels();
+      render();
+      updateNamesList();
+      document.getElementById('nameInput').value = '';
+      document.getElementById('nameInput').focus();
+    }
+  }
+
+  function removeName(index) {
+    labels[index] = '';
+    normalizeLabels();
+    render();
+    updateNamesList();
+  }
+
+  function clearAllNames() {
+    const filledCount = labels.filter(v => v).length;
+    if (filledCount > 0 && confirm(`Remove all ${filledCount} name${filledCount !== 1 ? 's' : ''}?`)) {
+      labels = [];
+      render();
+      updateNamesList();
+    }
+  }
+
+  function updateNamesList() {
+    const namesList = document.getElementById('namesList');
+    const countDisplay = document.getElementById('countDisplay');
+    const filled = labels.map((name, idx) => ({ name, idx })).filter(item => item.name);
+
+    if (filled.length === 0) {
+      namesList.innerHTML = '<div style="color: var(--muted); font-size: 12px; text-align: center; padding: 20px 10px;">No names added yet</div>';
+      countDisplay.textContent = '';
+    } else {
+      namesList.innerHTML = filled.map(item => `
+        <div class="name-item">
+          <span class="name-item-text">${escapeHtml(item.name)}</span>
+          <button class="name-item-delete" data-index="${item.idx}">Delete</button>
+        </div>
+      `).join('');
+
+      countDisplay.textContent = `${filled.length} label${filled.length !== 1 ? 's' : ''}`;
+
+      // Add delete listeners
+      document.querySelectorAll('.name-item-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          removeName(parseInt(e.target.dataset.index));
+        });
+      });
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  const NAME_MAX_FONT = 50;
+  const NAME_MIN_FONT = 14;
+
+  // A long name must never stretch the fixed 4"x2" label — that breaks
+  // alignment on the physical sheet. Instead, shrink the font until the
+  // rendered text actually fits the space left after the logo.
+  function fitLabelName(nameEl) {
+    const container = nameEl.closest('.label');
+    if (!container) return;
+
+    const logoEl = container.querySelector('.label-logo');
+    const containerStyle = getComputedStyle(container);
+    const paddingV = parseFloat(containerStyle.paddingTop) + parseFloat(containerStyle.paddingBottom);
+    const paddingH = parseFloat(containerStyle.paddingLeft) + parseFloat(containerStyle.paddingRight);
+
+    let logoSpace = 0;
+    if (logoEl) {
+      const logoStyle = getComputedStyle(logoEl);
+      logoSpace = logoEl.offsetHeight + parseFloat(logoStyle.marginBottom);
+    }
+
+    const availableHeight = container.clientHeight - paddingV - logoSpace;
+    const availableWidth = container.clientWidth - paddingH;
+
+    let fontSize = NAME_MAX_FONT;
+    nameEl.style.fontSize = fontSize + 'px';
+
+    while (
+      fontSize > NAME_MIN_FONT &&
+      (nameEl.scrollHeight > availableHeight || nameEl.scrollWidth > availableWidth)
+    ) {
+      fontSize -= 1;
+      nameEl.style.fontSize = fontSize + 'px';
+    }
+  }
+
+  function fitAllLabelNames() {
+    document.querySelectorAll('.label-name').forEach(fitLabelName);
+  }
+
+  function renderLabels() {
+    const hasContent = labels.some(v => v);
+    if (!hasContent) {
+      return `
+        <div class="empty-message">
+          <h1>Welcome to Label Baker</h1>
+          <p>Create printable name tags using the URL parameters below.</p>
+          <p style="font-weight: 600; margin-top: 20px;">Example:</p>
+          <div class="example-code">
+            LabelBaker.html?name1=David&name2=Alex&name3=Jordan
+          </div>
+          <p style="margin-top: 20px;">Parameters: <strong>name1</strong>, <strong>name2</strong>, <strong>name3</strong>, etc.</p>
+          <p style="font-size: 12px; color: var(--muted);">
+            Supports up to any number of names. Automatically creates 10 labels per 8.5" × 11" sheet.
+          </p>
+        </div>
+      `;
+    }
+
+    let html = '';
+    const totalPages = Math.ceil(labels.length / labelsPerPage);
+
+    for (let pageNum = 0; pageNum < totalPages; pageNum++) {
+      html += '<div class="page">';
+
+      const startIdx = pageNum * labelsPerPage;
+      const endIdx = Math.min(startIdx + labelsPerPage, labels.length);
+
+      for (let i = startIdx; i < endIdx; i++) {
+        const label = labels[i];
+
+        if (label) {
+          html += `
+            <div class="label ${editMode ? 'draggable' : ''}" data-index="${i}" draggable="${editMode}">
+              <div class="label-logo">
+                <img src="${logoSrc}" alt="Mile Zero Tours">
+              </div>
+              <div class="label-name" contenteditable="${editMode}" data-index="${i}">${escapeHtml(label)}</div>
+            </div>
+          `;
+        } else {
+          // Blank slot — still a real, addressable position in labels[],
+          // so dragging a name onto it places it exactly here (via drop
+          // handler's swap), not just appended past the end of the list.
+          html += `<div class="label" data-index="${i}" data-empty="true" style="border-color: #f5f5f5;"></div>`;
+        }
+      }
+
+      html += '</div>';
+    }
+
+    return html;
+  }
+
+  function updateTopbar() {
+    const topbarText = document.getElementById('topbarText');
+    const filledCount = labels.filter(v => v).length;
+    if (filledCount > 0) {
+      topbarText.textContent = `${filledCount} label${filledCount !== 1 ? 's' : ''} ready to print`;
+    } else {
+      topbarText.textContent = '';
+    }
+  }
+
+  function triggerPrint() {
+    // Re-check text fit right before printing too, in case box metrics
+    // shift slightly between screen and print layout.
+    fitAllLabelNames();
+
+    // Ensure all images are loaded before printing
+    const images = document.querySelectorAll('img');
+    let loadedCount = 0;
+    const totalCount = images.length;
+
+    if (totalCount === 0) {
+      window.print();
+      return;
+    }
+
+    images.forEach(img => {
+      if (img.complete) {
+        loadedCount++;
+      } else {
+        img.addEventListener('load', () => {
+          loadedCount++;
+          if (loadedCount === totalCount) {
+            setTimeout(() => window.print(), 100);
+          }
+        }, { once: true });
+        img.addEventListener('error', () => {
+          loadedCount++;
+          if (loadedCount === totalCount) {
+            setTimeout(() => window.print(), 100);
+          }
+        }, { once: true });
+      }
+    });
+
+    if (loadedCount === totalCount) {
+      setTimeout(() => window.print(), 100);
+    }
+  }
+
+  // Bound once — these elements persist across renders (only #output's
+  // innerHTML changes), so listeners here must not be re-attached on
+  // every render() or they'd stack up and fire multiple times per click.
+  function attachStaticEventListeners() {
+    const output = document.getElementById('output');
+
+    // Print button
+    document.getElementById('printBtn').addEventListener('click', triggerPrint);
+
+    // Edit mode toggle
+    const editBtn = document.getElementById('editModeToggle');
+    editBtn.addEventListener('click', () => {
+      editMode = !editMode;
+      editBtn.classList.toggle('active');
+      render();
+    });
+
+    // Drag and drop listeners (event delegation on the persistent #output)
+    output.addEventListener('dragstart', (e) => {
+      if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+        return;
+      }
+      if (!e.target.classList.contains('label') || !editMode || e.target.dataset.empty === 'true') return;
+      draggedLabel = e.target;
+      e.target.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+
+    output.addEventListener('dragend', (e) => {
+      if (!e.target.classList.contains('label')) return;
+      e.target.classList.remove('dragging');
+      document.querySelectorAll('.label.drag-over').forEach(el => {
+        el.classList.remove('drag-over');
+      });
+    });
+
+    output.addEventListener('dragover', (e) => {
+      if (!editMode) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const target = e.target.closest('.label');
+      if (target && target !== draggedLabel && target.dataset.index !== undefined) {
+        target.classList.add('drag-over');
+      }
+    });
+
+    output.addEventListener('dragleave', (e) => {
+      const target = e.target.closest('.label');
+      if (target) target.classList.remove('drag-over');
+    });
+
+    output.addEventListener('drop', (e) => {
+      if (!editMode || !draggedLabel) return;
+      e.preventDefault();
+      const target = e.target.closest('.label');
+      if (target && target !== draggedLabel && target.dataset.index !== undefined) {
+        const fromIdx = parseInt(draggedLabel.dataset.index);
+        const toIdx = parseInt(target.dataset.index);
+
+        // Direct swap — the dragged label and whatever was at the drop
+        // target (a name, or nothing) trade places exactly, so a label
+        // can be placed on any specific slot on the grid, filled or blank.
+        const temp = labels[fromIdx];
+        labels[fromIdx] = labels[toIdx];
+        labels[toIdx] = temp;
+
+        trimTrailingEmptySlots();
+        render();
+        updateNamesList();
+      }
+    });
+
+    // Name editing
+    output.addEventListener('input', (e) => {
+      if (e.target.classList.contains('label-name')) {
+        const idx = parseInt(e.target.dataset.index);
+        labels[idx] = e.target.textContent;
+        fitLabelName(e.target);
+      }
+    });
+  }
+
+  function render() {
+    const output = document.getElementById('output');
+    output.innerHTML = renderLabels();
+    fitAllLabelNames();
+    updateTopbar();
+  }
+
+  function init() {
+    labels = getUrlParams();
+    padLabels();
+
+    // Add form listener
+    document.getElementById('addNameForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      addName(document.getElementById('nameInput').value);
+    });
+
+    // Clear all button
+    document.getElementById('clearAllBtn').addEventListener('click', clearAllNames);
+
+    // Bind persistent listeners once
+    attachStaticEventListeners();
+
+    // Initial render
+    render();
+    updateNamesList();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>
